@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LiveNewsTime</string>
+    <string name="edittext_hint"><font size="15">Search for News</font></string>
+</resources>
