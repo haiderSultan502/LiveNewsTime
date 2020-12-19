@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tab_text_color">#FFFFFFFF</color>
+    <color name="heading_color">#0a1b48</color>
+    <color name="readMore">#ed5012</color>
 </resources>

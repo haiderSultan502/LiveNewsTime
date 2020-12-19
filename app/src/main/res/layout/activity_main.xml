@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.3"
-        android:weightSum="2.3"
+        android:layout_weight="2.2"
+        android:weightSum="2.2"
         android:background="@drawable/bg"
         android:orientation="vertical">
 
@@ -24,15 +24,15 @@
                 android:id="@+id/btn_drawer"
                 android:layout_width="@dimen/_12sdp"
                 android:layout_height="@dimen/_10sdp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="@dimen/_22sdp"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:background="@drawable/btn_drawer"/>
             <ImageView
+                android:id="@+id/logo"
                 android:layout_width="@dimen/_180sdp"
-                android:layout_height="@dimen/_160sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:src="@drawable/logo"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -59,5 +59,170 @@
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            style="@style/Base.Widget.Design.TabLayout">
+<!--            app:tabTextAppearance="@style/MyCustomTabText"-->
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Politics"/>
+
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="News"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TECHNOLOGY" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/tv_live"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:text="Latest News"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/heading_color"
+            android:textStyle="normal"
+            ></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_113sdp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_latest_news">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_95sdp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <LinearLayout
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_95sdp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_70sdp"
+                        android:src="@drawable/img1"
+                        android:scaleType="centerCrop"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_15sdp"
+                        android:text="Prices Diana's 1995 interview, once again"
+                        android:textSize="@dimen/_6sdp"
+                        android:textColor="@color/heading_color"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"
+                        android:text="Read more..."
+                        android:textColor="@color/readMore"
+                        android:textSize="@dimen/_6sdp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_95sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_70sdp"
+                        android:src="@drawable/img1"
+                        android:scaleType="centerCrop"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_15sdp"
+                        android:text="Prices Diana's 1995 interview, once again"
+                        android:textSize="@dimen/_6sdp"
+                        android:textColor="@color/heading_color"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"
+                        android:text="Read more..."
+                        android:textColor="@color/readMore"
+                        android:textSize="@dimen/_6sdp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_95sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_70sdp"
+                        android:src="@drawable/img1"
+                        android:scaleType="centerCrop"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_15sdp"
+                        android:text="Prices Diana's 1995 interview, once again"
+                        android:textSize="@dimen/_6sdp"
+                        android:textColor="@color/heading_color"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"
+                        android:text="Read more..."
+                        android:textColor="@color/readMore"
+                        android:textSize="@dimen/_6sdp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="6"></LinearLayout>
 
 </LinearLayout>
