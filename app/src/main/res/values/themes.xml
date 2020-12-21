@@ -17,7 +17,7 @@
         <item name="tabBackground">@drawable/tabitem_background</item>
     </style>
     <style name="MyCustomTabText" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/tab_text_color</item>
-        <item name="android:textSize">12sp</item>
+<!--        <item name="android:textColor">@color/selected_tab_text_color</item>-->
+        <item name="android:textSize">10sp</item>
     </style>
 </resources>
