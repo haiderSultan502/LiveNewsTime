@@ -14,7 +14,7 @@
         android:src="@drawable/img1"/>
 
     <TextView
-        android:id="@+id/text_view_heading"
+        android:id="@+id/text_view_post_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_25sdp"
         android:text="Prices Diana's 1995 interview, once again"

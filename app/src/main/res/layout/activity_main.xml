@@ -10,17 +10,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg"
+        android:background="@color/top_bar_bg"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btn_drawer"
                 android:layout_width="@dimen/_12sdp"
                 android:layout_height="@dimen/_10sdp"
-                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:background="@drawable/btn_drawer"/>
             <ImageView
@@ -30,17 +31,30 @@
                 android:src="@drawable/logo"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_centerHorizontal="true"/>
+            <ImageView
+                android:id="@+id/img_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+               android:layout_marginTop="@dimen/_22sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:src="@drawable/ic_baseline_search_24">
+            </ImageView>
+
+
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_seach_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/_42sdp"
+            android:visibility="gone"
+            android:layoutAnimation="@anim/animation_for_search_view">
 
             <EditText
                 android:id="@+id/edit_text_search"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_33sdp"
-                android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:background="@drawable/search_bar"
@@ -49,8 +63,12 @@
                 android:inputType="text"
                 android:paddingLeft="@dimen/_15sdp"
                 android:drawableRight="@drawable/search_icon"
-                android:paddingRight="@dimen/_20sdp">
+                android:paddingRight="@dimen/_20sdp"
+                android:layout_alignParentTop="true"
+                >
             </EditText>
+
+
         </RelativeLayout>
 
 
@@ -92,10 +110,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TECHNOLOGY" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/tv_live"/>
+                android:icon="@drawable/tv_live_gray"/>
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -105,147 +124,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:text="Latest News"
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/heading_color"
-                    android:textStyle="normal"
-                    ></TextView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_140sdp"
-                    android:background="@drawable/bg_latest_news"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_5sdp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_120sdp"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginRight="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_10sdp">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycler_view_latest_news"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:text="Recent News"
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/heading_color"
-                    android:textStyle="normal"
-                    ></TextView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_10sdp">
-
-                    <ImageView
-                        android:id="@+id/image_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_105sdp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img5"/>
-
-                    <TextView
-                        android:id="@+id/text_view_heading"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_12sdp"
-                        android:text="Prices Diana's 1995 interview, once again"
-                        android:textColor="@color/heading_color"
-                        android:textSize="@dimen/_9sdp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_15sdp"
-                        android:text="Read more..."
-                        android:textColor="@color/readMore"
-                        android:textSize="@dimen/_9sdp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/heading_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:text="More News"
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/heading_color"
-                    android:textStyle="normal"
-                    ></TextView>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_10sdp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_more_news"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
+    </FrameLayout>
     </ScrollView>
 
 </LinearLayout>

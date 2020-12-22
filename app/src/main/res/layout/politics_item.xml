@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/_130sdp"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_120sdp"
     android:paddingRight="@dimen/_10sdp"
     android:orientation="vertical">
     <ImageView

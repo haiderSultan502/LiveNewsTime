@@ -10,19 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.R;
 
-public class ReadMoreAdapter extends RecyclerView.Adapter<ReadMoreAdapter.ItemViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ItemViewHolder> {
     View view;
     Context context;
 
-    public ReadMoreAdapter(Context context) {
+    public NewsAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
-    public ReadMoreAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.read_more_item, parent, false);
-        return new ReadMoreAdapter.ItemViewHolder(view);
+    public NewsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        view = LayoutInflater.from(context).inflate(R.layout.politics_item, parent, false);
+        return new NewsAdapter.ItemViewHolder(view);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ReadMoreAdapter extends RecyclerView.Adapter<ReadMoreAdapter.ItemVi
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder

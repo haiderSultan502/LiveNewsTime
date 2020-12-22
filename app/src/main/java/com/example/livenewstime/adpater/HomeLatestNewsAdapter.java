@@ -9,24 +9,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.R;
 
-public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.ItemViewHolder> {
+public class HomeLatestNewsAdapter extends RecyclerView.Adapter<HomeLatestNewsAdapter.ItemViewHolder> {
 
     View view;
     Context context;
 
-    public LatestNewsAdapter(Context context) {
+    public HomeLatestNewsAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
-    public LatestNewsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HomeLatestNewsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         view = LayoutInflater.from(context).inflate(R.layout.latest_news_item, parent, false);
-        return new LatestNewsAdapter.ItemViewHolder(view);
+        return new HomeLatestNewsAdapter.ItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LatestNewsAdapter.ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeLatestNewsAdapter.ItemViewHolder holder, int position) {
 
     }
 

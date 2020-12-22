@@ -10,7 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:replace="android:icon"
-        android:windowSoftInputMode="stateHidden|adjustResize"
         android:theme="@style/Theme.LiveNewsTime">
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -20,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"></activity>
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
     </application>
 
 </manifest>
