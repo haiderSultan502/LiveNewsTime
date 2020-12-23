@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="News"
+            android:text="Technology"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/heading_color"
             android:textStyle="normal"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_105sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/actor2"/>
+            android:src="@drawable/img6"/>
 
         <TextView
             android:id="@+id/text_view_post_text"
@@ -67,10 +67,11 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/heading_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="More About News"
+            android:text="More About Technology"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/heading_color"
             android:textStyle="normal"
@@ -85,7 +86,7 @@
             android:layout_marginBottom="@dimen/_10sdp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_more_about_news"
+                android:id="@+id/recycler_view_more_about_technology"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>

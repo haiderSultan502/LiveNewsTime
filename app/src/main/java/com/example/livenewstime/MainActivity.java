@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.example.livenewstime.fragments.Home;
 import com.example.livenewstime.fragments.News;
 import com.example.livenewstime.fragments.Politics;
+import com.example.livenewstime.fragments.Technology;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -84,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case 2:
                         News news = new News(mainActivity);
                         replaceFrag(news);
+                        break;
+                    case 3:
+                        Technology technology = new Technology(mainActivity);
+                        replaceFrag(technology);
                         break;
                     case 4:
                         tabLayout.getTabAt(index).setIcon(R.drawable.tv_live_white);
