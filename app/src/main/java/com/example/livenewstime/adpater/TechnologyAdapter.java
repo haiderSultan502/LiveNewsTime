@@ -21,7 +21,7 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.It
     @NonNull
     @Override
     public TechnologyAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.politics_item, parent, false);
+        view = LayoutInflater.from(context).inflate(R.layout.read_more_item, parent, false);
         return new TechnologyAdapter.ItemViewHolder(view);
     }
 

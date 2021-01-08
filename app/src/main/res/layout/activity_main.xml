@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/top_bar_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <RelativeLayout
             android:id="@+id/top_bar"
@@ -76,7 +77,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="visible">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
@@ -123,7 +125,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        android:visibility="visible">
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"

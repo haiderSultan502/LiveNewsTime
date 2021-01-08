@@ -13,11 +13,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.example.livenewstime.fragments.Home;
-import com.example.livenewstime.fragments.News;
-import com.example.livenewstime.fragments.Politics;
-import com.example.livenewstime.fragments.Technology;
+import com.example.livenewstime.fragments.HomeFragment;
+import com.example.livenewstime.fragments.NewsFragment;
+import com.example.livenewstime.fragments.PoliticsFragment;
+import com.example.livenewstime.fragments.TechnologyFragment;
+import com.example.livenewstime.models.NewsModel;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,10 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FrameLayout frameLayout;
     Boolean checkSearchStatus = false;
     EditText edtSearch;
-    MainActivity mainActivity;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+
+    public static ArrayList<NewsModel> news;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,16 +45,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public static ArrayList<NewsModel> getNews() {
+        return news;
+    }
+
+    public static void setNews(ArrayList<NewsModel> news) {
+        MainActivity.news = news;
+    }
+
     private void initializeView() {
+        news = new ArrayList<>();
         tabLayout=findViewById(R.id.tabLayout);
         imgSearch=findViewById(R.id.img_search);
         rlSearchLayout=findViewById(R.id.rl_seach_layout);
         edtSearch=findViewById(R.id.edit_text_search);
         frameLayout=findViewById(R.id.frame_layout);
 
-        mainActivity=this;
-        Home home = new Home(mainActivity);
-        replaceFrag(home);
+        HomeFragment homeFragment = new HomeFragment(getBaseContext());
+        replaceFrag(homeFragment);
         setDataInViews();
 
         imgSearch.setOnClickListener(this);
@@ -75,20 +87,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (index)
                 {
                     case 0:
-                        Home home = new Home(mainActivity);
-                        replaceFrag(home);
+                        HomeFragment homeFragment = new HomeFragment(getApplicationContext());
+                        replaceFrag(homeFragment);
                         break;
                     case 1:
-                        Politics politics = new Politics(mainActivity);
-                        replaceFrag(politics);
+                        PoliticsFragment politicsFragment = new PoliticsFragment(getApplicationContext());
+                        replaceFrag(politicsFragment);
                         break;
                     case 2:
-                        News news = new News(mainActivity);
-                        replaceFrag(news);
+                        NewsFragment newsFragment = new NewsFragment(getApplicationContext());
+                        replaceFrag(newsFragment);
                         break;
                     case 3:
-                        Technology technology = new Technology(mainActivity);
-                        replaceFrag(technology);
+                        TechnologyFragment technologyFragment = new TechnologyFragment(getApplicationContext());
+                        replaceFrag(technologyFragment);
                         break;
                     case 4:
                         tabLayout.getTabAt(index).setIcon(R.drawable.tv_live_white);

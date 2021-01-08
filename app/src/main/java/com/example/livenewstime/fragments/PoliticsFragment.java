@@ -17,16 +17,15 @@ import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.HomeLatestNewsAdapter;
 import com.example.livenewstime.adpater.PoliticsAdapter;
-import com.example.livenewstime.adpater.TechnologyAdapter;
 
-public class Technology extends Fragment {
+public class PoliticsFragment extends Fragment {
 
-    RecyclerView recyclerViewMoreAboutTechnology;
+    RecyclerView recyclerViewMoreAboutPolitics;
     GridLayoutManager gridLayoutManager;
     View view;
     MainActivity mainActivity;
 
-    public Technology(Context context) {
+    public PoliticsFragment(Context context) {
         this.mainActivity= (MainActivity) context;
     }
 
@@ -39,9 +38,9 @@ public class Technology extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view=inflater.inflate(R.layout.frag_technology,container,false);
+        view=inflater.inflate(R.layout.frag_politics,container,false);
 
-        recyclerViewMoreAboutTechnology=view.findViewById(R.id.recycler_view_more_about_technology);
+        recyclerViewMoreAboutPolitics=view.findViewById(R.id.recycler_view_more_about_politics);
 
         setDataInViews();
 
@@ -51,9 +50,9 @@ public class Technology extends Fragment {
     private void setDataInViews() {
 
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
-        recyclerViewMoreAboutTechnology.setLayoutManager(setOrientationToLatestNewsRecyclerView);
-        TechnologyAdapter technologyAdapter =new TechnologyAdapter(mainActivity);
-        recyclerViewMoreAboutTechnology.setAdapter(technologyAdapter);
+        recyclerViewMoreAboutPolitics.setLayoutManager(setOrientationToLatestNewsRecyclerView);
+        PoliticsAdapter politicsAdapter =new PoliticsAdapter(mainActivity);
+        recyclerViewMoreAboutPolitics.setAdapter(politicsAdapter);
 
     }
 

@@ -16,17 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.HomeLatestNewsAdapter;
-import com.example.livenewstime.adpater.NewsAdapter;
 import com.example.livenewstime.adpater.PoliticsAdapter;
+import com.example.livenewstime.adpater.TechnologyAdapter;
 
-public class News extends Fragment {
+public class TechnologyFragment extends Fragment {
 
-    RecyclerView recyclerViewMoreAboutNews;
+    RecyclerView recyclerViewMoreAboutTechnology;
     GridLayoutManager gridLayoutManager;
     View view;
     MainActivity mainActivity;
 
-    public News(Context context) {
+    public TechnologyFragment(Context context) {
         this.mainActivity= (MainActivity) context;
     }
 
@@ -39,9 +39,9 @@ public class News extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view=inflater.inflate(R.layout.frag_news,container,false);
+        view=inflater.inflate(R.layout.frag_technology,container,false);
 
-        recyclerViewMoreAboutNews=view.findViewById(R.id.recycler_view_more_about_news);
+        recyclerViewMoreAboutTechnology=view.findViewById(R.id.recycler_view_more_about_technology);
 
         setDataInViews();
 
@@ -51,9 +51,9 @@ public class News extends Fragment {
     private void setDataInViews() {
 
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
-        recyclerViewMoreAboutNews.setLayoutManager(setOrientationToLatestNewsRecyclerView);
-        NewsAdapter newsAdapter =new NewsAdapter(mainActivity);
-        recyclerViewMoreAboutNews.setAdapter(newsAdapter);
+        recyclerViewMoreAboutTechnology.setLayoutManager(setOrientationToLatestNewsRecyclerView);
+        TechnologyAdapter technologyAdapter =new TechnologyAdapter(mainActivity);
+        recyclerViewMoreAboutTechnology.setAdapter(technologyAdapter);
 
     }
 

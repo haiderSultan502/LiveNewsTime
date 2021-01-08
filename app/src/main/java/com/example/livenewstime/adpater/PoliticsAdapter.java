@@ -21,7 +21,7 @@ public class PoliticsAdapter extends RecyclerView.Adapter<PoliticsAdapter.ItemVi
     @NonNull
     @Override
     public PoliticsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.politics_item, parent, false);
+        view = LayoutInflater.from(context).inflate(R.layout.read_more_item, parent, false);
         return new PoliticsAdapter.ItemViewHolder(view);
     }
 

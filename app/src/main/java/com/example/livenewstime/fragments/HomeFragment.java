@@ -2,6 +2,7 @@ package com.example.livenewstime.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +17,24 @@ import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.HomeLatestNewsAdapter;
 import com.example.livenewstime.adpater.HomeReadMoreAdapter;
+import com.example.livenewstime.models.NewsModel;
+import com.example.livenewstime.otherClasses.Data;
 
-public class Home extends Fragment {
+import java.util.ArrayList;
+
+public class HomeFragment extends Fragment {
 
     RecyclerView recyclerViewLatestNews,getRecyclerViewMoreNews;
     LinearLayoutManager linearLayoutManager;
     View view;
-    MainActivity mainActivity;
+    Context context;
 
-    public Home(Context context) {
-        this.mainActivity= (MainActivity) context;
+
+    Data data;
+
+    public HomeFragment(Context context) {
+        this.context = context;
+        data = new Data(context);
     }
 
     @Override
@@ -51,18 +60,20 @@ public class Home extends Fragment {
 
         LinearLayoutManager setOrientationToLatestNewsRecyclerView =setRecyclerViewOrientation();
         recyclerViewLatestNews.setLayoutManager(setOrientationToLatestNewsRecyclerView);
-        HomeLatestNewsAdapter homeLatestNewsAdapter =new HomeLatestNewsAdapter(mainActivity);
-        recyclerViewLatestNews.setAdapter(homeLatestNewsAdapter);
 
-        LinearLayoutManager setOrientationToMorereadRecyclerView =setRecyclerViewOrientation();
-        getRecyclerViewMoreNews.setLayoutManager(setOrientationToMorereadRecyclerView);
-        HomeReadMoreAdapter homeReadMoreAdapter =new HomeReadMoreAdapter(mainActivity);
-        getRecyclerViewMoreNews.setAdapter(homeReadMoreAdapter);
+        data.getNews("https://livenewstime.com/wp-json/newspaper/v2/");
+//        HomeLatestNewsAdapter homeLatestNewsAdapter =new HomeLatestNewsAdapter(context);
+//        recyclerViewLatestNews.setAdapter(homeLatestNewsAdapter);
+
+//        LinearLayoutManager setOrientationToMorereadRecyclerView =setRecyclerViewOrientation();
+//        getRecyclerViewMoreNews.setLayoutManager(setOrientationToMorereadRecyclerView);
+//        HomeReadMoreAdapter homeReadMoreAdapter =new HomeReadMoreAdapter(context);
+//        getRecyclerViewMoreNews.setAdapter(homeReadMoreAdapter);
 
     }
 
     private LinearLayoutManager setRecyclerViewOrientation() {
-        linearLayoutManager=new LinearLayoutManager(mainActivity);
+        linearLayoutManager=new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         return linearLayoutManager;
     }

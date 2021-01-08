@@ -16,16 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.HomeLatestNewsAdapter;
+import com.example.livenewstime.adpater.NewsAdapter;
 import com.example.livenewstime.adpater.PoliticsAdapter;
 
-public class Politics extends Fragment {
+public class NewsFragment extends Fragment {
 
-    RecyclerView recyclerViewMoreAboutPolitics;
+    RecyclerView recyclerViewMoreAboutNews;
     GridLayoutManager gridLayoutManager;
     View view;
     MainActivity mainActivity;
 
-    public Politics(Context context) {
+    public NewsFragment(Context context) {
         this.mainActivity= (MainActivity) context;
     }
 
@@ -38,9 +39,9 @@ public class Politics extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view=inflater.inflate(R.layout.frag_politics,container,false);
+        view=inflater.inflate(R.layout.frag_news,container,false);
 
-        recyclerViewMoreAboutPolitics=view.findViewById(R.id.recycler_view_more_about_politics);
+        recyclerViewMoreAboutNews=view.findViewById(R.id.recycler_view_more_about_news);
 
         setDataInViews();
 
@@ -50,9 +51,9 @@ public class Politics extends Fragment {
     private void setDataInViews() {
 
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
-        recyclerViewMoreAboutPolitics.setLayoutManager(setOrientationToLatestNewsRecyclerView);
-        PoliticsAdapter politicsAdapter =new PoliticsAdapter(mainActivity);
-        recyclerViewMoreAboutPolitics.setAdapter(politicsAdapter);
+        recyclerViewMoreAboutNews.setLayoutManager(setOrientationToLatestNewsRecyclerView);
+        NewsAdapter newsAdapter =new NewsAdapter(mainActivity);
+        recyclerViewMoreAboutNews.setAdapter(newsAdapter);
 
     }
 
