@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -35,33 +36,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    public static ArrayList<NewsModel> news;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         initializeView();
 
     }
 
-    public static ArrayList<NewsModel> getNews() {
-        return news;
-    }
-
-    public static void setNews(ArrayList<NewsModel> news) {
-        MainActivity.news = news;
-    }
-
     private void initializeView() {
-        news = new ArrayList<>();
         tabLayout=findViewById(R.id.tabLayout);
         imgSearch=findViewById(R.id.img_search);
         rlSearchLayout=findViewById(R.id.rl_seach_layout);
         edtSearch=findViewById(R.id.edit_text_search);
         frameLayout=findViewById(R.id.frame_layout);
 
-        HomeFragment homeFragment = new HomeFragment(getBaseContext());
+        HomeFragment homeFragment = new HomeFragment();
         replaceFrag(homeFragment);
         setDataInViews();
 
@@ -87,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (index)
                 {
                     case 0:
-                        HomeFragment homeFragment = new HomeFragment(getApplicationContext());
+                        HomeFragment homeFragment = new HomeFragment();
                         replaceFrag(homeFragment);
                         break;
                     case 1:

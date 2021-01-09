@@ -1,51 +1,70 @@
 package com.example.livenewstime.adpater;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
+import com.example.livenewstime.models.NewsModel;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeLatestNewsAdapter extends RecyclerView.Adapter<HomeLatestNewsAdapter.ItemViewHolder> {
 
     View view;
-    String thimbnailurl,title,readMore;
+    List<String> thumbnailUrl;
+    String title,readMore,checkView;
     Context context;
+    ArrayList<NewsModel> arrayListLatestNews;
 
-    public HomeLatestNewsAdapter(Context context) {
+    public HomeLatestNewsAdapter(Context context,ArrayList<NewsModel> arrayListLatestNews,String view) {
+        this.arrayListLatestNews = new ArrayList<>();
+        this.checkView=view;
         this.context = context;
+        this.arrayListLatestNews = arrayListLatestNews;
+
     }
 
     @NonNull
     @Override
     public HomeLatestNewsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.latest_news_item, parent, false);
+
+        if (checkView.equals("latestNews"))
+        {
+            view = LayoutInflater.from(context).inflate(R.layout.latest_news_item, parent, false);
+        }
+        else
+        {
+            view = LayoutInflater.from(context).inflate(R.layout.read_more_item, parent, false);
+        }
         return new HomeLatestNewsAdapter.ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HomeLatestNewsAdapter.ItemViewHolder holder, int position) {
 
-//        thimbnailurl = mainActivity.news.get(position).getThumbnailUrl().get(position);
-//        Picasso.with(mainActivity).load(thimbnailurl).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(holder.thumbnialHomeNews);
-
-//        title = mainActivity.news.get(position).getTitle();
-//        holder.textViewTitle.setText(title);
+        thumbnailUrl = arrayListLatestNews.get(position).getThumbnailUrl();
+        Picasso.with(context).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(holder.thumbnialHomeNews);
 
 
-
+        title = arrayListLatestNews.get(position).getTitle();
+        holder.textViewTitle.setText(title);
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return arrayListLatestNews.size();
     }
 
 
