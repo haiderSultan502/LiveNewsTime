@@ -7,11 +7,15 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface InterfaceApi {
 
     @GET("posts")
-    Call<List<NewsModel>> getAllNews();
+    Call<List<NewsModel>> getHomeNews();
+
+    @GET("posts")
+    Call<List<NewsModel>> getAllCategoriesNews(@Query("cat") int categoryid);
 
 
 

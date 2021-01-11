@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/_5sdp">
         </TextView>
         <TextView
-            android:id="@+id/tv_politics"
+                android:id="@+id/tv_politics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_politics"
@@ -37,12 +37,14 @@
         android:layout_marginTop="@dimen/_10sdp">
 
         <ImageView
+            android:id="@+id/image_view_politics"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_105sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/img5"/>
 
         <TextView
+            android:id="@+id/tv_title_politics"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_12sdp"
             android:text="Prices Diana's 1995 interview, once again"
@@ -86,7 +88,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_more_about_politics"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:clipToPadding="false"/>
         </LinearLayout>
 
     </LinearLayout>

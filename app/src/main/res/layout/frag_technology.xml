@@ -37,13 +37,14 @@
         android:layout_marginTop="@dimen/_10sdp">
 
         <ImageView
-            android:id="@+id/image_view"
+            android:id="@+id/image_view_technology"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_105sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/img6"/>
 
         <TextView
+            android:id="@+id/tv_title_technology"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_12sdp"
             android:text="Prices Diana's 1995 interview, once again"

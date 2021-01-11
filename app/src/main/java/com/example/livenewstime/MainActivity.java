@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         edtSearch=findViewById(R.id.edit_text_search);
         frameLayout=findViewById(R.id.frame_layout);
 
-        HomeFragment homeFragment = new HomeFragment();
+        HomeFragment homeFragment = new HomeFragment(this);
         replaceFrag(homeFragment);
         setDataInViews();
 
@@ -79,19 +79,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (index)
                 {
                     case 0:
-                        HomeFragment homeFragment = new HomeFragment();
+                        HomeFragment homeFragment = new HomeFragment(MainActivity.this);
                         replaceFrag(homeFragment);
                         break;
                     case 1:
-                        PoliticsFragment politicsFragment = new PoliticsFragment(getApplicationContext());
+                        PoliticsFragment politicsFragment = new PoliticsFragment(MainActivity.this);
                         replaceFrag(politicsFragment);
                         break;
                     case 2:
-                        NewsFragment newsFragment = new NewsFragment(getApplicationContext());
+                        NewsFragment newsFragment = new NewsFragment(MainActivity.this);
                         replaceFrag(newsFragment);
                         break;
                     case 3:
-                        TechnologyFragment technologyFragment = new TechnologyFragment(getApplicationContext());
+                        TechnologyFragment technologyFragment = new TechnologyFragment(MainActivity.this);
                         replaceFrag(technologyFragment);
                         break;
                     case 4:
