@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/item_click"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/thumbnail_news"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_105sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img5"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_12sdp"
+            android:text="Prices Diana's 1995 interview, once again"
+            android:textColor="@color/heading_color"
+            android:textSize="@dimen/_9sdp" />
+
+        <TextView
+            android:id="@+id/tv_readmore"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            android:text="Read more..."
+            android:textColor="@color/readMore"
+            android:textSize="@dimen/_9sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

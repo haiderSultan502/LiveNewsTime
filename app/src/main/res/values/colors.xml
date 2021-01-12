@@ -12,4 +12,6 @@
     <color name="heading_color">#0a1b48</color>
     <color name="readMore">#ed5012</color>
     <color name="top_bar_bg">#0a1b48</color>
+    <color name="app_major_color">#0a1b48</color>
+    <color name="white_color">#fff</color>
 </resources>
