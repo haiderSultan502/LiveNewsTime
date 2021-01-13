@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.Interface.InterfaceApi;
+import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
 import com.example.livenewstime.models.NewsModel;
@@ -120,6 +121,8 @@ public class PoliticsFragment extends Fragment {
 
                     AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListPoliticsNews,"readMoreNews");
                     recyclerViewMoreAboutPolitics.setAdapter(homeMoreNewsAdapter);
+
+                    MainActivity.animationHide();
 
                 }
 

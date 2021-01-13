@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,23 +33,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewsFragment extends Fragment {
+public class HealthFragment extends Fragment {
 
-    RecyclerView recyclerViewMoreAboutNews;
+    RecyclerView recyclerViewMoreAboutHealth;
     GridLayoutManager gridLayoutManager;
     View view;
     TextView tvPostTitle,tvReadMore;
-    ImageView imageViewNews;
+    ImageView imageViewHealth;
+    RelativeLayout imgBackButton;
+    LinearLayout lootieAnmationParentlayout;
 
     Context context;
     List<String> thumbnailUrl;
     String title;
     InterfaceApi interfaceApi;
-    Call<List<NewsModel>> callForNews;
-    ArrayList<NewsModel> arrayListNews;
+    Call<List<NewsModel>> callForHealth;
+    ArrayList<NewsModel> arrayListHealth;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
-    public NewsFragment(Context context) {
+    public HealthFragment(Context context) {
         this.context= context;
     }
 
@@ -60,25 +64,44 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view=inflater.inflate(R.layout.frag_news,container,false);
-        recyclerViewMoreAboutNews=view.findViewById(R.id.recycler_view_more_about_news);
-        tvPostTitle = view.findViewById(R.id.tv_title_news);
-        imageViewNews = view.findViewById(R.id.image_view_news);
+        view=inflater.inflate(R.layout.frag_health,container,false);
+        recyclerViewMoreAboutHealth=view.findViewById(R.id.recycler_view_more_about_health);
+        tvPostTitle = view.findViewById(R.id.tv_title_health);
+        imageViewHealth = view.findViewById(R.id.image_view_health);
+        imgBackButton=view.findViewById(R.id.img_back_btn);
+        lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
-        arrayListNews = new ArrayList<>();
+        arrayListHealth = new ArrayList<>();
 
+        parentAnimationShow();
         setDataInViews();
 
+        imgBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getFragmentManager().getBackStackEntryCount() != 0) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
+
         return view;
+    }
+
+    public  void parentAnimationShow() {
+        lootieAnmationParentlayout.setVisibility(View.VISIBLE);
+    }
+    public  void parentAnimationHide() {
+        lootieAnmationParentlayout.setVisibility(View.GONE);
     }
 
     private void setDataInViews() {
 
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
-        recyclerViewMoreAboutNews.setLayoutManager(setOrientationToLatestNewsRecyclerView);
+        recyclerViewMoreAboutHealth.setLayoutManager(setOrientationToLatestNewsRecyclerView);
 
-        getNews("https://livenewstime.com/wp-json/wp/v2/",2);
+        getHealthNews("https://livenewstime.com/wp-json/wp/v2/",7);
 
     }
 
@@ -88,13 +111,13 @@ public class NewsFragment extends Fragment {
         return gridLayoutManager;
     }
 
-    public void getNews(String url,int newsCategoryID)
+    public void getHealthNews(String url,int newsCategoryID)
     {
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
-            callForNews = interfaceApi.getAllCategoriesNews(newsCategoryID);
-            callForNews.enqueue(new Callback<List<NewsModel>>() {
+            callForHealth = interfaceApi.getAllCategoriesNews(newsCategoryID);
+            callForHealth.enqueue(new Callback<List<NewsModel>>() {
                 @Override
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
                     if (!response.isSuccessful())
@@ -102,25 +125,25 @@ public class NewsFragment extends Fragment {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    arrayListNews = (ArrayList<NewsModel>) response.body();
+                    arrayListHealth = (ArrayList<NewsModel>) response.body();
 
                     try {
-                        thumbnailUrl = arrayListNews.get(0).getFeaturedMedia();
-                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
+                        thumbnailUrl = arrayListHealth.get(0).getFeaturedMedia();
+                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
                     } catch (Exception e) {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
                     }
 
-                    title = arrayListNews.get(0).getTitle();
+                    title = arrayListHealth.get(0).getTitle();
                     tvPostTitle.setText(title);
 
-                    arrayListNews.remove(0);
+                    arrayListHealth.remove(0);
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListNews,"readMoreNews");
-                    recyclerViewMoreAboutNews.setAdapter(allNewsCategoriesAdapter);
+                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListHealth,"readMoreNews");
+                    recyclerViewMoreAboutHealth.setAdapter(allNewsCategoriesAdapter);
 
-                    MainActivity.animationHide();
+                    parentAnimationHide();
 
                 }
 
@@ -138,4 +161,5 @@ public class NewsFragment extends Fragment {
 
     }
 }
+
 

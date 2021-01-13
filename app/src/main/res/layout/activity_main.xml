@@ -10,140 +10,167 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/top_bar_bg"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <RelativeLayout
-            android:id="@+id/top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_drawer"
-                android:layout_width="@dimen/_12sdp"
-                android:layout_height="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_24sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:background="@drawable/btn_drawer"/>
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="@dimen/_180sdp"
-                android:layout_height="@dimen/_45sdp"
-                android:src="@drawable/logo"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_centerHorizontal="true"/>
-            <ImageView
-                android:id="@+id/img_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-               android:layout_marginTop="@dimen/_22sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:src="@drawable/ic_baseline_search_24">
-            </ImageView>
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_seach_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_42sdp"
-            android:visibility="gone"
-            android:layoutAnimation="@anim/animation_for_search_view">
-
-            <EditText
-                android:id="@+id/edit_text_search"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_33sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:background="@drawable/search_bar"
-                android:hint="@string/edittext_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:paddingLeft="@dimen/_15sdp"
-                android:drawableRight="@drawable/search_icon"
-                android:paddingRight="@dimen/_20sdp"
-                android:layout_alignParentTop="true">
-            </EditText>
-
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabTextAppearance="@style/MyCustomTabText"
-            style="@style/Base.Widget.Design.TabLayout">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Politics"/>
-
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="News"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TECHNOLOGY" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/tv_live_gray"/>
-
-        </com.google.android.material.tabs.TabLayout>
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:visibility="visible">
     <FrameLayout
-        android:id="@+id/frame_layout"
+        android:id="@+id/frame_layout_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </FrameLayout>
-    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-</LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/top_bar_bg"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_drawer"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:background="@drawable/btn_drawer"/>
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:src="@drawable/logo"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_centerHorizontal="true"/>
+                <ImageView
+                    android:id="@+id/img_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                   android:layout_marginTop="@dimen/_22sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:src="@drawable/ic_baseline_search_24">
+                </ImageView>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_seach_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_42sdp"
+                android:visibility="gone"
+                android:layoutAnimation="@anim/animation_for_search_view">
+
+                <EditText
+                    android:id="@+id/edit_text_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_33sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:background="@drawable/search_bar"
+                    android:hint="@string/edittext_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:drawableRight="@drawable/search_icon"
+                    android:paddingRight="@dimen/_20sdp"
+                    android:layout_alignParentTop="true">
+                </EditText>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabTextAppearance="@style/MyCustomTabText"
+                style="@style/Base.Widget.Design.TabLayout">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Politics"/>
+
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="News"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TECHNOLOGY" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/tv_live_gray"/>
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/lootie_animation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:gravity="center">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_animation_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_url="REPLACE_JSON_URL"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading"/>
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:visibility="visible">
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    </FrameLayout>
 
     <!--
          Navigation view to show the menu items

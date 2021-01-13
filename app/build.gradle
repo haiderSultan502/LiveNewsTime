@@ -88,5 +88,10 @@ dependencies {
     //aweasome dialog
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
 
+    //add lootie animation
+
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
 
 }

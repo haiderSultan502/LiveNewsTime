@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.fragments.WebsiteView;
 import com.example.livenewstime.models.NewsModel;
@@ -85,8 +86,11 @@ public class AllNewsCategoriesAdapter extends RecyclerView.Adapter<AllNewsCatego
     }
 
     private void replaceFragment() {
+
+
+
         ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_layout, websiteView).addToBackStack(null)
+                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
                 .commit();
     }
 

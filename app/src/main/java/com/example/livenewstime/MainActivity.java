@@ -21,14 +21,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.example.livenewstime.fragments.BusinessFragment;
+import com.example.livenewstime.fragments.HealthFragment;
 import com.example.livenewstime.fragments.HomeFragment;
 import com.example.livenewstime.fragments.NewsFragment;
 import com.example.livenewstime.fragments.PoliticsFragment;
 import com.example.livenewstime.fragments.SearchFragment;
+import com.example.livenewstime.fragments.SportsFragment;
 import com.example.livenewstime.fragments.TechnologyFragment;
 import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
@@ -43,11 +48,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnDrawerLayout;
     ImageView imgSearch;
     RelativeLayout rlSearchLayout;
-    FrameLayout frameLayout;
+    FrameLayout frameLayout,frameLayoutWebView;
     Boolean checkSearchStatus = false;
     EditText edtSearch;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    public static LottieAnimationView lottieAnimationView;
+    public static LinearLayout lootieAnimaationLayout;
 
     int index;
     FragmentManager fragmentManager;
@@ -70,25 +77,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rlSearchLayout=findViewById(R.id.rl_seach_layout);
         edtSearch=findViewById(R.id.edit_text_search);
         frameLayout=findViewById(R.id.frame_layout);
+        frameLayoutWebView=findViewById(R.id.frame_layout_parent);
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         btnDrawerLayout = findViewById(R.id.btn_drawer);
+        lottieAnimationView=findViewById(R.id.lottie_animation_view);
+        lootieAnimaationLayout=findViewById(R.id.lootie_animation_layout);
+
+        animationShow();
+
         setNavigationDrawer();
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(MainActivity.this);
         HomeFragment homeFragment = new HomeFragment(this);
         replaceFrag(homeFragment);
+
         setDataInViews();
 
         imgSearch.setOnClickListener(this);
         btnDrawerLayout.setOnClickListener(this);
     }
 
+    public static void animationShow()
+    {
+        lootieAnimaationLayout.setVisibility(View.VISIBLE);
+    }
+    public static void animationHide()
+    {
+        lootieAnimaationLayout.setVisibility(View.GONE);
+    }
     private void replaceFrag(Fragment frag) {
+        animationShow();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction= fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout,frag);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
+    }
+    private void replaceFragWithParentFramelayout(Fragment frag) {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction= fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout_parent,frag);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -180,10 +210,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
 
                 }
+                break;
 
             case R.id.btn_drawer:
 
                     drawerLayout.openDrawer(Gravity.LEFT);
+                    break;
 
         }
     }
@@ -196,13 +228,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int itemId = menuItem.getItemId();
                 // check selected menu item's id and replace a Fragment Accordingly
                 if (itemId == R.id.health) {
-                    Toast.makeText(MainActivity.this, "health", Toast.LENGTH_SHORT).show();
+                    HealthFragment healthFragment = new HealthFragment(MainActivity.this);
+                    replaceFragWithParentFramelayout(healthFragment);
                 }
                 else if (itemId == R.id.sports) {
-                    Toast.makeText(MainActivity.this, "sports", Toast.LENGTH_SHORT).show();
+                    SportsFragment sportsFragment = new SportsFragment(MainActivity.this);
+                    replaceFragWithParentFramelayout(sportsFragment);
                 }
                 else if (itemId == R.id.business) {
-                    Toast.makeText(MainActivity.this, "business", Toast.LENGTH_SHORT).show();
+                    BusinessFragment businessFragment = new BusinessFragment(MainActivity.this);
+                    replaceFragWithParentFramelayout(businessFragment);
                 }
                 drawerLayout.closeDrawers();
                 return false;

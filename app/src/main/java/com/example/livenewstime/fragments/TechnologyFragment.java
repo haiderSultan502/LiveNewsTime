@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.Interface.InterfaceApi;
+import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
 import com.example.livenewstime.models.NewsModel;
@@ -118,6 +119,8 @@ public class TechnologyFragment extends Fragment {
 
                     AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListTechnologyNews,"readMoreNews");
                     recyclerViewMoreAboutTechnology.setAdapter(allNewsCategoriesAdapter);
+
+                    MainActivity.animationHide();
 
                 }
 
