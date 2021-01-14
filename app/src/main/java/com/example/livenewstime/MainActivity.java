@@ -41,6 +41,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,8 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText edtSearch;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    public static LottieAnimationView lottieAnimationView;
     public static LinearLayout lootieAnimaationLayout;
+
+    public static boolean getHomeNews=false,getPoloiticsNews=false,getNews=false,getTechnologyNews=false,getHealthNews=false,getSportsNews=false,getBusinessNews=false;
+    public static ArrayList<NewsModel> arrayListHomeNews,arrayListPoliticsNews,arrayListNews,arrayListTechnologyNews,arrayListHealthNews,arrayListSportsNews,arrayListBusinessNews;
+    public static ArrayList<NewsModel> arrayListLatestHomeNews;
+    public static List<String> homeThumbnailUrl,politicsThumbnailUrl,newsThumbnailUrl,technologyThumbnailUrl,healthThumbnailUrl,sportsThumbnailUrl,businessThumbnailUrl;
+    public static String homePostTitle,politicsPostTitle,newsPostTitle,technologyPostTitle,healthPostTitle,sportsPostTitle,businessPostTitle;
 
     int index;
     FragmentManager fragmentManager;
@@ -81,14 +87,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         btnDrawerLayout = findViewById(R.id.btn_drawer);
-        lottieAnimationView=findViewById(R.id.lottie_animation_view);
         lootieAnimaationLayout=findViewById(R.id.lootie_animation_layout);
 
         animationShow();
 
         setNavigationDrawer();
 
+        initializeArrayList();
+
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(MainActivity.this);
+
         HomeFragment homeFragment = new HomeFragment(this);
         replaceFrag(homeFragment);
 
@@ -96,6 +104,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         imgSearch.setOnClickListener(this);
         btnDrawerLayout.setOnClickListener(this);
+    }
+
+    private void initializeArrayList() {
+
+        arrayListHomeNews = new ArrayList<>();
+        arrayListLatestHomeNews = new ArrayList<>();
+
+        arrayListPoliticsNews = new ArrayList<>();
+
+        arrayListNews = new ArrayList<>();
+
+        arrayListTechnologyNews = new ArrayList<>();
+
+        arrayListHealthNews = new ArrayList<>();
+
+        arrayListSportsNews = new ArrayList<>();
+
+        arrayListBusinessNews = new ArrayList<>();
     }
 
     public static void animationShow()
@@ -107,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lootieAnimaationLayout.setVisibility(View.GONE);
     }
     private void replaceFrag(Fragment frag) {
+
         animationShow();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction= fragmentManager.beginTransaction();

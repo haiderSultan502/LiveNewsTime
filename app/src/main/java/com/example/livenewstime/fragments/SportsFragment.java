@@ -44,11 +44,8 @@ public class SportsFragment extends Fragment {
     LinearLayout lootieAnmationParentlayout;
 
     Context context;
-    List<String> thumbnailUrl;
-    String title;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForSports;
-    ArrayList<NewsModel> arrayListSports;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
     public SportsFragment(Context context) {
@@ -72,11 +69,17 @@ public class SportsFragment extends Fragment {
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
-        arrayListSports = new ArrayList<>();
+        MainActivity.arrayListSportsNews = new ArrayList<>();
 
         parentAnimationShow();
 
         setDataInViews();
+
+        if (MainActivity.getSportsNews == true)
+        {
+            parentAnimationHide();
+            getStoreSportsNews();
+        }
 
         imgBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +92,8 @@ public class SportsFragment extends Fragment {
 
         return view;
     }
+
+
 
     public  void parentAnimationShow() {
         lootieAnmationParentlayout.setVisibility(View.VISIBLE);
@@ -123,25 +128,26 @@ public class SportsFragment extends Fragment {
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
                     if (!response.isSuccessful())
                     {
+                        parentAnimationHide();
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    arrayListSports = (ArrayList<NewsModel>) response.body();
 
-                    try {
-                        thumbnailUrl = arrayListSports.get(0).getFeaturedMedia();
-                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
-                    } catch (Exception e) {
-                        sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
-                    }
+                    MainActivity.arrayListSportsNews = (ArrayList<NewsModel>) response.body();
 
-                    title = arrayListSports.get(0).getTitle();
-                    tvPostTitle.setText(title);
-
-                    arrayListSports.remove(0);
+                    MainActivity.getSportsNews = true;
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListSports,"readMoreNews");
+                    MainActivity.sportsThumbnailUrl = MainActivity.arrayListSportsNews.get(0).getFeaturedMedia();
+                    Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
+
+                    MainActivity.sportsPostTitle = MainActivity.arrayListSportsNews.get(0).getTitle();
+                    tvPostTitle.setText(MainActivity.sportsPostTitle);
+
+                    MainActivity.arrayListSportsNews.remove(0);
+
+
+                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListSportsNews,"readMoreNews");
                     recyclerViewMoreAboutSports.setAdapter(allNewsCategoriesAdapter);
 
                     parentAnimationHide();
@@ -149,16 +155,25 @@ public class SportsFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<List<NewsModel>> call, Throwable t) {
-
+                    parentAnimationHide();
                     sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
                 }
             });
         }
         catch (Exception e)
         {
+            parentAnimationHide();
             sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
         }
 
+    }
+    private void getStoreSportsNews() {
+
+        Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
+        tvPostTitle.setText(MainActivity.sportsPostTitle);
+
+        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListSportsNews,"readMoreNews");
+        recyclerViewMoreAboutSports.setAdapter(allNewsCategoriesAdapter);
     }
 }
 

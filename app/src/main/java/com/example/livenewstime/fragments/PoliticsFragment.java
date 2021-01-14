@@ -40,11 +40,8 @@ public class PoliticsFragment extends Fragment {
     ImageView imageViewrPoliticsNews;
 
     Context context;
-    List<String> thumbnailUrl;
-    String title;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForpoliticsNews;
-    ArrayList<NewsModel> arrayListPoliticsNews;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
     public PoliticsFragment(Context context) {
@@ -66,9 +63,14 @@ public class PoliticsFragment extends Fragment {
         imageViewrPoliticsNews = view.findViewById(R.id.image_view_politics);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
-        arrayListPoliticsNews = new ArrayList<>();
 
         setDataInViews();
+
+        if (MainActivity.getPoloiticsNews == true)
+        {
+            MainActivity.animationHide();
+            getStorePoliticsNews();
+        }
 
         return view;
     }
@@ -101,25 +103,24 @@ public class PoliticsFragment extends Fragment {
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
                     if (!response.isSuccessful())
                     {
+                        MainActivity.animationHide();
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    arrayListPoliticsNews = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListPoliticsNews = (ArrayList<NewsModel>) response.body();
 
-                    try {
-                        thumbnailUrl = arrayListPoliticsNews.get(0).getFeaturedMedia();
-                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrPoliticsNews);
-                    } catch (Exception e) {
-                        sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
-                    }
+                    MainActivity.getPoloiticsNews = true;
 
-                    title = arrayListPoliticsNews.get(0).getTitle();
-                    tvPostTitle.setText(title);
+                    MainActivity.politicsThumbnailUrl = MainActivity.arrayListPoliticsNews.get(0).getFeaturedMedia();
+                    Picasso.with(getActivity()).load(MainActivity.politicsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrPoliticsNews);
 
-                    arrayListPoliticsNews.remove(0);
+                    MainActivity.politicsPostTitle = MainActivity.arrayListPoliticsNews.get(0).getTitle();
+                    tvPostTitle.setText(MainActivity.politicsPostTitle);
+
+                    MainActivity.arrayListPoliticsNews.remove(0);
 
 
-                    AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListPoliticsNews,"readMoreNews");
+                    AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListPoliticsNews,"readMoreNews");
                     recyclerViewMoreAboutPolitics.setAdapter(homeMoreNewsAdapter);
 
                     MainActivity.animationHide();
@@ -129,15 +130,26 @@ public class PoliticsFragment extends Fragment {
                 @Override
                 public void onFailure(Call<List<NewsModel>> call, Throwable t) {
 
+                    MainActivity.animationHide();
                     sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
                 }
             });
         }
         catch (Exception e)
         {
+            MainActivity.animationHide();
             sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
         }
 
+    }
+
+    void getStorePoliticsNews()
+    {
+        Picasso.with(getActivity()).load(MainActivity.politicsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrPoliticsNews);
+        tvPostTitle.setText(MainActivity.politicsPostTitle);
+
+        AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListPoliticsNews,"readMoreNews");
+        recyclerViewMoreAboutPolitics.setAdapter(homeMoreNewsAdapter);
     }
 }
 

@@ -40,11 +40,8 @@ public class TechnologyFragment extends Fragment {
     ImageView imageViewrtechnologyNews;
 
     Context context;
-    List<String> thumbnailUrl;
-    String title;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForTechnologyNews;
-    ArrayList<NewsModel> arrayListTechnologyNews;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
     public TechnologyFragment(Context context) {
@@ -66,12 +63,18 @@ public class TechnologyFragment extends Fragment {
         imageViewrtechnologyNews = view.findViewById(R.id.image_view_technology);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
-        arrayListTechnologyNews = new ArrayList<>();
 
         setDataInViews();
 
+        if (MainActivity.getTechnologyNews == true)
+        {
+            MainActivity.animationHide();
+            getStoreTechnologyNews();
+        }
+
         return view;
     }
+
 
     private void setDataInViews() {
 
@@ -102,22 +105,21 @@ public class TechnologyFragment extends Fragment {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    arrayListTechnologyNews = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListTechnologyNews = (ArrayList<NewsModel>) response.body();
 
-                    try {
-                        thumbnailUrl = arrayListTechnologyNews.get(0).getFeaturedMedia();
-                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
-                    } catch (Exception e) {
-                        sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
-                    }
-
-                    title = arrayListTechnologyNews.get(0).getTitle();
-                    tvPostTitle.setText(title);
-
-                    arrayListTechnologyNews.remove(0);
+                    MainActivity.getTechnologyNews = true;
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListTechnologyNews,"readMoreNews");
+                    MainActivity.technologyThumbnailUrl = MainActivity.arrayListTechnologyNews.get(0).getFeaturedMedia();
+                    Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
+
+                    MainActivity.technologyPostTitle = MainActivity.arrayListTechnologyNews.get(0).getTitle();
+                    tvPostTitle.setText(MainActivity.technologyPostTitle);
+
+                    MainActivity.arrayListTechnologyNews.remove(0);
+
+
+                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListTechnologyNews,"readMoreNews");
                     recyclerViewMoreAboutTechnology.setAdapter(allNewsCategoriesAdapter);
 
                     MainActivity.animationHide();
@@ -136,6 +138,15 @@ public class TechnologyFragment extends Fragment {
             sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
         }
 
+    }
+
+    private void getStoreTechnologyNews() {
+
+        Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
+        tvPostTitle.setText(MainActivity.technologyPostTitle);
+
+        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListTechnologyNews,"readMoreNews");
+        recyclerViewMoreAboutTechnology.setAdapter(allNewsCategoriesAdapter);
     }
 }
 

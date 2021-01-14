@@ -40,11 +40,8 @@ public class NewsFragment extends Fragment {
     ImageView imageViewNews;
 
     Context context;
-    List<String> thumbnailUrl;
-    String title;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForNews;
-    ArrayList<NewsModel> arrayListNews;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
     public NewsFragment(Context context) {
@@ -66,12 +63,19 @@ public class NewsFragment extends Fragment {
         imageViewNews = view.findViewById(R.id.image_view_news);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
-        arrayListNews = new ArrayList<>();
 
         setDataInViews();
 
+        if (MainActivity.getNews == true)
+        {
+            MainActivity.animationHide();
+            getStoreNews();
+        }
+
         return view;
     }
+
+
 
     private void setDataInViews() {
 
@@ -102,22 +106,21 @@ public class NewsFragment extends Fragment {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    arrayListNews = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListNews = (ArrayList<NewsModel>) response.body();
 
-                    try {
-                        thumbnailUrl = arrayListNews.get(0).getFeaturedMedia();
-                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
-                    } catch (Exception e) {
-                        sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
-                    }
-
-                    title = arrayListNews.get(0).getTitle();
-                    tvPostTitle.setText(title);
-
-                    arrayListNews.remove(0);
+                    MainActivity.getNews = true;
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListNews,"readMoreNews");
+                    MainActivity.newsThumbnailUrl = MainActivity.arrayListNews.get(0).getFeaturedMedia();
+                    Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
+
+                    MainActivity.newsPostTitle = MainActivity.arrayListNews.get(0).getTitle();
+                    tvPostTitle.setText(MainActivity.newsPostTitle);
+
+                    MainActivity.arrayListNews.remove(0);
+
+
+                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListNews,"readMoreNews");
                     recyclerViewMoreAboutNews.setAdapter(allNewsCategoriesAdapter);
 
                     MainActivity.animationHide();
@@ -136,6 +139,14 @@ public class NewsFragment extends Fragment {
             sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
         }
 
+    }
+    private void getStoreNews() {
+
+        Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
+        tvPostTitle.setText(MainActivity.newsPostTitle);
+
+        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListNews,"readMoreNews");
+        recyclerViewMoreAboutNews.setAdapter(allNewsCategoriesAdapter);
     }
 }
 

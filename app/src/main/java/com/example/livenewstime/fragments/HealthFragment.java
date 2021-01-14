@@ -44,11 +44,8 @@ public class HealthFragment extends Fragment {
     LinearLayout lootieAnmationParentlayout;
 
     Context context;
-    List<String> thumbnailUrl;
-    String title;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForHealth;
-    ArrayList<NewsModel> arrayListHealth;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
     public HealthFragment(Context context) {
@@ -72,10 +69,16 @@ public class HealthFragment extends Fragment {
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
-        arrayListHealth = new ArrayList<>();
 
         parentAnimationShow();
         setDataInViews();
+
+        if (MainActivity.getHealthNews == true)
+        {
+            parentAnimationHide();
+            getStoreHealthNews();
+        }
+
 
         imgBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +91,8 @@ public class HealthFragment extends Fragment {
 
         return view;
     }
+
+
 
     public  void parentAnimationShow() {
         lootieAnmationParentlayout.setVisibility(View.VISIBLE);
@@ -122,25 +127,25 @@ public class HealthFragment extends Fragment {
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
                     if (!response.isSuccessful())
                     {
+                        parentAnimationHide();
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    arrayListHealth = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListHealthNews = (ArrayList<NewsModel>) response.body();
 
-                    try {
-                        thumbnailUrl = arrayListHealth.get(0).getFeaturedMedia();
-                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
-                    } catch (Exception e) {
-                        sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
-                    }
-
-                    title = arrayListHealth.get(0).getTitle();
-                    tvPostTitle.setText(title);
-
-                    arrayListHealth.remove(0);
+                    MainActivity.getHealthNews = true;
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListHealth,"readMoreNews");
+                    MainActivity.healthThumbnailUrl = MainActivity.arrayListHealthNews.get(0).getFeaturedMedia();
+                    Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
+
+                    MainActivity.healthPostTitle = MainActivity.arrayListHealthNews.get(0).getTitle();
+                    tvPostTitle.setText(MainActivity.healthPostTitle);
+
+                    MainActivity.arrayListHealthNews.remove(0);
+
+
+                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHealthNews,"readMoreNews");
                     recyclerViewMoreAboutHealth.setAdapter(allNewsCategoriesAdapter);
 
                     parentAnimationHide();
@@ -150,15 +155,26 @@ public class HealthFragment extends Fragment {
                 @Override
                 public void onFailure(Call<List<NewsModel>> call, Throwable t) {
 
+                    parentAnimationHide();
                     sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
                 }
             });
         }
         catch (Exception e)
         {
+            parentAnimationHide();
             sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
         }
 
+    }
+
+    private void getStoreHealthNews() {
+
+        Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
+        tvPostTitle.setText(MainActivity.healthPostTitle);
+
+        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHealthNews,"readMoreNews");
+        recyclerViewMoreAboutHealth.setAdapter(allNewsCategoriesAdapter);
     }
 }
 

@@ -44,11 +44,8 @@ public class BusinessFragment extends Fragment {
     LinearLayout lootieAnmationParentlayout;
 
     Context context;
-    List<String> thumbnailUrl;
-    String title;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForBusiness;
-    ArrayList<NewsModel> arrayListBusiness;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
     public BusinessFragment(Context context) {
@@ -72,10 +69,15 @@ public class BusinessFragment extends Fragment {
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
-        arrayListBusiness = new ArrayList<>();
 
         parentAnimationShow();
         setDataInViews();
+
+        if (MainActivity.getSportsNews == true)
+        {
+            parentAnimationHide();
+            getStoreBusinessNews();
+        }
 
         imgBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +90,8 @@ public class BusinessFragment extends Fragment {
 
         return view;
     }
+
+
 
     public  void parentAnimationShow() {
         lootieAnmationParentlayout.setVisibility(View.VISIBLE);
@@ -122,25 +126,25 @@ public class BusinessFragment extends Fragment {
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
                     if (!response.isSuccessful())
                     {
+                        parentAnimationHide();
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    arrayListBusiness = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListBusinessNews = (ArrayList<NewsModel>) response.body();
 
-                    try {
-                        thumbnailUrl = arrayListBusiness.get(0).getFeaturedMedia();
-                        Picasso.with(getActivity()).load(thumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewBusiness);
-                    } catch (Exception e) {
-                        sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
-                    }
-
-                    title = arrayListBusiness.get(0).getTitle();
-                    tvPostTitle.setText(title);
-
-                    arrayListBusiness.remove(0);
+                    MainActivity.getBusinessNews = true;
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),arrayListBusiness,"readMoreNews");
+                    MainActivity.businessThumbnailUrl = MainActivity.arrayListBusinessNews.get(0).getFeaturedMedia();
+                    Picasso.with(getActivity()).load(MainActivity.businessThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewBusiness);
+
+                    MainActivity.businessPostTitle = MainActivity.arrayListBusinessNews.get(0).getTitle();
+                    tvPostTitle.setText(MainActivity.businessPostTitle);
+
+                    MainActivity.arrayListBusinessNews.remove(0);
+
+
+                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListBusinessNews,"readMoreNews");
                     recyclerViewMoreAboutBusiness.setAdapter(allNewsCategoriesAdapter);
 
                     parentAnimationHide();
@@ -150,15 +154,26 @@ public class BusinessFragment extends Fragment {
                 @Override
                 public void onFailure(Call<List<NewsModel>> call, Throwable t) {
 
+                    parentAnimationHide();
                     sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
                 }
             });
         }
         catch (Exception e)
         {
+            parentAnimationHide();
             sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
         }
 
+    }
+
+    private void getStoreBusinessNews() {
+
+        Picasso.with(getActivity()).load(MainActivity.businessThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewBusiness);
+        tvPostTitle.setText(MainActivity.businessPostTitle);
+
+        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListBusinessNews,"readMoreNews");
+        recyclerViewMoreAboutBusiness.setAdapter(allNewsCategoriesAdapter);
     }
 }
 
