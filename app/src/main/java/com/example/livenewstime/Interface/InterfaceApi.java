@@ -1,6 +1,7 @@
 package com.example.livenewstime.Interface;
 
 
+import com.example.livenewstime.models.LiveChannelsModel;
 import com.example.livenewstime.models.NewsModel;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public interface InterfaceApi {
 
     @GET("posts")
     Call<List<NewsModel>> getAllCategoriesNews(@Query("cat") int categoryid);
+
+    @GET("tchannels")
+    Call<LiveChannelsModel> getLiveChannels();
 
 
 

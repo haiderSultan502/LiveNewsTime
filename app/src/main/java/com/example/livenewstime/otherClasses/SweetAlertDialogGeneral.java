@@ -60,7 +60,7 @@ public class SweetAlertDialogGeneral {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                sweetDialog.dismiss();
+//                sweetDialog.dismiss();
             }
         },3000);
     }

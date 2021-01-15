@@ -30,11 +30,13 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.livenewstime.fragments.BusinessFragment;
 import com.example.livenewstime.fragments.HealthFragment;
 import com.example.livenewstime.fragments.HomeFragment;
+import com.example.livenewstime.fragments.LiveChannelsFragment;
 import com.example.livenewstime.fragments.NewsFragment;
 import com.example.livenewstime.fragments.PoliticsFragment;
 import com.example.livenewstime.fragments.SearchFragment;
 import com.example.livenewstime.fragments.SportsFragment;
 import com.example.livenewstime.fragments.TechnologyFragment;
+import com.example.livenewstime.models.LiveChannelsModel;
 import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
 import com.google.android.material.navigation.NavigationView;
@@ -56,8 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NavigationView navigationView;
     public static LinearLayout lootieAnimaationLayout;
 
-    public static boolean getHomeNews=false,getPoloiticsNews=false,getNews=false,getTechnologyNews=false,getHealthNews=false,getSportsNews=false,getBusinessNews=false;
+    public static boolean getHomeNews=false,getPoloiticsNews=false,getNews=false,getTechnologyNews=false,getHealthNews=false,getSportsNews=false,getBusinessNews=false,getLiveNews;
     public static ArrayList<NewsModel> arrayListHomeNews,arrayListPoliticsNews,arrayListNews,arrayListTechnologyNews,arrayListHealthNews,arrayListSportsNews,arrayListBusinessNews;
+    public static LiveChannelsModel liveChannelsModel;
     public static ArrayList<NewsModel> arrayListLatestHomeNews;
     public static List<String> homeThumbnailUrl,politicsThumbnailUrl,newsThumbnailUrl,technologyThumbnailUrl,healthThumbnailUrl,sportsThumbnailUrl,businessThumbnailUrl;
     public static String homePostTitle,politicsPostTitle,newsPostTitle,technologyPostTitle,healthPostTitle,sportsPostTitle,businessPostTitle;
@@ -122,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         arrayListSportsNews = new ArrayList<>();
 
         arrayListBusinessNews = new ArrayList<>();
+
+        liveChannelsModel = new LiveChannelsModel();
     }
 
     public static void animationShow()
@@ -177,6 +182,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case 4:
                         tabLayout.getTabAt(index).setIcon(R.drawable.tv_live_white);
+                        LiveChannelsFragment liveChannelsFragment = new LiveChannelsFragment(MainActivity.this);
+                        replaceFrag(liveChannelsFragment);
                         break;
                 }
             }

@@ -2,4 +2,5 @@
     <string name="app_name">LiveNewsTime</string>
     <string name="edittext_hint"><font size="15">Search for News</font></string>
     <string name="about_politics">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
+    <string name="about_channels_news">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
 </resources>
