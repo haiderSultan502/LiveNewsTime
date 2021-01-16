@@ -17,22 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.livenewstime.Interface.InterfaceApi;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
-import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
 import com.example.livenewstime.adpater.LiveChannelsAdapter;
 import com.example.livenewstime.models.LiveChannelsModel;
-import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.RetrofitLibrary;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LiveChannelsFragment extends Fragment {
+public class LiveNewsFragment extends Fragment {
 
     RecyclerView recyclerViewLiveNewsChannels;
     GridLayoutManager gridLayoutManager;
@@ -44,7 +38,7 @@ public class LiveChannelsFragment extends Fragment {
     Call<LiveChannelsModel> callForLiveChannels;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
-    public LiveChannelsFragment(Context context) {
+    public LiveNewsFragment(Context context) {
         this.context= context;
     }
 
@@ -57,7 +51,7 @@ public class LiveChannelsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view=inflater.inflate(R.layout.frag_live_channels,container,false);
+        view=inflater.inflate(R.layout.frag_live_news,container,false);
         recyclerViewLiveNewsChannels=view.findViewById(R.id.recycler_view_live_channels);
         tvLiveChannelDescription = view.findViewById(R.id.tv_live_channel_description);
 

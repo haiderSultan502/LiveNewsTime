@@ -1,9 +1,7 @@
 package com.example.livenewstime;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -24,13 +21,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.livenewstime.fragments.BusinessFragment;
 import com.example.livenewstime.fragments.HealthFragment;
 import com.example.livenewstime.fragments.HomeFragment;
-import com.example.livenewstime.fragments.LiveChannelsFragment;
+import com.example.livenewstime.fragments.LiveNewsFragment;
 import com.example.livenewstime.fragments.NewsFragment;
 import com.example.livenewstime.fragments.PoliticsFragment;
 import com.example.livenewstime.fragments.SearchFragment;
@@ -182,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case 4:
                         tabLayout.getTabAt(index).setIcon(R.drawable.tv_live_white);
-                        LiveChannelsFragment liveChannelsFragment = new LiveChannelsFragment(MainActivity.this);
-                        replaceFrag(liveChannelsFragment);
+                        LiveNewsFragment liveNewsFragment = new LiveNewsFragment(MainActivity.this);
+                        replaceFrag(liveNewsFragment);
                         break;
                 }
             }

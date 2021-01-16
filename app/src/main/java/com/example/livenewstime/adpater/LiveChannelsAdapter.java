@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
+import com.example.livenewstime.fragments.LiveNewsPlayerFragment;
+import com.example.livenewstime.fragments.LiveNewsPlayerFragment2;
 import com.example.livenewstime.fragments.WebsiteView;
 import com.example.livenewstime.models.LiveChannelsModel;
 import com.example.livenewstime.models.NewsModel;
@@ -29,6 +31,8 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
     Context context;
     LiveChannelsModel liveChannelsModel;
     String thumbnailLiveNewsChannelCompleteUrl,thumbnailLiveNewsChannelBaseUrl;
+
+    LiveNewsPlayerFragment2 liveNewsPlayerFragment = new LiveNewsPlayerFragment2();
 
 
     public LiveChannelsAdapter(Context context,LiveChannelsModel liveChannelsModel) {
@@ -63,9 +67,9 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
 
     private void replaceFragment() {
 
-//        ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
-//                .commit();
+        ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_parent, liveNewsPlayerFragment).addToBackStack(null)
+                .commit();
     }
 
     @Override
