@@ -1,29 +1,20 @@
 package com.example.livenewstime.adpater;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
-import com.example.livenewstime.fragments.LiveNewsPlayerFragment;
 import com.example.livenewstime.fragments.LiveNewsPlayerFragment2;
-import com.example.livenewstime.fragments.WebsiteView;
 import com.example.livenewstime.models.LiveChannelsModel;
-import com.example.livenewstime.models.NewsModel;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapter.ItemViewHolder> {
 

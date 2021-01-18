@@ -47,6 +47,11 @@ import retrofit2.Response;
 
 
 
+    public HomeFragment()
+    {
+
+    }
+
 
     public HomeFragment(Context context) {
         this.context=context;

@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FragmentTransaction fragmentTransaction;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
+    public MainActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

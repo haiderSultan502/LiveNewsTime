@@ -1,110 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/videoview_frame"
+    <tcking.github.com.giraffeplayer2.VideoView
+        android:id="@+id/video_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="180dp"
+        android:layout_margin="8dp" />
 
-        <tcking.github.com.giraffeplayer2.VideoView
-            android:id="@+id/video_view"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/et_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        <RelativeLayout
-            android:id="@+id/controllers_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/videoView"
-            android:layout_alignTop="@+id/videoView"
-            android:layout_alignRight="@+id/videoView"
-            android:layout_alignBottom="@+id/videoView"
-            android:visibility="gone">
-
-            <ProgressBar
-                android:id="@+id/progressBar1"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:progressTint="@color/colorPrimary"
-                android:thumbTint="@color/colorPrimary"
-                android:visibility="gone" />
-
-            <RelativeLayout
-                android:id="@+id/control_bar"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_alignParentBottom="true">
-
-                <ImageView
-                    android:id="@+id/playPauseImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true" />
-
-                <TextView
-                    android:id="@+id/startText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/playPauseImageView"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:text="00:00" />
-
-                <TextView
-                    android:id="@+id/endText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="16dp"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:text="0:00"
-                    android:textColor="@android:color/white" />
-
-                <SeekBar
-                    android:id="@+id/seekBar1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/endText"
-                    android:layout_toRightOf="@+id/startText"
-                    android:indeterminateTint="@color/colorPrimary" />
-            </RelativeLayout>
-        </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@color/transparent"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:id="@+id/backButtonLayoutVideoPlayerID"
-            android:layout_marginLeft="10dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/vtpb"
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_margin="6dp"
-                android:background="@drawable/back_icon"
-                android:tint="@color/colorAccent" />
+            <Button
+                android:id="@+id/btn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="play/pause in embed player"
+                android:textAllCaps="false"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_full"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="toggle full screen"
+                    android:textAllCaps="false"/>
+
+                <CheckBox
+                    android:id="@+id/cb_pwf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="portrait when fullScreen"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_play_float"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="play in float window"
+                android:textAllCaps="false"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/btn_play_in_standalone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="play in standalone player"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="aspect ratio："
+                    android:visibility="gone"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_ra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_fill_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="fill parent"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_fit_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="fit parent"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="wrap content"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="match parent"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_16_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="16:9"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_4_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4:3"/>
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="video in list example"
+                    android:textAllCaps="false"/>
+
+
+                <RadioGroup
+                    android:id="@+id/rg_mc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_mc_default"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="default media controller"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_mc_simple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="simple media controller"/>
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_list2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="video + comments"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
 
-    </FrameLayout>
+    </ScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

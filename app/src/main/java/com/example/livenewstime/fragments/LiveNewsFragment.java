@@ -38,6 +38,11 @@ public class LiveNewsFragment extends Fragment {
     Call<LiveChannelsModel> callForLiveChannels;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
 
+    public LiveNewsFragment()
+    {
+
+    }
+
     public LiveNewsFragment(Context context) {
         this.context= context;
     }

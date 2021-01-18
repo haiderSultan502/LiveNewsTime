@@ -102,4 +102,12 @@ dependencies {
     implementation 'com.github.tcking:ijkplayer-arm64:0.8.8-full'
 
 
+    //Exoplayer
+    implementation 'com.jarvanmo:exoplayerview:2.1.3'
+
+
+
+
+
+
 }
