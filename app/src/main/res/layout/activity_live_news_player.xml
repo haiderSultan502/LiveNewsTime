@@ -19,73 +19,92 @@
         app:default_artwork="@drawable/default_art"
         app:use_artwork="true" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/wrapper"
+    <LinearLayout
+        android:id="@+id/player_below_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_weight="3.5"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/changeMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="play"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/mode_none"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="mode_fill"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/changeMode" />
+            <TextView
+                android:id="@+id/channel_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Channel Title"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/app_major_color"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"></TextView>
 
-        <Button
-            android:id="@+id/mode_fit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="mode_fit"
-            app:layout_constraintBottom_toBottomOf="@+id/mode_none"
-            app:layout_constraintStart_toEndOf="@+id/mode_none"
-            app:layout_constraintTop_toTopOf="@+id/mode_none" />
+            <TextView
+                android:id="@+id/country_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="United States"
+                android:textColor="#3f7794"
+                android:textSize="@dimen/_12sdp"
+                android:layout_centerHorizontal="true"
+                ></TextView>
 
-        <Button
-            android:id="@+id/mode_width"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="mode_fix_width"
-            app:layout_constraintBottom_toBottomOf="@+id/mode_height"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mode_height" />
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/mode_height"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="mode_fix_height"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mode_none" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/news_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="normal"
+                android:text="@string/about_live_news_channels"/>
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/mode_zoom"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="mode_zoom"
-            app:layout_constraintBottom_toBottomOf="@+id/mode_fit"
-            app:layout_constraintStart_toEndOf="@+id/mode_fit"
-            app:layout_constraintTop_toTopOf="@+id/mode_fit" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical"
+            android:gravity="left">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Related Channels"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/heading_color"
+                android:textStyle="normal"
+                android:layout_marginTop="@dimen/_5sdp">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_realted_live_channels"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

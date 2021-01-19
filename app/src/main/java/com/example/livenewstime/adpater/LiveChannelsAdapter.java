@@ -1,6 +1,7 @@
 package com.example.livenewstime.adpater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.livenewstime.LiveNewsPlayer;
 import com.example.livenewstime.R;
-import com.example.livenewstime.fragments.LiveNewsPlayerFragment2;
 import com.example.livenewstime.models.LiveChannelsModel;
 import com.squareup.picasso.Picasso;
 
@@ -22,8 +22,6 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
     Context context;
     LiveChannelsModel liveChannelsModel;
     String thumbnailLiveNewsChannelCompleteUrl,thumbnailLiveNewsChannelBaseUrl;
-
-    LiveNewsPlayerFragment2 liveNewsPlayerFragment = new LiveNewsPlayerFragment2();
 
 
     public LiveChannelsAdapter(Context context,LiveChannelsModel liveChannelsModel) {
@@ -58,9 +56,9 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
 
     private void replaceFragment() {
 
-        ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_layout_parent, liveNewsPlayerFragment).addToBackStack(null)
-                .commit();
+        Intent intent = new Intent();
+        intent.setClass(context, LiveNewsPlayer.class);
+        context.startActivity(intent);
     }
 
     @Override
