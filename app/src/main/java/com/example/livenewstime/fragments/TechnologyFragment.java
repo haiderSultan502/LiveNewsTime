@@ -35,9 +35,10 @@ public class TechnologyFragment extends Fragment {
 
     RecyclerView recyclerViewMoreAboutTechnology;
     GridLayoutManager gridLayoutManager;
-    View view;
+    View view,technologyLatestNewsItem;
     TextView tvPostTitle,tvReadMore;
     ImageView imageViewrtechnologyNews;
+    WebsiteView websiteView = new WebsiteView();
 
     Context context;
     InterfaceApi interfaceApi;
@@ -61,6 +62,7 @@ public class TechnologyFragment extends Fragment {
         recyclerViewMoreAboutTechnology=view.findViewById(R.id.recycler_view_more_about_technology);
         tvPostTitle = view.findViewById(R.id.tv_title_technology);
         imageViewrtechnologyNews = view.findViewById(R.id.image_view_technology);
+        technologyLatestNewsItem = view.findViewById(R.id.technology_latest_News_Item);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -72,9 +74,26 @@ public class TechnologyFragment extends Fragment {
             getStoreTechnologyNews();
         }
 
+        technologyLatestNewsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
+
         return view;
     }
 
+    private void replaceFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("newsUrl",MainActivity.arrayListTechnologyNews.get(0).getGuid());
+        websiteView.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
+                .commit();
+    }
 
     private void setDataInViews() {
 

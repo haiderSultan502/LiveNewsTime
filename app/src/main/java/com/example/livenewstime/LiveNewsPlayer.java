@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.livenewstime.adpater.LiveChannelsAdapter;
+import com.example.livenewstime.models.LiveChannelsModel;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.jarvanmo.exoplayerview.media.ExoMediaSource;
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource;
@@ -45,6 +46,9 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
     GridLayoutManager gridLayoutManager;
 
+    int position;
+    String channelTitle,countryName,streamingLink,channelDescription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +65,21 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
         recyclerViewRelatedNewsChannel = findViewById(R.id.recycler_view_realted_live_channels);
 
+        GridLayoutManager setOrientationToRelatedNewsRecyclerView = setRecyclerViewOrientation();
+        recyclerViewRelatedNewsChannel.setLayoutManager(setOrientationToRelatedNewsRecyclerView);
+
+        position = getIntent().getIntExtra("position",0);
 
 
+        LiveChannelsModel liveChannelsModel = MainActivity.liveChannelsModel;
+
+        channelTitle = liveChannelsModel.getData().get(position).getTitle();
+
+        countryName = liveChannelsModel.getData().get(position).getStudio();
+
+        channelDescription = liveChannelsModel.getData().get(position).getDescription();
+
+        streamingLink = liveChannelsModel.getData().get(position).getVideoUrl();
 
         videoView.setBackListener((view, isPortrait) -> {
             if (isPortrait) {
@@ -70,11 +87,6 @@ public class LiveNewsPlayer extends AppCompatActivity  {
             }
             return false;
         });
-
-
-//
-//
-
 
         videoView.setOrientationListener(orientation -> {
             if (orientation == SENSOR_PORTRAIT) {
@@ -85,17 +97,25 @@ public class LiveNewsPlayer extends AppCompatActivity  {
         });
 
 
-        SimpleMediaSource mediaSource = new SimpleMediaSource("https://videolinks.com/pub/media/videolinks/video/dji.osmo.action.mp4");
-//        SimpleMediaSource mediaSource = new SimpleMediaSource(""https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8"");
+//        SimpleMediaSource mediaSource = new SimpleMediaSource("https://videolinks.com/pub/media/videolinks/video/dji.osmo.action.mp4");
+        SimpleMediaSource mediaSource = new SimpleMediaSource(streamingLink);
 
         mediaSource.setDisplayName("Live");
 
-        videoView.play(mediaSource, false);
+//        videoView.play(mediaSource, false);
 
         videoView.play(mediaSource);
 
-        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(getApplicationContext(),MainActivity.liveChannelsModel);
+        tvChannelTitle.setText(channelTitle);
+        tvCountryName.setText(countryName);
+        tvNewsContent.setText(channelDescription);
+
+//        liveChannelsModel.getData().remove(position);
+
+        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(getApplicationContext(),liveChannelsModel,"livePlayer");
         recyclerViewRelatedNewsChannel.setAdapter(liveChannelsAdapter);
+
+
 
 
         // this part of code is for add the qualtis of video

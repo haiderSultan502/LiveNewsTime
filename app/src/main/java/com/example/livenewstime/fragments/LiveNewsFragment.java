@@ -111,7 +111,7 @@ public class LiveNewsFragment extends Fragment {
                     MainActivity.getLiveNews = true;
 
 
-                    LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel);
+                    LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
                     recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
 
                     MainActivity.animationHide();
@@ -133,7 +133,7 @@ public class LiveNewsFragment extends Fragment {
     }
 
     private void getStoreLiveNews() {
-        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel);
+        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
         recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
     }
 

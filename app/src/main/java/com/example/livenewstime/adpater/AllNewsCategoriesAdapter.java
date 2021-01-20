@@ -35,6 +35,7 @@ public class AllNewsCategoriesAdapter extends RecyclerView.Adapter<AllNewsCatego
 
 
     public AllNewsCategoriesAdapter(Context context, ArrayList<NewsModel> arrayListNews, String view) {
+
         this.arrayListNews = new ArrayList<>();
         this.checkView=view;
         this.context = context;
@@ -86,8 +87,6 @@ public class AllNewsCategoriesAdapter extends RecyclerView.Adapter<AllNewsCatego
     }
 
     private void replaceFragment() {
-
-
 
         ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)

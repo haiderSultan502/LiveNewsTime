@@ -47,8 +47,8 @@
                 android:gravity="center">
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lottie_animation_parent_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
                     app:lottie_url="REPLACE_JSON_URL"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
@@ -87,6 +87,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/business_latest_News_Item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

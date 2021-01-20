@@ -37,7 +37,7 @@ public class BusinessFragment extends Fragment {
 
     RecyclerView recyclerViewMoreAboutBusiness;
     GridLayoutManager gridLayoutManager;
-    View view;
+    View view,businessLatestNewsItem;
     TextView tvPostTitle,tvReadMore;
     ImageView imageViewBusiness;
     RelativeLayout imgBackButton;
@@ -47,6 +47,7 @@ public class BusinessFragment extends Fragment {
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForBusiness;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
+    WebsiteView websiteView = new WebsiteView();
 
     public BusinessFragment(Context context) {
         this.context= context;
@@ -66,6 +67,7 @@ public class BusinessFragment extends Fragment {
         tvPostTitle = view.findViewById(R.id.tv_title_business);
         imageViewBusiness = view.findViewById(R.id.image_view_business);
         imgBackButton=view.findViewById(R.id.img_back_btn);
+        businessLatestNewsItem = view.findViewById(R.id.business_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
@@ -88,9 +90,27 @@ public class BusinessFragment extends Fragment {
             }
         });
 
+        businessLatestNewsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
+
         return view;
     }
 
+
+    private void replaceFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("newsUrl",MainActivity.arrayListBusinessNews.get(0).getGuid());
+        websiteView.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
+                .commit();
+    }
 
 
     public  void parentAnimationShow() {

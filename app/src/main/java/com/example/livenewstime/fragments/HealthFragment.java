@@ -37,11 +37,12 @@ public class HealthFragment extends Fragment {
 
     RecyclerView recyclerViewMoreAboutHealth;
     GridLayoutManager gridLayoutManager;
-    View view;
+    View view,healthLatestNewsItem;
     TextView tvPostTitle,tvReadMore;
     ImageView imageViewHealth;
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
+    WebsiteView websiteView = new WebsiteView();
 
     Context context;
     InterfaceApi interfaceApi;
@@ -66,7 +67,9 @@ public class HealthFragment extends Fragment {
         tvPostTitle = view.findViewById(R.id.tv_title_health);
         imageViewHealth = view.findViewById(R.id.image_view_health);
         imgBackButton=view.findViewById(R.id.img_back_btn);
+        healthLatestNewsItem = view.findViewById(R.id.health_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
+
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -89,7 +92,25 @@ public class HealthFragment extends Fragment {
             }
         });
 
+        healthLatestNewsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
+
         return view;
+    }
+
+    private void replaceFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("newsUrl",MainActivity.arrayListHealthNews.get(0).getGuid());
+        websiteView.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
+                .commit();
     }
 
 

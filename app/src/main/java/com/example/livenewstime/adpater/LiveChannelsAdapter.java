@@ -1,4 +1,4 @@
-package com.example.livenewstime.adpater;
+    package com.example.livenewstime.adpater;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,11 +22,13 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
     Context context;
     LiveChannelsModel liveChannelsModel;
     String thumbnailLiveNewsChannelCompleteUrl,thumbnailLiveNewsChannelBaseUrl;
+    String check ;
 
 
-    public LiveChannelsAdapter(Context context,LiveChannelsModel liveChannelsModel) {
+    public LiveChannelsAdapter(Context context,LiveChannelsModel liveChannelsModel,String check) {
         this.context = context;
         this.liveChannelsModel = liveChannelsModel;
+        this.check = check;
     }
 
     @NonNull
@@ -49,16 +51,24 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
         holder.itemClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment();
+                replaceFragment(position);
             }
         });
     }
 
-    private void replaceFragment() {
+    private void replaceFragment(int position) {
 
-        Intent intent = new Intent();
-        intent.setClass(context, LiveNewsPlayer.class);
-        context.startActivity(intent);
+        if(check == "livePlayer")
+        {
+
+        }
+        else
+        {
+            Intent intent = new Intent(context, LiveNewsPlayer.class);
+            intent.putExtra("position", position);
+            context.startActivity(intent);
+        }
+
     }
 
     @Override

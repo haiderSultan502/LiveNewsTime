@@ -37,16 +37,18 @@ public class SportsFragment extends Fragment {
 
     RecyclerView recyclerViewMoreAboutSports;
     GridLayoutManager gridLayoutManager;
-    View view;
+    View view,sportsLatestNewsItem;
     TextView tvPostTitle,tvReadMore;
     ImageView imageViewSports;
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
 
+
     Context context;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForSports;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
+    WebsiteView websiteView = new WebsiteView();
 
     public SportsFragment(Context context) {
         this.context= context;
@@ -66,7 +68,9 @@ public class SportsFragment extends Fragment {
         tvPostTitle = view.findViewById(R.id.tv_title_sports);
         imageViewSports = view.findViewById(R.id.image_view_sports);
         imgBackButton=view.findViewById(R.id.img_back_btn);
+        sportsLatestNewsItem = view.findViewById(R.id.sports_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
+
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
         MainActivity.arrayListSportsNews = new ArrayList<>();
@@ -90,10 +94,27 @@ public class SportsFragment extends Fragment {
             }
         });
 
+        sportsLatestNewsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
+
         return view;
     }
 
 
+    private void replaceFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("newsUrl",MainActivity.arrayListSportsNews.get(0).getGuid());
+        websiteView.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
+                .commit();
+    }
 
     public  void parentAnimationShow() {
         lootieAnmationParentlayout.setVisibility(View.VISIBLE);

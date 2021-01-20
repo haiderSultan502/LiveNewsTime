@@ -35,9 +35,11 @@ public class PoliticsFragment extends Fragment {
 
     RecyclerView recyclerViewMoreAboutPolitics;
     GridLayoutManager gridLayoutManager;
-    View view;
+    View view,politicsLatestNewsItem;
     TextView tvPostTitle,tvReadMore;
     ImageView imageViewrPoliticsNews;
+    WebsiteView websiteView = new WebsiteView();
+
 
     Context context;
     InterfaceApi interfaceApi;
@@ -61,6 +63,7 @@ public class PoliticsFragment extends Fragment {
         recyclerViewMoreAboutPolitics=view.findViewById(R.id.recycler_view_more_about_politics);
         tvPostTitle = view.findViewById(R.id.tv_title_politics);
         imageViewrPoliticsNews = view.findViewById(R.id.image_view_politics);
+        politicsLatestNewsItem = view.findViewById(R.id.politics_latest_News_Item);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -72,7 +75,24 @@ public class PoliticsFragment extends Fragment {
             getStorePoliticsNews();
         }
 
+        politicsLatestNewsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
+
         return view;
+    }
+    private void replaceFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("newsUrl",MainActivity.arrayListPoliticsNews.get(0).getGuid());
+        websiteView.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
+                .commit();
     }
 
     private void setDataInViews() {

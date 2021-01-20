@@ -13,10 +13,9 @@
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="3.5"
         app:controller_display_mode="all"
         app:resize_mode="fill"
-        app:default_artwork="@drawable/default_art"
         app:use_artwork="true" />
 
     <LinearLayout

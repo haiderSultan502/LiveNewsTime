@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,9 +37,11 @@ import retrofit2.Response;
 
     RecyclerView recyclerViewLatestNews,recyclerViewMoretNews;
     LinearLayoutManager linearLayoutManager;
+    View homeRecentNewsItem;
     View view;
     TextView tvPostTitle,tvReadMore,tvLatestNews;
     ImageView imageViewrRecentNews;
+    WebsiteView websiteView = new WebsiteView();
 
     Context context;
     InterfaceApi interfaceApi;
@@ -76,6 +79,7 @@ import retrofit2.Response;
         tvPostTitle = view.findViewById(R.id.tv_post_title);
         tvReadMore = view.findViewById(R.id.tv_readmore_recent_news);
         imageViewrRecentNews = view.findViewById(R.id.image_view_recent_news);
+        homeRecentNewsItem = view.findViewById(R.id.home_Recent_News_Item);
         recyclerViewLatestNews=view.findViewById(R.id.recycler_view_latest_news);
         recyclerViewMoretNews=view.findViewById(R.id.recycler_view_more_news);
 
@@ -89,8 +93,27 @@ import retrofit2.Response;
             getStoreHomeNews();
         }
 
+        homeRecentNewsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                replaceFragment();
+            }
+        });
+
         return view;
     }
+        private void replaceFragment() {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("newsUrl",MainActivity.arrayListHomeNews.get(3).getGuid());
+            websiteView.setArguments(bundle);
+
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
+                    .commit();
+        }
 
     private void setDataInViews() {
 

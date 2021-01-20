@@ -35,9 +35,10 @@ public class NewsFragment extends Fragment {
 
     RecyclerView recyclerViewMoreAboutNews;
     GridLayoutManager gridLayoutManager;
-    View view;
+    View view,latestNewsItem;
     TextView tvPostTitle,tvReadMore;
     ImageView imageViewNews;
+    WebsiteView websiteView = new WebsiteView();
 
     Context context;
     InterfaceApi interfaceApi;
@@ -61,6 +62,7 @@ public class NewsFragment extends Fragment {
         recyclerViewMoreAboutNews=view.findViewById(R.id.recycler_view_more_about_news);
         tvPostTitle = view.findViewById(R.id.tv_title_news);
         imageViewNews = view.findViewById(R.id.image_view_news);
+        latestNewsItem = view.findViewById(R.id.latest_News_Item);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -72,7 +74,25 @@ public class NewsFragment extends Fragment {
             getStoreNews();
         }
 
+        latestNewsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment();
+            }
+        });
+
         return view;
+    }
+
+    private void replaceFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("newsUrl",MainActivity.arrayListNews.get(0).getGuid());
+        websiteView.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
+                .commit();
     }
 
 
