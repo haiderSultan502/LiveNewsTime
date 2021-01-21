@@ -1,5 +1,7 @@
 package com.example.livenewstime.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,12 +31,13 @@ import java.io.IOException;
 public class WebsiteView extends Fragment {
     View view;
     WebView webView;
-    RelativeLayout imgBackButton;
+    RelativeLayout imgBackButton,imgShareButton;
     public static LinearLayout lootieAnmationParentlayout;
 
     Bundle bundle;
     static  String newsUrl;
     Document document = null;
+    String facebookPageLink = "https://www.facebook.com/";
 
 
     @Override
@@ -50,6 +53,7 @@ public class WebsiteView extends Fragment {
         webView=view.findViewById(R.id.web_view);
         imgBackButton=view.findViewById(R.id.img_back_btn);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
+        imgShareButton=view.findViewById(R.id.share_btn);
 
 
         parentAnimationShow();
@@ -65,6 +69,15 @@ public class WebsiteView extends Fragment {
                 if (getFragmentManager().getBackStackEntryCount() != 0) {
                     getFragmentManager().popBackStack();
                 }
+            }
+        });
+
+        imgShareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toFacebookPage = new Intent(Intent.ACTION_VIEW);
+                toFacebookPage.setData(Uri.parse(facebookPageLink));
+                startActivity(toFacebookPage);
             }
         });
 

@@ -17,10 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.livenewstime.Interface.InterfaceApi;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
+import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
 import com.example.livenewstime.adpater.LiveChannelsAdapter;
+import com.example.livenewstime.models.FragmentDetailModel;
 import com.example.livenewstime.models.LiveChannelsModel;
+import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.RetrofitLibrary;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,12 +38,14 @@ public class LiveNewsFragment extends Fragment {
     RecyclerView recyclerViewLiveNewsChannels;
     GridLayoutManager gridLayoutManager;
     View view;
-    TextView tvLiveChannelDescription;
+    TextView tvLiveChannelDescription,tvCategoryName;
 
     Context context;
     InterfaceApi interfaceApi;
     Call<LiveChannelsModel> callForLiveChannels;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
+    Call<List<FragmentDetailModel>> callForFragmentDetails;
+    String categoryName;
 
     public LiveNewsFragment()
     {
@@ -59,6 +68,7 @@ public class LiveNewsFragment extends Fragment {
         view=inflater.inflate(R.layout.frag_live_news,container,false);
         recyclerViewLiveNewsChannels=view.findViewById(R.id.recycler_view_live_channels);
         tvLiveChannelDescription = view.findViewById(R.id.tv_live_channel_description);
+        tvCategoryName = view.findViewById(R.id.categoryName);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -67,11 +77,50 @@ public class LiveNewsFragment extends Fragment {
         if (MainActivity.getLiveNews == true)
         {
             MainActivity.animationHide();
+            getFragmentDetail();
             getStoreLiveNews();
         }
 
         return view;
 
+    }
+
+    public void getFragmentDetail()
+    {
+        {
+
+            try {
+                interfaceApi = RetrofitLibrary.connect("https://livenewstime.com/wp-json/Newspaper/v2/");
+                callForFragmentDetails = interfaceApi.getFragmnetDetail();
+                callForFragmentDetails.enqueue(new Callback<List<FragmentDetailModel>>() {
+                    @Override
+                    public void onResponse(Call<List<FragmentDetailModel>> call, Response<List<FragmentDetailModel>> response) {
+                        if (!response.isSuccessful())
+                        {
+                            sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
+                            return;
+                        }
+                        MainActivity.arrayListListFragmentDetails = (ArrayList<FragmentDetailModel>) response.body();
+
+                        MainActivity.getFragmentDetails =  true;
+
+                        categoryName = MainActivity.arrayListListFragmentDetails.get(15).getName();
+
+                        tvCategoryName.setText(categoryName);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<FragmentDetailModel>> call, Throwable t) {
+                        sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
+            }
+
+        }
     }
 
 
@@ -80,6 +129,7 @@ public class LiveNewsFragment extends Fragment {
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewLiveNewsChannels.setLayoutManager(setOrientationToLatestNewsRecyclerView);
 
+        getFragmentDetail();
         getLiveNewsChannels("https://app.newslive.com/newslive/api/");
 
     }
@@ -133,6 +183,11 @@ public class LiveNewsFragment extends Fragment {
     }
 
     private void getStoreLiveNews() {
+
+        categoryName = MainActivity.arrayListListFragmentDetails.get(15).getName();
+
+        tvCategoryName.setText(categoryName);
+
         LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
         recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
     }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -31,6 +32,7 @@ import com.example.livenewstime.fragments.PoliticsFragment;
 import com.example.livenewstime.fragments.SearchFragment;
 import com.example.livenewstime.fragments.SportsFragment;
 import com.example.livenewstime.fragments.TechnologyFragment;
+import com.example.livenewstime.models.FragmentDetailModel;
 import com.example.livenewstime.models.LiveChannelsModel;
 import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
@@ -53,8 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NavigationView navigationView;
     public static LinearLayout lootieAnimaationLayout;
 
-    public static boolean getHomeNews=false,getPoloiticsNews=false,getNews=false,getTechnologyNews=false,getHealthNews=false,getSportsNews=false,getBusinessNews=false,getLiveNews;
+    public static boolean getHomeNews=false,getPoloiticsNews=false,getNews=false,getTechnologyNews=false,getHealthNews=false,getSportsNews=false,getBusinessNews=false,getLiveNews,getFragmentDetails;
     public static ArrayList<NewsModel> arrayListHomeNews,arrayListPoliticsNews,arrayListNews,arrayListTechnologyNews,arrayListHealthNews,arrayListSportsNews,arrayListBusinessNews;
+    public static ArrayList<FragmentDetailModel> arrayListListFragmentDetails;
     public static LiveChannelsModel liveChannelsModel;
     public static ArrayList<NewsModel> arrayListLatestHomeNews;
     public static List<String> homeThumbnailUrl,politicsThumbnailUrl,newsThumbnailUrl,technologyThumbnailUrl,healthThumbnailUrl,sportsThumbnailUrl,businessThumbnailUrl;
@@ -123,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         arrayListSportsNews = new ArrayList<>();
 
         arrayListBusinessNews = new ArrayList<>();
+
+        arrayListListFragmentDetails = new ArrayList<>();
 
         liveChannelsModel = new LiveChannelsModel();
     }

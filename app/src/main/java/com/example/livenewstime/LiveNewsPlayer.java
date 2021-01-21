@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.livenewstime.adpater.LiveChannelsAdapter;
 import com.example.livenewstime.models.LiveChannelsModel;
+import com.github.pedrovgs.DraggablePanel;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.jarvanmo.exoplayerview.media.ExoMediaSource;
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource;
@@ -34,6 +35,7 @@ import static com.jarvanmo.exoplayerview.orientation.OnOrientationChangedListene
 import static com.jarvanmo.exoplayerview.orientation.OnOrientationChangedListener.SENSOR_PORTRAIT;
 
 public class LiveNewsPlayer extends AppCompatActivity  {
+
 
 
     private ExoVideoView videoView;
@@ -53,6 +55,7 @@ public class LiveNewsPlayer extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_news_player);
+
 
 
         videoView = findViewById(R.id.videoView);
@@ -118,7 +121,7 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
 
 
-        // this part of code is for add the qualtis of video
+//         this part of code is for add the qualtis of video
 
 //        List<ExoMediaSource.Quality> qualities = new ArrayList<>();
 //        ExoMediaSource.Quality quality;

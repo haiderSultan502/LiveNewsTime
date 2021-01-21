@@ -105,6 +105,10 @@ dependencies {
     //Exoplayer
     implementation 'com.jarvanmo:exoplayerview:2.1.3'
 
+    // dragable video player pannel
+
+    implementation 'com.github.pedrovgs:draggablepanel:1.9'
+
 
 
 

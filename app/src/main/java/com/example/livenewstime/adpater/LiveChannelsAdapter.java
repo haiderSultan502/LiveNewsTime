@@ -39,6 +39,7 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
         view = LayoutInflater.from(context).inflate(R.layout.live_channels_item, parent, false);
 
         return new LiveChannelsAdapter.ItemViewHolder(view);
+
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.example.livenewstime.Interface.InterfaceApi;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
+import com.example.livenewstime.models.FragmentDetailModel;
 import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.RetrofitLibrary;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
@@ -47,7 +48,6 @@ import retrofit2.Response;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForNews;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
-
 
 
     public HomeFragment()

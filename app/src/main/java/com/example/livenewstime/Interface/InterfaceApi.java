@@ -1,6 +1,7 @@
 package com.example.livenewstime.Interface;
 
 
+import com.example.livenewstime.models.FragmentDetailModel;
 import com.example.livenewstime.models.LiveChannelsModel;
 import com.example.livenewstime.models.NewsModel;
 
@@ -23,6 +24,11 @@ public interface InterfaceApi {
 
     @GET("tchannels")
     Call<LiveChannelsModel> getLiveChannels();
+
+    @GET("title/")
+    Call<List<FragmentDetailModel>> getFragmnetDetail();
+
+
 
 
 
