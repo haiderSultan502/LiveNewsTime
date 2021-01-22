@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.livenewstime.adpater.LiveChannelsAdapter;
 import com.example.livenewstime.models.LiveChannelsModel;
@@ -96,6 +97,13 @@ public class LiveNewsPlayer extends AppCompatActivity  {
                 changeToPortrait();
             } else if (orientation == SENSOR_LANDSCAPE) {
                 changeToLandscape();
+            }
+        });
+
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LiveNewsPlayer.this, "get ", Toast.LENGTH_SHORT).show();
             }
         });
 

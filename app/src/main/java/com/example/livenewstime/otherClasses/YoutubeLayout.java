@@ -3,9 +3,11 @@ package com.example.livenewstime.otherClasses;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.core.view.MotionEventCompat;
 import androidx.core.view.ViewCompat;
@@ -26,6 +28,8 @@ public class YoutubeLayout extends ViewGroup {
     private int mDragRange;
     private int mTop;
     private float mDragOffset;
+
+    int lastAction;
 
 
     public YoutubeLayout(Context context) {
@@ -89,6 +93,8 @@ public class YoutubeLayout extends ViewGroup {
 
             requestLayout();
         }
+
+
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
@@ -175,24 +181,42 @@ public class YoutubeLayout extends ViewGroup {
         boolean isHeaderViewUnder = mDragHelper.isViewUnder(mHeaderView, (int) x, (int) y);
         switch (action & MotionEventCompat.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
+
+                lastAction = MotionEvent.ACTION_DOWN;
+
                 mInitialMotionX = x;
                 mInitialMotionY = y;
                 break;
             }
 
+
             case MotionEvent.ACTION_UP: {
-                final float dx = x - mInitialMotionX;
-                final float dy = y - mInitialMotionY;
-                final int slop = mDragHelper.getTouchSlop();
-                if (dx * dx + dy * dy < slop * slop && isHeaderViewUnder) {
-                    if (mDragOffset == 0) {
-                        smoothSlideTo(1f);
-                    } else {
-                        smoothSlideTo(0f);
-                    }
+
+                if (lastAction == MotionEvent.ACTION_DOWN) {
+                    Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
+                    Log.d("yesssss", "onTouchEvent: ");
                 }
                 break;
             }
+
+//            case MotionEvent.ACTION_UP: {
+//
+//                lastAction = MotionEvent.ACTION_UP;
+//
+//
+//                final float dx = x - mInitialMotionX;
+//                final float dy = y - mInitialMotionY;
+//                final int slop = mDragHelper.getTouchSlop();
+//                if (dx * dx + dy * dy < slop * slop && isHeaderViewUnder) {
+//                    if (mDragOffset == 0) {
+//                        smoothSlideTo(1f);
+//                    } else {
+//                        smoothSlideTo(0f);
+//                    }
+//                }
+//                break;
+//            }
+
         }
 
         return isHeaderViewUnder && isViewHit(mHeaderView, (int) x, (int) y) || isViewHit(mDescView, (int) x, (int) y);

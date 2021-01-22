@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ import retrofit2.Response;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForNews;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
+//    public static LinearLayout lootieAnimaationLayout;
 
 
     public HomeFragment()
@@ -82,6 +84,7 @@ import retrofit2.Response;
         homeRecentNewsItem = view.findViewById(R.id.home_Recent_News_Item);
         recyclerViewLatestNews=view.findViewById(R.id.recycler_view_latest_news);
         recyclerViewMoretNews=view.findViewById(R.id.recycler_view_more_news);
+//        lootieAnimaationLayout=view.findViewById(R.id.lootie_animation_layout);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -89,15 +92,13 @@ import retrofit2.Response;
 
         if (MainActivity.getHomeNews == true)
         {
-            MainActivity.animationHide();
+
             getStoreHomeNews();
         }
 
         homeRecentNewsItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 replaceFragment();
             }
         });
@@ -114,6 +115,16 @@ import retrofit2.Response;
                     .replace(R.id.frame_layout_parent, websiteView).addToBackStack(null)
                     .commit();
         }
+
+//        public static void animationShow()
+//        {
+//            lootieAnimaationLayout.setVisibility(View.VISIBLE);
+//        }
+//
+//        public static void animationHide()
+//        {
+//            lootieAnimaationLayout.setVisibility(View.GONE);
+//        }
 
     private void setDataInViews() {
 
@@ -137,6 +148,7 @@ import retrofit2.Response;
 
     public void getNews(String url)
         {
+            MainActivity.animationShow();
 
             try {
                 interfaceApi = RetrofitLibrary.connect(url);
@@ -161,6 +173,10 @@ import retrofit2.Response;
                         }
 
 
+
+                        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListLatestHomeNews,"latestNews");
+                        recyclerViewLatestNews.setAdapter(allNewsCategoriesAdapter);
+
                         MainActivity.homeThumbnailUrl = MainActivity.arrayListHomeNews.get(3).getFeaturedMedia();
                         Picasso.with(getActivity()).load(MainActivity.homeThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrRecentNews);
 
@@ -168,10 +184,6 @@ import retrofit2.Response;
                         tvPostTitle.setText(MainActivity.homePostTitle);
 
                         MainActivity.arrayListHomeNews.remove(3);
-
-
-                        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListLatestHomeNews,"latestNews");
-                        recyclerViewLatestNews.setAdapter(allNewsCategoriesAdapter);
 
                         AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHomeNews,"moreNews");
                         recyclerViewMoretNews.setAdapter(homeMoreNewsAdapter);
@@ -198,13 +210,16 @@ import retrofit2.Response;
 
         void getStoreHomeNews()
         {
-            Picasso.with(getActivity()).load(MainActivity.homeThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrRecentNews);
-            tvPostTitle.setText(MainActivity.homePostTitle);
 
             AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListLatestHomeNews,"latestNews");
             recyclerViewLatestNews.setAdapter(allNewsCategoriesAdapter);
 
+            Picasso.with(getActivity()).load(MainActivity.homeThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrRecentNews);
+            tvPostTitle.setText(MainActivity.homePostTitle);
+
             AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHomeNews,"moreNews");
             recyclerViewMoretNews.setAdapter(homeMoreNewsAdapter);
+
+            MainActivity.animationHide();
         }
     }

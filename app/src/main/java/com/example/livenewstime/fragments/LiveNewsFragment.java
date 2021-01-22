@@ -76,7 +76,6 @@ public class LiveNewsFragment extends Fragment {
 
         if (MainActivity.getLiveNews == true)
         {
-            MainActivity.animationHide();
             getFragmentDetail();
             getStoreLiveNews();
         }
@@ -87,6 +86,7 @@ public class LiveNewsFragment extends Fragment {
 
     public void getFragmentDetail()
     {
+        MainActivity.animationShow();
         {
 
             try {
@@ -107,6 +107,8 @@ public class LiveNewsFragment extends Fragment {
                         categoryName = MainActivity.arrayListListFragmentDetails.get(15).getName();
 
                         tvCategoryName.setText(categoryName);
+
+                        MainActivity.animationHide();
                     }
 
                     @Override
@@ -190,6 +192,8 @@ public class LiveNewsFragment extends Fragment {
 
         LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
         recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
+
+        MainActivity.animationHide();
     }
 
 }

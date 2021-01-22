@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -67,11 +68,12 @@ public class PoliticsFragment extends Fragment {
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
+
+
         setDataInViews();
 
         if (MainActivity.getPoloiticsNews == true)
         {
-            MainActivity.animationHide();
             getStorePoliticsNews();
         }
 
@@ -84,6 +86,7 @@ public class PoliticsFragment extends Fragment {
 
         return view;
     }
+
     private void replaceFragment() {
 
         Bundle bundle = new Bundle();
@@ -114,6 +117,7 @@ public class PoliticsFragment extends Fragment {
 
     public void getPoliticsNews(String url,int newsCategoryID)
     {
+        MainActivity.animationShow();
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
@@ -170,6 +174,8 @@ public class PoliticsFragment extends Fragment {
 
         AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListPoliticsNews,"readMoreNews");
         recyclerViewMoreAboutPolitics.setAdapter(homeMoreNewsAdapter);
+
+        MainActivity.animationHide();
     }
 }
 

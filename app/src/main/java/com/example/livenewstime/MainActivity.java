@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDrawerLayout = findViewById(R.id.btn_drawer);
         lootieAnimaationLayout=findViewById(R.id.lootie_animation_layout);
 
-        animationShow();
+//        animationShow();
 
         setNavigationDrawer();
 
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void replaceFrag(Fragment frag) {
 
-        animationShow();
+//        animationShow();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction= fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout,frag);

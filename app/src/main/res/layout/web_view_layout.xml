@@ -48,7 +48,7 @@
             android:id="@+id/img_back_btn"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true">
+            android:layout_alignParentRight="true">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_15sdp"
@@ -61,7 +61,7 @@
             android:id="@+id/share_btn"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentLeft="true">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

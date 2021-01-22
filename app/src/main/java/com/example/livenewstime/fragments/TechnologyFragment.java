@@ -70,7 +70,6 @@ public class TechnologyFragment extends Fragment {
 
         if (MainActivity.getTechnologyNews == true)
         {
-            MainActivity.animationHide();
             getStoreTechnologyNews();
         }
 
@@ -112,6 +111,7 @@ public class TechnologyFragment extends Fragment {
 
     public void getTechnologyNews(String url,int newsCategoryID)
     {
+        MainActivity.animationShow();
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
@@ -166,6 +166,8 @@ public class TechnologyFragment extends Fragment {
 
         AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListTechnologyNews,"readMoreNews");
         recyclerViewMoreAboutTechnology.setAdapter(allNewsCategoriesAdapter);
+
+        MainActivity.animationHide();
     }
 }
 

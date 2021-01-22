@@ -101,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_105sdp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/actor2"/>
+                        android:src="@drawable/ic_baseline_image_search_24"/>
 
                     <TextView
                         android:id="@+id/tv_title_health"

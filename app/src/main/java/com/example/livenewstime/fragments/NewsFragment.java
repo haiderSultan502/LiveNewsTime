@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -70,7 +71,6 @@ public class NewsFragment extends Fragment {
 
         if (MainActivity.getNews == true)
         {
-            MainActivity.animationHide();
             getStoreNews();
         }
 
@@ -83,6 +83,7 @@ public class NewsFragment extends Fragment {
 
         return view;
     }
+
 
     private void replaceFragment() {
 
@@ -114,6 +115,8 @@ public class NewsFragment extends Fragment {
 
     public void getNews(String url,int newsCategoryID)
     {
+
+        MainActivity.animationShow();
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
@@ -167,6 +170,8 @@ public class NewsFragment extends Fragment {
 
         AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListNews,"readMoreNews");
         recyclerViewMoreAboutNews.setAdapter(allNewsCategoriesAdapter);
+
+        MainActivity.animationHide();
     }
 }
 
