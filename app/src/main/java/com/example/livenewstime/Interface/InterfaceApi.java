@@ -26,7 +26,7 @@ public interface InterfaceApi {
     Call<LiveChannelsModel> getLiveChannels();
 
     @GET("title/")
-    Call<List<FragmentDetailModel>> getFragmnetDetail();
+    Call<List<FragmentDetailModel>> getCategoryDetail();
 
 
 

@@ -20,6 +20,7 @@ import com.example.livenewstime.Interface.InterfaceApi;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
+import com.example.livenewstime.models.FragmentDetailModel;
 import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.RetrofitLibrary;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
@@ -37,7 +38,7 @@ public class PoliticsFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutPolitics;
     GridLayoutManager gridLayoutManager;
     View view,politicsLatestNewsItem;
-    TextView tvPostTitle,tvReadMore;
+    TextView tvPostTitle,tvReadMore,tvCategoryName;
     ImageView imageViewrPoliticsNews;
     WebsiteView websiteView = new WebsiteView();
 
@@ -66,6 +67,8 @@ public class PoliticsFragment extends Fragment {
         imageViewrPoliticsNews = view.findViewById(R.id.image_view_politics);
         politicsLatestNewsItem = view.findViewById(R.id.politics_latest_News_Item);
 
+        tvCategoryName = view.findViewById(R.id.categoryNamePolitics);
+
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
 
@@ -87,6 +90,7 @@ public class PoliticsFragment extends Fragment {
         return view;
     }
 
+
     private void replaceFragment() {
 
         Bundle bundle = new Bundle();
@@ -102,7 +106,6 @@ public class PoliticsFragment extends Fragment {
 
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewMoreAboutPolitics.setLayoutManager(setOrientationToLatestNewsRecyclerView);
-
 
         getPoliticsNews("https://livenewstime.com/wp-json/wp/v2/",14);
 
@@ -134,6 +137,11 @@ public class PoliticsFragment extends Fragment {
                     MainActivity.arrayListPoliticsNews = (ArrayList<NewsModel>) response.body();
 
                     MainActivity.getPoloiticsNews = true;
+
+
+                    MainActivity.categoryNamepolitics = MainActivity.arrayListCategoryDetails.get(9).getName();
+
+                    tvCategoryName.setText(MainActivity.categoryNamepolitics);
 
                     MainActivity.politicsThumbnailUrl = MainActivity.arrayListPoliticsNews.get(0).getFeaturedMedia();
                     Picasso.with(getActivity()).load(MainActivity.politicsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrPoliticsNews);
@@ -169,6 +177,8 @@ public class PoliticsFragment extends Fragment {
 
     void getStorePoliticsNews()
     {
+        tvCategoryName.setText(MainActivity.categoryNamepolitics);
+
         Picasso.with(getActivity()).load(MainActivity.politicsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrPoliticsNews);
         tvPostTitle.setText(MainActivity.politicsPostTitle);
 

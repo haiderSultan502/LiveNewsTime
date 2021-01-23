@@ -13,10 +13,11 @@
         android:orientation="vertical"
         android:gravity="left">
         <TextView
-            android:id="@+id/categoryName"
+            android:id="@+id/categoryNameLive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_12sdp"
+            android:text="Watch"
             android:textColor="@color/heading_color"
             android:textStyle="normal"
             android:layout_marginTop="@dimen/_5sdp">

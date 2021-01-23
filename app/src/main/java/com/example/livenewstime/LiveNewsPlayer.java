@@ -61,6 +61,14 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
         videoView = findViewById(R.id.videoView);
 
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                videoView.getVideoSurfaceView().setVisibility(View.INVISIBLE);
+//                Toast.makeText(LiveNewsPlayer.this, "Clickedd", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         playerBelowScreen = findViewById(R.id.player_below_screen);
 
         tvChannelTitle = findViewById(R.id.channel_title);

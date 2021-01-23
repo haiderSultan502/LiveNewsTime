@@ -20,6 +20,7 @@ import com.example.livenewstime.Interface.InterfaceApi;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
+import com.example.livenewstime.models.FragmentDetailModel;
 import com.example.livenewstime.models.NewsModel;
 import com.example.livenewstime.otherClasses.RetrofitLibrary;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
@@ -37,7 +38,7 @@ public class NewsFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutNews;
     GridLayoutManager gridLayoutManager;
     View view,latestNewsItem;
-    TextView tvPostTitle,tvReadMore;
+    TextView tvPostTitle,tvReadMore,tvCategoryName;
     ImageView imageViewNews;
     WebsiteView websiteView = new WebsiteView();
 
@@ -45,6 +46,7 @@ public class NewsFragment extends Fragment {
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForNews;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
+    Call<List<FragmentDetailModel>> callForCategoryDetails;
 
     public NewsFragment(Context context) {
         this.context= context;
@@ -64,6 +66,7 @@ public class NewsFragment extends Fragment {
         tvPostTitle = view.findViewById(R.id.tv_title_news);
         imageViewNews = view.findViewById(R.id.image_view_news);
         latestNewsItem = view.findViewById(R.id.latest_News_Item);
+        tvCategoryName = view.findViewById(R.id.categoryNameNews);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -133,6 +136,10 @@ public class NewsFragment extends Fragment {
 
                     MainActivity.getNews = true;
 
+                    MainActivity.categoryNameNews = MainActivity.arrayListCategoryDetails.get(8).getName();
+
+                    tvCategoryName.setText(MainActivity.categoryNameNews);
+
 
                     MainActivity.newsThumbnailUrl = MainActivity.arrayListNews.get(0).getFeaturedMedia();
                     Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
@@ -164,6 +171,8 @@ public class NewsFragment extends Fragment {
 
     }
     private void getStoreNews() {
+
+        tvCategoryName.setText(MainActivity.categoryNameNews);
 
         Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
         tvPostTitle.setText(MainActivity.newsPostTitle);

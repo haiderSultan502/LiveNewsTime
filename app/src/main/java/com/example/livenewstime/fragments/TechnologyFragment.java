@@ -36,7 +36,7 @@ public class TechnologyFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutTechnology;
     GridLayoutManager gridLayoutManager;
     View view,technologyLatestNewsItem;
-    TextView tvPostTitle,tvReadMore;
+    TextView tvPostTitle,tvReadMore,tvCategoryName;
     ImageView imageViewrtechnologyNews;
     WebsiteView websiteView = new WebsiteView();
 
@@ -63,6 +63,7 @@ public class TechnologyFragment extends Fragment {
         tvPostTitle = view.findViewById(R.id.tv_title_technology);
         imageViewrtechnologyNews = view.findViewById(R.id.image_view_technology);
         technologyLatestNewsItem = view.findViewById(R.id.technology_latest_News_Item);
+        tvCategoryName = view.findViewById(R.id.categoryNametechnology);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -128,6 +129,10 @@ public class TechnologyFragment extends Fragment {
 
                     MainActivity.getTechnologyNews = true;
 
+                    MainActivity.categoryNameTechnolohy = MainActivity.arrayListCategoryDetails.get(12).getName();
+
+                    tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
+
 
                     MainActivity.technologyThumbnailUrl = MainActivity.arrayListTechnologyNews.get(0).getFeaturedMedia();
                     Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
@@ -160,6 +165,8 @@ public class TechnologyFragment extends Fragment {
     }
 
     private void getStoreTechnologyNews() {
+
+        tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
 
         Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
         tvPostTitle.setText(MainActivity.technologyPostTitle);

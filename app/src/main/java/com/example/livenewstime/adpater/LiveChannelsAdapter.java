@@ -22,7 +22,8 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
     Context context;
     LiveChannelsModel liveChannelsModel;
     String thumbnailLiveNewsChannelCompleteUrl,thumbnailLiveNewsChannelBaseUrl;
-    String check ;
+    String check;
+    int size;
 
 
     public LiveChannelsAdapter(Context context,LiveChannelsModel liveChannelsModel,String check) {
@@ -74,7 +75,14 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
 
     @Override
     public int getItemCount() {
-        return liveChannelsModel.getData().size();
+        try {
+            size =  liveChannelsModel.getData().size();
+        }
+        catch (Exception e)
+        {
+
+        }
+        return size;
     }
 
 

@@ -38,7 +38,7 @@ public class SportsFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutSports;
     GridLayoutManager gridLayoutManager;
     View view,sportsLatestNewsItem;
-    TextView tvPostTitle,tvReadMore;
+    TextView tvPostTitle,tvReadMore,tvCategoryName;
     ImageView imageViewSports;
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
@@ -70,6 +70,7 @@ public class SportsFragment extends Fragment {
         imgBackButton=view.findViewById(R.id.img_back_btn);
         sportsLatestNewsItem = view.findViewById(R.id.sports_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
+        tvCategoryName = view.findViewById(R.id.categoryNameSports);
 
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
@@ -158,6 +159,10 @@ public class SportsFragment extends Fragment {
 
                     MainActivity.getSportsNews = true;
 
+                    MainActivity.categoryNameSports = MainActivity.arrayListCategoryDetails.get(11).getName();
+
+                    tvCategoryName.setText(MainActivity.categoryNameSports);
+
 
                     MainActivity.sportsThumbnailUrl = MainActivity.arrayListSportsNews.get(0).getFeaturedMedia();
                     Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
@@ -189,6 +194,8 @@ public class SportsFragment extends Fragment {
 
     }
     private void getStoreSportsNews() {
+
+        tvCategoryName.setText(MainActivity.categoryNameSports);
 
         Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
         tvPostTitle.setText(MainActivity.sportsPostTitle);

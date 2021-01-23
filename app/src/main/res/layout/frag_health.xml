@@ -72,6 +72,7 @@
                     android:orientation="vertical"
                     android:gravity="left">
                     <TextView
+                        android:id="@+id/categoryNameHealth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Health"

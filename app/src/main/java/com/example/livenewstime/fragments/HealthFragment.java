@@ -38,7 +38,7 @@ public class HealthFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutHealth;
     GridLayoutManager gridLayoutManager;
     View view,healthLatestNewsItem;
-    TextView tvPostTitle,tvReadMore;
+    TextView tvPostTitle,tvReadMore,tvCategoryName;
     ImageView imageViewHealth;
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
@@ -69,6 +69,7 @@ public class HealthFragment extends Fragment {
         imgBackButton=view.findViewById(R.id.img_back_btn);
         healthLatestNewsItem = view.findViewById(R.id.health_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
+        tvCategoryName = view.findViewById(R.id.categoryNameHealth);
 
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
@@ -156,6 +157,11 @@ public class HealthFragment extends Fragment {
 
                     MainActivity.getHealthNews = true;
 
+                    MainActivity.categoryNameHealth = MainActivity.arrayListCategoryDetails.get(7).getName();
+
+                    tvCategoryName.setText(MainActivity.categoryNameHealth);
+
+
 
                     MainActivity.healthThumbnailUrl = MainActivity.arrayListHealthNews.get(0).getFeaturedMedia();
                     Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
@@ -190,6 +196,8 @@ public class HealthFragment extends Fragment {
     }
 
     private void getStoreHealthNews() {
+
+        tvCategoryName.setText(MainActivity.categoryNameHealth);
 
         Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
         tvPostTitle.setText(MainActivity.healthPostTitle);

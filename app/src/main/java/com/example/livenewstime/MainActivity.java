@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.livenewstime.Interface.InterfaceApi;
 import com.example.livenewstime.fragments.BusinessFragment;
 import com.example.livenewstime.fragments.HealthFragment;
 import com.example.livenewstime.fragments.HomeFragment;
@@ -35,12 +36,17 @@ import com.example.livenewstime.fragments.TechnologyFragment;
 import com.example.livenewstime.models.FragmentDetailModel;
 import com.example.livenewstime.models.LiveChannelsModel;
 import com.example.livenewstime.models.NewsModel;
+import com.example.livenewstime.otherClasses.RetrofitLibrary;
 import com.example.livenewstime.otherClasses.SweetAlertDialogGeneral;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,16 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static boolean getHomeNews=false,getPoloiticsNews=false,getNews=false,getTechnologyNews=false,getHealthNews=false,getSportsNews=false,getBusinessNews=false,getLiveNews,getFragmentDetails;
     public static ArrayList<NewsModel> arrayListHomeNews,arrayListPoliticsNews,arrayListNews,arrayListTechnologyNews,arrayListHealthNews,arrayListSportsNews,arrayListBusinessNews;
-    public static ArrayList<FragmentDetailModel> arrayListListFragmentDetails;
+    public static ArrayList<FragmentDetailModel> arrayListCategoryDetails;
     public static LiveChannelsModel liveChannelsModel;
     public static ArrayList<NewsModel> arrayListLatestHomeNews;
     public static List<String> homeThumbnailUrl,politicsThumbnailUrl,newsThumbnailUrl,technologyThumbnailUrl,healthThumbnailUrl,sportsThumbnailUrl,businessThumbnailUrl;
     public static String homePostTitle,politicsPostTitle,newsPostTitle,technologyPostTitle,healthPostTitle,sportsPostTitle,businessPostTitle;
+    public static String categoryNameLive,categoryNameHome,categoryNameNews,categoryNamepolitics,categoryNameTechnolohy,categoryNameSports,categoryNameBusiness,categoryNameHealth;
 
     int index;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
+    Call<List<FragmentDetailModel>> callForCategoryDetails;
+    InterfaceApi interfaceApi;
 
     public MainActivity() {
     }
@@ -101,8 +110,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(MainActivity.this);
 
+        getCategoryDetail();
+
+
         HomeFragment homeFragment = new HomeFragment(this);
         replaceFrag(homeFragment);
+
 
         setDataInViews();
 
@@ -127,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         arrayListBusinessNews = new ArrayList<>();
 
-        arrayListListFragmentDetails = new ArrayList<>();
+        arrayListCategoryDetails = new ArrayList<>();
 
         liveChannelsModel = new LiveChannelsModel();
     }
@@ -207,6 +220,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+    }
+
+    public void getCategoryDetail()
+    {
+        {
+
+            try {
+                interfaceApi = RetrofitLibrary.connect("https://livenewstime.com/wp-json/Newspaper/v2/");
+                callForCategoryDetails = interfaceApi.getCategoryDetail();
+                callForCategoryDetails.enqueue(new Callback<List<FragmentDetailModel>>() {
+                    @Override
+                    public void onResponse(Call<List<FragmentDetailModel>> call, Response<List<FragmentDetailModel>> response) {
+                        if (!response.isSuccessful())
+                        {
+                            sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
+                            return;
+                        }
+                        arrayListCategoryDetails = (ArrayList<FragmentDetailModel>) response.body();
+
+//                        animationHide();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<FragmentDetailModel>> call, Throwable t) {
+                        sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
+            }
+
+        }
     }
 
     @Override

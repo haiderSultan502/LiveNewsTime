@@ -44,8 +44,7 @@ public class LiveNewsFragment extends Fragment {
     InterfaceApi interfaceApi;
     Call<LiveChannelsModel> callForLiveChannels;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
-    Call<List<FragmentDetailModel>> callForFragmentDetails;
-    String categoryName;
+    Call<List<FragmentDetailModel>> callForCategoryDetails;
 
     public LiveNewsFragment()
     {
@@ -68,7 +67,7 @@ public class LiveNewsFragment extends Fragment {
         view=inflater.inflate(R.layout.frag_live_news,container,false);
         recyclerViewLiveNewsChannels=view.findViewById(R.id.recycler_view_live_channels);
         tvLiveChannelDescription = view.findViewById(R.id.tv_live_channel_description);
-        tvCategoryName = view.findViewById(R.id.categoryName);
+        tvCategoryName = view.findViewById(R.id.categoryNameLive);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -76,7 +75,7 @@ public class LiveNewsFragment extends Fragment {
 
         if (MainActivity.getLiveNews == true)
         {
-            getFragmentDetail();
+//            getCategoryDetail();
             getStoreLiveNews();
         }
 
@@ -84,46 +83,48 @@ public class LiveNewsFragment extends Fragment {
 
     }
 
-    public void getFragmentDetail()
-    {
-        MainActivity.animationShow();
-        {
-
-            try {
-                interfaceApi = RetrofitLibrary.connect("https://livenewstime.com/wp-json/Newspaper/v2/");
-                callForFragmentDetails = interfaceApi.getFragmnetDetail();
-                callForFragmentDetails.enqueue(new Callback<List<FragmentDetailModel>>() {
-                    @Override
-                    public void onResponse(Call<List<FragmentDetailModel>> call, Response<List<FragmentDetailModel>> response) {
-                        if (!response.isSuccessful())
-                        {
-                            sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
-                            return;
-                        }
-                        MainActivity.arrayListListFragmentDetails = (ArrayList<FragmentDetailModel>) response.body();
-
-                        MainActivity.getFragmentDetails =  true;
-
-                        categoryName = MainActivity.arrayListListFragmentDetails.get(15).getName();
-
-                        tvCategoryName.setText(categoryName);
-
-                        MainActivity.animationHide();
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<FragmentDetailModel>> call, Throwable t) {
-                        sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
-                    }
-                });
-            }
-            catch (Exception e)
-            {
-                sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
-            }
-
-        }
-    }
+//    public void getCategoryDetail()
+//    {
+//        MainActivity.animationShow();
+//        {
+//
+//            try {
+//                interfaceApi = RetrofitLibrary.connect("https://livenewstime.com/wp-json/Newspaper/v2/");
+//                callForCategoryDetails = interfaceApi.getFragmnetDetail();
+//                callForCategoryDetails.enqueue(new Callback<List<FragmentDetailModel>>() {
+//                    @Override
+//                    public void onResponse(Call<List<FragmentDetailModel>> call, Response<List<FragmentDetailModel>> response) {
+//                        if (!response.isSuccessful())
+//                        {
+//                            sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
+//                            return;
+//                        }
+//                        MainActivity.arrayListCategoryDetails = (ArrayList<FragmentDetailModel>) response.body();
+//
+////                        MainActivity.getFragmentDetails =  true;
+//
+//                        MainActivity.categoryNameLive = MainActivity.arrayListCategoryDetails.get(15).getName();
+//
+//
+//
+//                        tvCategoryName.setText(MainActivity.categoryNameLive);
+//
+//                        MainActivity.animationHide();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<List<FragmentDetailModel>> call, Throwable t) {
+//                        sweetAlertDialogGeneral.showSweetAlertDialog("error",t.getMessage());
+//                    }
+//                });
+//            }
+//            catch (Exception e)
+//            {
+//                sweetAlertDialogGeneral.showSweetAlertDialog("warning",e.getMessage());
+//            }
+//
+//        }
+//    }
 
 
     private void setDataInViews() {
@@ -131,7 +132,7 @@ public class LiveNewsFragment extends Fragment {
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewLiveNewsChannels.setLayoutManager(setOrientationToLatestNewsRecyclerView);
 
-        getFragmentDetail();
+//        getCategoryDetail();
         getLiveNewsChannels("https://app.newslive.com/newslive/api/");
 
     }
@@ -162,6 +163,10 @@ public class LiveNewsFragment extends Fragment {
 
                     MainActivity.getLiveNews = true;
 
+                    MainActivity.categoryNameLive = MainActivity.arrayListCategoryDetails.get(15).getName();
+
+                    tvCategoryName.setText(MainActivity.categoryNameLive);
+
 
                     LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
                     recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
@@ -186,9 +191,7 @@ public class LiveNewsFragment extends Fragment {
 
     private void getStoreLiveNews() {
 
-        categoryName = MainActivity.arrayListListFragmentDetails.get(15).getName();
-
-        tvCategoryName.setText(categoryName);
+        tvCategoryName.setText(MainActivity.categoryNameLive);
 
         LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
         recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
