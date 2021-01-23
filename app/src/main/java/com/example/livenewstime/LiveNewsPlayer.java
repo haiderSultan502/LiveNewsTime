@@ -1,16 +1,24 @@
 package com.example.livenewstime;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.PictureInPictureParams;
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Rational;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -49,6 +57,8 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
     GridLayoutManager gridLayoutManager;
 
+    ActionBar actionBar;
+
     int position;
     String channelTitle,countryName,streamingLink,channelDescription;
 
@@ -60,6 +70,8 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
 
         videoView = findViewById(R.id.videoView);
+
+        actionBar = getActionBar();
 
         videoView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +86,8 @@ public class LiveNewsPlayer extends AppCompatActivity  {
         tvChannelTitle = findViewById(R.id.channel_title);
         tvCountryName = findViewById(R.id.country_title);
         tvNewsContent = findViewById(R.id.news_content);
+
+
 
         recyclerViewRelatedNewsChannel = findViewById(R.id.recycler_view_realted_live_channels);
 
@@ -108,12 +122,12 @@ public class LiveNewsPlayer extends AppCompatActivity  {
             }
         });
 
-        videoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LiveNewsPlayer.this, "get ", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        videoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(LiveNewsPlayer.this, "get ", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
 //        SimpleMediaSource mediaSource = new SimpleMediaSource("https://videolinks.com/pub/media/videolinks/video/dji.osmo.action.mp4");
@@ -128,6 +142,7 @@ public class LiveNewsPlayer extends AppCompatActivity  {
         tvChannelTitle.setText(channelTitle);
         tvCountryName.setText(countryName);
         tvNewsContent.setText(channelDescription);
+
 
 //        liveChannelsModel.getData().remove(position);
 
@@ -157,8 +172,78 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 //            qualities.add(quality);
 //        }
 //        mediaSource.setQualities(qualities);
+        tvChannelTitle.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(LiveNewsPlayer.this, "Title", Toast.LENGTH_SHORT).show();
+
+                pictureInPictureMode();
+
+//                Display d = getWindowManager()
+//                        .getDefaultDisplay();
+//                Point p = new Point();
+//                d.getSize(p);
+//                int width = p.x;
+//                int height = p.y;
+//
+//                Rational ratio
+//                        = new Rational(width, height);
+//                PictureInPictureParams.Builder
+//                        pip_Builder
+//                        = new PictureInPictureParams
+//                        .Builder();
+//
+//                pip_Builder.setAspectRatio(ratio).build();
+//                enterPictureInPictureMode(pip_Builder.build());
+            }
+        });
+
+    }
+    private void pictureInPictureMode() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        // Calculate the aspect ratio of the PiP screen.
+        Rational aspectRatio = new Rational(350, 180);
+        PictureInPictureParams.Builder mPictureInPictureParamsBuilder  = new PictureInPictureParams.Builder();
+        mPictureInPictureParamsBuilder.setAspectRatio(aspectRatio).build();
+        enterPictureInPictureMode(mPictureInPictureParamsBuilder.build());
 
 
+//            Display d = getWindowManager().getDefaultDisplay();
+//                Point p = new Point();
+//                d.getSize(p);
+//                int width = p.x;
+//                int height = p.y;
+//
+//                Rational ratio
+//                        = new Rational(width, height);
+//                PictureInPictureParams.Builder
+//                        pip_Builder
+//                        = new PictureInPictureParams
+//                        .Builder();
+//
+//                pip_Builder.setAspectRatio(ratio).build();
+//                enterPictureInPictureMode(pip_Builder.build());
+
+        }
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+        if (isInPictureInPictureMode)
+        {
+//            actionBar.hide();
+            playerBelowScreen.setVisibility(View.GONE);
+//            videoView.setVisibility(View.VISIBLE);
+
+
+        }
+        else
+        {
+//            actionBar.show();
+
+            playerBelowScreen.setVisibility(View.VISIBLE);
+        }
     }
 
     private GridLayoutManager setRecyclerViewOrientation() {
@@ -232,6 +317,7 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             return videoView.onKeyDown(keyCode, event);
+
         }
         return super.onKeyDown(keyCode, event);
     }

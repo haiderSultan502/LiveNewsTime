@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +51,7 @@ import retrofit2.Response;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForNews;
     SweetAlertDialogGeneral sweetAlertDialogGeneral;
+    Animation animation;
 //    public static LinearLayout lootieAnimaationLayout;
 
 
@@ -138,9 +141,19 @@ import retrofit2.Response;
 
         getNews("https://livenewstime.com/wp-json/newspaper/v2/");
 
+        recyclerViewScrollHorizontalAnimation();
+
+
+
     }
 
-    private LinearLayoutManager setRecyclerViewOrientation() {
+        private void recyclerViewScrollHorizontalAnimation() {
+
+            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.recycler_view_horizontal_scroll_anim);
+            recyclerViewMoretNews.setAnimation(animation);
+        }
+
+        private LinearLayoutManager setRecyclerViewOrientation() {
         linearLayoutManager=new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         return linearLayoutManager;
@@ -188,6 +201,7 @@ import retrofit2.Response;
                         AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHomeNews,"moreNews");
                         recyclerViewMoretNews.setAdapter(homeMoreNewsAdapter);
 
+
                         MainActivity.animationHide();
 
                     }
@@ -221,5 +235,11 @@ import retrofit2.Response;
             recyclerViewMoretNews.setAdapter(homeMoreNewsAdapter);
 
             MainActivity.animationHide();
+
+            recyclerViewScrollHorizontalAnimation();
+
+
+
+
         }
     }

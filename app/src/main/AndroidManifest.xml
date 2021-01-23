@@ -16,7 +16,8 @@
         tools:replace="android:icon">
         <activity
             android:name=".LiveNewsPlayer"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:supportsPictureInPicture="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|keyboardHidden"></activity>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
