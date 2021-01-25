@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.PictureInPictureParams;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -19,7 +20,9 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Rational;
 import android.view.Display;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,7 +46,7 @@ import java.util.List;
 import static com.jarvanmo.exoplayerview.orientation.OnOrientationChangedListener.SENSOR_LANDSCAPE;
 import static com.jarvanmo.exoplayerview.orientation.OnOrientationChangedListener.SENSOR_PORTRAIT;
 
-public class LiveNewsPlayer extends AppCompatActivity  {
+public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
 
 
@@ -62,24 +65,24 @@ public class LiveNewsPlayer extends AppCompatActivity  {
     int position;
     String channelTitle,countryName,streamingLink,channelDescription;
 
+    static final String TAG = "swipe positoion";
+    float x1,x2,y1,y2;
+    static int MIN_DISTANCE = 150;
+    GestureDetector gestureDetector;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_news_player);
 
-
+        this.gestureDetector = new GestureDetector(LiveNewsPlayer.this,this);
 
         videoView = findViewById(R.id.videoView);
 
         actionBar = getActionBar();
 
-        videoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                videoView.getVideoSurfaceView().setVisibility(View.INVISIBLE);
-//                Toast.makeText(LiveNewsPlayer.this, "Clickedd", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         playerBelowScreen = findViewById(R.id.player_below_screen);
 
@@ -144,6 +147,27 @@ public class LiveNewsPlayer extends AppCompatActivity  {
         tvNewsContent.setText(channelDescription);
 
 
+
+
+//        videoView.setOnTouchListener(new View.OnTouchListener() {
+//            float dX, dY;
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//
+//                if (event.getAction() == MotionEvent.ACTION_MOVE)
+//                {
+//
+//                        pictureInPictureMode();
+//                        Toast.makeText(LiveNewsPlayer.this, "get", Toast.LENGTH_SHORT).show();
+//
+//                    return true;
+//                }
+//                return true ;
+//            }
+//        });
+
+
 //        liveChannelsModel.getData().remove(position);
 
         LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(getApplicationContext(),liveChannelsModel,"livePlayer");
@@ -200,6 +224,67 @@ public class LiveNewsPlayer extends AppCompatActivity  {
         });
 
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+
+        gestureDetector.onTouchEvent(event);
+
+        switch (event.getAction())
+        {
+
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                y1 = event.getY();
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                x2 = event.getX();
+                y2 = event.getY();
+
+                float valueX = x2 - x1 ;
+                float valueY = y2 - y1 ;
+
+                if (Math.abs(valueX) > MIN_DISTANCE)
+                {
+                    if (x2 > x1 )
+                    {
+                        Toast.makeText(this, "rightdd Swiped", Toast.LENGTH_SHORT).show();
+                        pictureInPictureMode();
+                    }
+                    else
+                    {
+                        Toast.makeText(this, "Leftdd swiped", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if (Math.abs(valueY) > MIN_DISTANCE)
+                {
+                    if (y2 > y1 )
+                    {
+                        Toast.makeText(this, "bottom Swiped", Toast.LENGTH_SHORT).show();
+                        pictureInPictureMode();
+                    }
+                    else
+                    {
+                        Toast.makeText(this, "top swiped", Toast.LENGTH_SHORT).show();
+//                        pictureInPictureMode();
+                    }
+                }
+
+        }
+
+
+
+
+
+
+
+
+        return super.onTouchEvent(event);
+    }
+
     private void pictureInPictureMode() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
         // Calculate the aspect ratio of the PiP screen.
@@ -320,5 +405,35 @@ public class LiveNewsPlayer extends AppCompatActivity  {
 
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }

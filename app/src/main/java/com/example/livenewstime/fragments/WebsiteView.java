@@ -75,9 +75,14 @@ public class WebsiteView extends Fragment {
         imgShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toFacebookPage = new Intent(Intent.ACTION_VIEW);
-                toFacebookPage.setData(Uri.parse(facebookPageLink));
-                startActivity(toFacebookPage);
+//                Intent toFacebookPage = new Intent(Intent.ACTION_VIEW);
+//                toFacebookPage.setData(Uri.parse(facebookPageLink));
+//                startActivity(toFacebookPage);
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, newsUrl);
+                startActivity(Intent.createChooser(intent, "Share"));
             }
         });
 
