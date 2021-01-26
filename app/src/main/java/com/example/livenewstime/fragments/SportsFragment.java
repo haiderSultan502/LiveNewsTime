@@ -2,11 +2,14 @@ package com.example.livenewstime.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +46,14 @@ public class SportsFragment extends Fragment {
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
 
+    ProgressBar progressBar;
+    String url= "https://livenewstime.com/wp-json/wp/v2/";
+    int pageNumber = 1;
+    String categortIDAndPageNumber;
+    Boolean isScrooling = false;
+    int currentItem,totalItems,scrollOutItems;
+    AllNewsCategoriesAdapter allNewsCategoriesAdapter;
+
 
     Context context;
     InterfaceApi interfaceApi;
@@ -76,15 +87,13 @@ public class SportsFragment extends Fragment {
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
         MainActivity.arrayListSportsNews = new ArrayList<>();
 
+        progressBar = view.findViewById(R.id.progress_bar);
+
         parentAnimationShow();
 
         setDataInViews();
 
-        if (MainActivity.getSportsNews == true)
-        {
-            parentAnimationHide();
-            getStoreSportsNews();
-        }
+
 
         imgBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +137,16 @@ public class SportsFragment extends Fragment {
 
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewMoreAboutSports.setLayoutManager(setOrientationToLatestNewsRecyclerView);
+        if (MainActivity.getSportsNews == true)
+        {
+            parentAnimationHide();
+            getStoreSportsNews();
+        }
+        else
+        {
+            getSportsNews(pageNumber);
+        }
 
-        getSportsNews("https://livenewstime.com/wp-json/wp/v2/",4);
 
     }
 
@@ -139,12 +156,14 @@ public class SportsFragment extends Fragment {
         return gridLayoutManager;
     }
 
-    public void getSportsNews(String url,int newsCategoryID)
+    public void getSportsNews(int pageNumber)
     {
+
+        categortIDAndPageNumber = " 4 | " +  String.valueOf(pageNumber);
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
-            callForSports = interfaceApi.getAllCategoriesNews(newsCategoryID);
+            callForSports = interfaceApi.getAllCategoriesNews(categortIDAndPageNumber);
             callForSports.enqueue(new Callback<List<NewsModel>>() {
                 @Override
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
@@ -155,28 +174,35 @@ public class SportsFragment extends Fragment {
                         return;
                     }
 
-                    MainActivity.arrayListSportsNews = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListSportsNews.addAll((ArrayList<NewsModel>) response.body());
 
                     MainActivity.getSportsNews = true;
 
-                    MainActivity.categoryNameSports = MainActivity.arrayListCategoryDetails.get(11).getName();
+                    if (pageNumber == 1)
+                    {
+                        MainActivity.categoryNameSports = MainActivity.arrayListCategoryDetails.get(11).getName();
 
-                    tvCategoryName.setText(MainActivity.categoryNameSports);
-
-
-                    MainActivity.sportsThumbnailUrl = MainActivity.arrayListSportsNews.get(0).getFeaturedMedia();
-                    Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
-
-                    MainActivity.sportsPostTitle = MainActivity.arrayListSportsNews.get(0).getTitle();
-                    tvPostTitle.setText(MainActivity.sportsPostTitle);
-
-                    MainActivity.arrayListSportsNews.remove(0);
+                        tvCategoryName.setText(MainActivity.categoryNameSports);
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListSportsNews,"readMoreNews");
-                    recyclerViewMoreAboutSports.setAdapter(allNewsCategoriesAdapter);
+                        MainActivity.sportsThumbnailUrl = MainActivity.arrayListSportsNews.get(0).getFeaturedMedia();
+                        Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
+
+                        MainActivity.sportsPostTitle = MainActivity.arrayListSportsNews.get(0).getTitle();
+                        tvPostTitle.setText(MainActivity.sportsPostTitle);
+
+                        MainActivity.arrayListSportsNews.remove(0);
+
+
+                        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListSportsNews,"readMoreNews");
+                        recyclerViewMoreAboutSports.setAdapter(allNewsCategoriesAdapter);
+                    }
+                    allNewsCategoriesAdapter.notifyDataSetChanged();
+                    allNewsCategoriesAdapter.notifyItemRangeInserted(allNewsCategoriesAdapter.getItemCount() , MainActivity.arrayListSportsNews.size());
 
                     parentAnimationHide();
+
+                    loadMore();
                 }
 
                 @Override
@@ -193,6 +219,53 @@ public class SportsFragment extends Fragment {
         }
 
     }
+
+    private void loadMore() {
+
+        recyclerViewMoreAboutSports.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override   //method called when scrolling start
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isScrooling = true;
+                }
+            }
+
+            @Override   //method called when scrolling end
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                currentItem = gridLayoutManager.getChildCount();
+                totalItems = gridLayoutManager.getItemCount();
+                scrollOutItems = gridLayoutManager.findFirstVisibleItemPosition();
+
+                if (isScrooling && (currentItem + scrollOutItems == totalItems))
+                {
+                    isScrooling = false;
+                    fetchData();
+                }
+            }
+        });
+    }
+
+    private void fetchData() {
+
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                pageNumber++;
+
+                getSportsNews(pageNumber);
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+        },5000);
+    }
+
     private void getStoreSportsNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameSports);
@@ -200,8 +273,11 @@ public class SportsFragment extends Fragment {
         Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
         tvPostTitle.setText(MainActivity.sportsPostTitle);
 
-        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListSportsNews,"readMoreNews");
+        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListSportsNews,"readMoreNews");
         recyclerViewMoreAboutSports.setAdapter(allNewsCategoriesAdapter);
+
+        loadMore();
+
     }
 }
 

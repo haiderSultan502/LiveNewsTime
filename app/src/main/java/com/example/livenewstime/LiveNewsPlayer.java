@@ -10,6 +10,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.PictureInPictureParams;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -170,8 +171,18 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
 //        liveChannelsModel.getData().remove(position);
 
-        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(getApplicationContext(),liveChannelsModel,"livePlayer");
+        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(getApplicationContext(),liveChannelsModel);
         recyclerViewRelatedNewsChannel.setAdapter(liveChannelsAdapter);
+
+        liveChannelsAdapter.setOnItemClickListener(new LiveChannelsAdapter.onRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                finish();
+                Intent intent = new Intent(LiveNewsPlayer.this, LiveNewsPlayer.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
 
 
 

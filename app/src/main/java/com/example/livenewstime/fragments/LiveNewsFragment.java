@@ -1,11 +1,13 @@
 package com.example.livenewstime.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.Interface.InterfaceApi;
+import com.example.livenewstime.LiveNewsPlayer;
 import com.example.livenewstime.MainActivity;
 import com.example.livenewstime.R;
 import com.example.livenewstime.adpater.AllNewsCategoriesAdapter;
@@ -168,8 +171,16 @@ public class LiveNewsFragment extends Fragment {
                     tvCategoryName.setText(MainActivity.categoryNameLive);
 
 
-                    LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
+                    LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel);
                     recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
+                    liveChannelsAdapter.setOnItemClickListener(new LiveChannelsAdapter.onRecyclerViewItemClickListener() {
+                        @Override
+                        public void onItemClickListener(View view, int position) {
+                            Intent intent = new Intent(getActivity(), LiveNewsPlayer.class);
+                            intent.putExtra("position", position);
+                            context.startActivity(intent);
+                        }
+                    });
 
                     MainActivity.animationHide();
                 }
@@ -193,10 +204,9 @@ public class LiveNewsFragment extends Fragment {
 
         tvCategoryName.setText(MainActivity.categoryNameLive);
 
-        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel,"livePlayers");
+        LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel);
         recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);
 
         MainActivity.animationHide();
     }
-
 }

@@ -2,10 +2,13 @@ package com.example.livenewstime.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +43,15 @@ public class TechnologyFragment extends Fragment {
     ImageView imageViewrtechnologyNews;
     WebsiteView websiteView = new WebsiteView();
 
+    String url= "https://livenewstime.com/wp-json/wp/v2/";
+    int pageNumber = 1;
+    String categortIDAndPageNumber;
+    AllNewsCategoriesAdapter allNewsCategoriesAdapter;
+    Boolean isScrooling = false;
+    int currentItem,totalItems,scrollOutItems;
+    ProgressBar progressBar;
+    
+
     Context context;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForTechnologyNews;
@@ -67,12 +79,14 @@ public class TechnologyFragment extends Fragment {
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
+        progressBar = view.findViewById(R.id.progress_bar);
+
+
+        MainActivity.animationShow();
+        
         setDataInViews();
 
-        if (MainActivity.getTechnologyNews == true)
-        {
-            getStoreTechnologyNews();
-        }
+
 
         technologyLatestNewsItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +114,14 @@ public class TechnologyFragment extends Fragment {
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewMoreAboutTechnology.setLayoutManager(setOrientationToLatestNewsRecyclerView);
 
-        getTechnologyNews("https://livenewstime.com/wp-json/wp/v2/",3);
+        if (MainActivity.getTechnologyNews == true)
+        {
+            getStoreTechnologyNews();
+        }
+        else
+        {
+            getTechnologyNews(pageNumber);
+        }
 
     }
 
@@ -110,13 +131,14 @@ public class TechnologyFragment extends Fragment {
         return gridLayoutManager;
     }
 
-    public void getTechnologyNews(String url,int newsCategoryID)
+    public void getTechnologyNews(int pageNumber)
     {
-        MainActivity.animationShow();
+
+        categortIDAndPageNumber = " 3 | " +  String.valueOf(pageNumber);
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
-            callForTechnologyNews = interfaceApi.getAllCategoriesNews(newsCategoryID);
+            callForTechnologyNews = interfaceApi.getAllCategoriesNews(categortIDAndPageNumber);
             callForTechnologyNews.enqueue(new Callback<List<NewsModel>>() {
                 @Override
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
@@ -125,28 +147,37 @@ public class TechnologyFragment extends Fragment {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    MainActivity.arrayListTechnologyNews = (ArrayList<NewsModel>) response.body();
-
+                    MainActivity.arrayListTechnologyNews.addAll((ArrayList<NewsModel>) response.body());
+                    
                     MainActivity.getTechnologyNews = true;
 
-                    MainActivity.categoryNameTechnolohy = MainActivity.arrayListCategoryDetails.get(12).getName();
+                    if (pageNumber == 1)
+                    {
+                        MainActivity.categoryNameTechnolohy = MainActivity.arrayListCategoryDetails.get(12).getName();
 
-                    tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
-
-
-                    MainActivity.technologyThumbnailUrl = MainActivity.arrayListTechnologyNews.get(0).getFeaturedMedia();
-                    Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
-
-                    MainActivity.technologyPostTitle = MainActivity.arrayListTechnologyNews.get(0).getTitle();
-                    tvPostTitle.setText(MainActivity.technologyPostTitle);
-
-                    MainActivity.arrayListTechnologyNews.remove(0);
+                        tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListTechnologyNews,"readMoreNews");
-                    recyclerViewMoreAboutTechnology.setAdapter(allNewsCategoriesAdapter);
+                        MainActivity.technologyThumbnailUrl = MainActivity.arrayListTechnologyNews.get(0).getFeaturedMedia();
+                        Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
+
+                        MainActivity.technologyPostTitle = MainActivity.arrayListTechnologyNews.get(0).getTitle();
+                        tvPostTitle.setText(MainActivity.technologyPostTitle);
+
+                        MainActivity.arrayListTechnologyNews.remove(0);
+
+
+                        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListTechnologyNews,"readMoreNews");
+                        recyclerViewMoreAboutTechnology.setAdapter(allNewsCategoriesAdapter); 
+                    }
+                    
+                    allNewsCategoriesAdapter.notifyDataSetChanged();
+                    allNewsCategoriesAdapter.notifyItemRangeInserted(allNewsCategoriesAdapter.getItemCount() , MainActivity.arrayListTechnologyNews.size());
+                    
 
                     MainActivity.animationHide();
+                    
+                    loadMore();
 
                 }
 
@@ -164,6 +195,48 @@ public class TechnologyFragment extends Fragment {
 
     }
 
+    private void loadMore() {
+        recyclerViewMoreAboutTechnology.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override   //method called when scrolling start
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isScrooling = true;
+                }
+            }
+
+            @Override   //method called when scrolling end
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                currentItem = gridLayoutManager.getChildCount();
+                totalItems = gridLayoutManager.getItemCount();
+                scrollOutItems = gridLayoutManager.findFirstVisibleItemPosition();
+
+                if (isScrooling && (currentItem + scrollOutItems == totalItems))
+                {
+                    isScrooling = false;
+                    fetchData();
+                }
+            }
+        });
+    }
+
+    private void fetchData() {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pageNumber++;
+                getTechnologyNews(pageNumber);
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+        },5000);
+    }
+
     private void getStoreTechnologyNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
@@ -171,8 +244,9 @@ public class TechnologyFragment extends Fragment {
         Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
         tvPostTitle.setText(MainActivity.technologyPostTitle);
 
-        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListTechnologyNews,"readMoreNews");
+        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListTechnologyNews,"readMoreNews");
         recyclerViewMoreAboutTechnology.setAdapter(allNewsCategoriesAdapter);
+        loadMore();
 
         MainActivity.animationHide();
     }

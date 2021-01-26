@@ -2,11 +2,14 @@ package com.example.livenewstime.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +45,16 @@ public class NewsFragment extends Fragment {
     ImageView imageViewNews;
     WebsiteView websiteView = new WebsiteView();
 
+
+
+    String url= "https://livenewstime.com/wp-json/wp/v2/";
+    int pageNumber = 1;
+    String categortIDAndPageNumber;
+    AllNewsCategoriesAdapter allNewsCategoriesAdapter;
+    Boolean isScrooling = false;
+    int currentItem,totalItems,scrollOutItems;
+    ProgressBar progressBar;
+
     Context context;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForNews;
@@ -70,12 +83,12 @@ public class NewsFragment extends Fragment {
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
-        setDataInViews();
+        progressBar = view.findViewById(R.id.progress_bar);
 
-        if (MainActivity.getNews == true)
-        {
-            getStoreNews();
-        }
+
+        MainActivity.animationShow();
+
+        setDataInViews();
 
         latestNewsItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +119,14 @@ public class NewsFragment extends Fragment {
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewMoreAboutNews.setLayoutManager(setOrientationToLatestNewsRecyclerView);
 
-        getNews("https://livenewstime.com/wp-json/wp/v2/",2);
+        if (MainActivity.getNews == true)
+        {
+            getStoreNews();
+        }
+        else
+        {
+            getNews(pageNumber);
+        }
 
     }
 
@@ -116,14 +136,15 @@ public class NewsFragment extends Fragment {
         return gridLayoutManager;
     }
 
-    public void getNews(String url,int newsCategoryID)
+    public void getNews(int pageNumber)
     {
 
-        MainActivity.animationShow();
+        categortIDAndPageNumber = " 2 | " +  String.valueOf(pageNumber);
+
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
-            callForNews = interfaceApi.getAllCategoriesNews(newsCategoryID);
+            callForNews = interfaceApi.getAllCategoriesNews(categortIDAndPageNumber);
             callForNews.enqueue(new Callback<List<NewsModel>>() {
                 @Override
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
@@ -132,28 +153,39 @@ public class NewsFragment extends Fragment {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    MainActivity.arrayListNews = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListNews.addAll((ArrayList<NewsModel>) response.body());
 
                     MainActivity.getNews = true;
 
-                    MainActivity.categoryNameNews = MainActivity.arrayListCategoryDetails.get(8).getName();
+                    if (pageNumber == 1)
+                    {
+                        MainActivity.categoryNameNews = MainActivity.arrayListCategoryDetails.get(8).getName();
 
-                    tvCategoryName.setText(MainActivity.categoryNameNews);
-
-
-                    MainActivity.newsThumbnailUrl = MainActivity.arrayListNews.get(0).getFeaturedMedia();
-                    Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
-
-                    MainActivity.newsPostTitle = MainActivity.arrayListNews.get(0).getTitle();
-                    tvPostTitle.setText(MainActivity.newsPostTitle);
-
-                    MainActivity.arrayListNews.remove(0);
+                        tvCategoryName.setText(MainActivity.categoryNameNews);
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListNews,"readMoreNews");
-                    recyclerViewMoreAboutNews.setAdapter(allNewsCategoriesAdapter);
+                        MainActivity.newsThumbnailUrl = MainActivity.arrayListNews.get(0).getFeaturedMedia();
+                        Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
+
+                        MainActivity.newsPostTitle = MainActivity.arrayListNews.get(0).getTitle();
+                        tvPostTitle.setText(MainActivity.newsPostTitle);
+
+                        MainActivity.arrayListNews.remove(0);
+
+
+                        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListNews,"readMoreNews");
+                        recyclerViewMoreAboutNews.setAdapter(allNewsCategoriesAdapter);
+
+                    }
+
+                    allNewsCategoriesAdapter.notifyDataSetChanged();
+                    allNewsCategoriesAdapter.notifyItemRangeInserted(allNewsCategoriesAdapter.getItemCount() , MainActivity.arrayListNews.size());
 
                     MainActivity.animationHide();
+
+                    loadMore();
+
+
 
                 }
 
@@ -170,6 +202,50 @@ public class NewsFragment extends Fragment {
         }
 
     }
+
+    private void loadMore() {
+
+        recyclerViewMoreAboutNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override   //method called when scrolling start
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isScrooling = true;
+                }
+            }
+
+            @Override   //method called when scrolling end
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                currentItem = gridLayoutManager.getChildCount();
+                totalItems = gridLayoutManager.getItemCount();
+                scrollOutItems = gridLayoutManager.findFirstVisibleItemPosition();
+
+                if (isScrooling && (currentItem + scrollOutItems == totalItems))
+                {
+                    isScrooling = false;
+                    fetchData();
+                }
+            }
+        });
+
+    }
+
+    private void fetchData() {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pageNumber++;
+                getNews(pageNumber);
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+        },5000);
+    }
     private void getStoreNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameNews);
@@ -177,8 +253,10 @@ public class NewsFragment extends Fragment {
         Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
         tvPostTitle.setText(MainActivity.newsPostTitle);
 
-        AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListNews,"readMoreNews");
+        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListNews,"readMoreNews");
         recyclerViewMoreAboutNews.setAdapter(allNewsCategoriesAdapter);
+
+        loadMore();
 
         MainActivity.animationHide();
     }

@@ -20,7 +20,10 @@ public interface InterfaceApi {
     Call<List<NewsModel>> getSearchNews(@Query("s") String searchKeyword);
 
     @GET("posts")
-    Call<List<NewsModel>> getAllCategoriesNews(@Query("cat") int categoryid);
+    Call<List<NewsModel>> getAllCategoriesNews(@Query("cat") int categoryIdAndPageNumber);
+
+    @GET("posts")
+    Call<List<NewsModel>> getAllCategoriesNews(@Query("cat") String categoryIdAndPageNumber);
 
     @GET("tchannels")
     Call<LiveChannelsModel> getLiveChannels();

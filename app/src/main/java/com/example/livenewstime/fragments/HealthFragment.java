@@ -2,11 +2,14 @@ package com.example.livenewstime.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,6 +47,14 @@ public class HealthFragment extends Fragment {
     LinearLayout lootieAnmationParentlayout;
     WebsiteView websiteView = new WebsiteView();
 
+    ProgressBar progressBar;
+    String url= "https://livenewstime.com/wp-json/wp/v2/";
+    int pageNumber = 1;
+    String categortIDAndPageNumber;
+    Boolean isScrooling = false;
+    int currentItem,totalItems,scrollOutItems;
+    AllNewsCategoriesAdapter allNewsCategoriesAdapter;
+
     Context context;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForHealth;
@@ -74,14 +85,12 @@ public class HealthFragment extends Fragment {
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
+        progressBar = view.findViewById(R.id.progress_bar);
+
         parentAnimationShow();
         setDataInViews();
 
-        if (MainActivity.getHealthNews == true)
-        {
-            parentAnimationHide();
-            getStoreHealthNews();
-        }
+
 
 
         imgBackButton.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +137,16 @@ public class HealthFragment extends Fragment {
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewMoreAboutHealth.setLayoutManager(setOrientationToLatestNewsRecyclerView);
 
-        getHealthNews("https://livenewstime.com/wp-json/wp/v2/",7);
+        if (MainActivity.getHealthNews == true)
+        {
+            parentAnimationHide();
+            getStoreHealthNews();
+        }
+        else
+        {
+            getHealthNews(pageNumber);
+        }
+
 
     }
 
@@ -138,12 +156,14 @@ public class HealthFragment extends Fragment {
         return gridLayoutManager;
     }
 
-    public void getHealthNews(String url,int newsCategoryID)
+    public void getHealthNews(int pageNumber)
     {
+
+        categortIDAndPageNumber = " 7 | " +  String.valueOf(pageNumber);
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
-            callForHealth = interfaceApi.getAllCategoriesNews(newsCategoryID);
+            callForHealth = interfaceApi.getAllCategoriesNews(categortIDAndPageNumber);
             callForHealth.enqueue(new Callback<List<NewsModel>>() {
                 @Override
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
@@ -153,29 +173,40 @@ public class HealthFragment extends Fragment {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    MainActivity.arrayListHealthNews = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListHealthNews.addAll((ArrayList<NewsModel>) response.body());
 
                     MainActivity.getHealthNews = true;
 
-                    MainActivity.categoryNameHealth = MainActivity.arrayListCategoryDetails.get(7).getName();
+                    if (pageNumber==1)
+                    {
+                        MainActivity.categoryNameHealth = MainActivity.arrayListCategoryDetails.get(7).getName();
 
-                    tvCategoryName.setText(MainActivity.categoryNameHealth);
-
-
-
-                    MainActivity.healthThumbnailUrl = MainActivity.arrayListHealthNews.get(0).getFeaturedMedia();
-                    Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
-
-                    MainActivity.healthPostTitle = MainActivity.arrayListHealthNews.get(0).getTitle();
-                    tvPostTitle.setText(MainActivity.healthPostTitle);
-
-                    MainActivity.arrayListHealthNews.remove(0);
+                        tvCategoryName.setText(MainActivity.categoryNameHealth);
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHealthNews,"readMoreNews");
-                    recyclerViewMoreAboutHealth.setAdapter(allNewsCategoriesAdapter);
+
+                        MainActivity.healthThumbnailUrl = MainActivity.arrayListHealthNews.get(0).getFeaturedMedia();
+                        Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
+
+                        MainActivity.healthPostTitle = MainActivity.arrayListHealthNews.get(0).getTitle();
+                        tvPostTitle.setText(MainActivity.healthPostTitle);
+
+                        MainActivity.arrayListHealthNews.remove(0);
+
+
+                        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHealthNews,"readMoreNews");
+                        recyclerViewMoreAboutHealth.setAdapter(allNewsCategoriesAdapter);
+                    }
+
+                    allNewsCategoriesAdapter.notifyDataSetChanged();
+                    allNewsCategoriesAdapter.notifyItemRangeInserted(allNewsCategoriesAdapter.getItemCount() , MainActivity.arrayListHealthNews.size());
 
                     parentAnimationHide();
+
+                    loadMore();
+
+
+
 
                 }
 
@@ -195,6 +226,48 @@ public class HealthFragment extends Fragment {
 
     }
 
+    private void loadMore() {
+        recyclerViewMoreAboutHealth.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override   //method called when scrolling start
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isScrooling = true;
+                }
+            }
+
+            @Override   //method called when scrolling end
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                currentItem = gridLayoutManager.getChildCount();
+                totalItems = gridLayoutManager.getItemCount();
+                scrollOutItems = gridLayoutManager.findFirstVisibleItemPosition();
+
+                if (isScrooling && (currentItem + scrollOutItems == totalItems))
+                {
+                    isScrooling = false;
+                    fetchData();
+                }
+            }
+        });
+    }
+
+    private void fetchData() {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pageNumber++;
+                getHealthNews(pageNumber);
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+        },5000);
+    }
+
     private void getStoreHealthNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameHealth);
@@ -204,6 +277,8 @@ public class HealthFragment extends Fragment {
 
         AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHealthNews,"readMoreNews");
         recyclerViewMoreAboutHealth.setAdapter(allNewsCategoriesAdapter);
+
+        loadMore();
     }
 }
 
