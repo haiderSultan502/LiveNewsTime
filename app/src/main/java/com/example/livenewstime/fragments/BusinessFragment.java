@@ -1,17 +1,22 @@
 package com.example.livenewstime.fragments;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,6 +48,14 @@ public class BusinessFragment extends Fragment {
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
 
+    ProgressBar progressBar;
+    String url= "https://livenewstime.com/wp-json/wp/v2/";
+    int pageNumber = 1;
+    String categortIDAndPageNumber;
+    Boolean isScrooling = false;
+    int currentItem,totalItems,scrollOutItems;
+    AllNewsCategoriesAdapter allNewsCategoriesAdapter;
+
     Context context;
     InterfaceApi interfaceApi;
     Call<List<NewsModel>> callForBusiness;
@@ -56,7 +69,6 @@ public class BusinessFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
     @Nullable
     @Override
@@ -73,14 +85,14 @@ public class BusinessFragment extends Fragment {
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
+        progressBar = view.findViewById(R.id.progress_bar);
+
+        setProgressBarColor();
+
         parentAnimationShow();
         setDataInViews();
 
-        if (MainActivity.getSportsNews == true)
-        {
-            parentAnimationHide();
-            getStoreBusinessNews();
-        }
+
 
         imgBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +111,11 @@ public class BusinessFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setProgressBarColor() {
+        progressBar.getIndeterminateDrawable()
+                .setColorFilter(ContextCompat.getColor(getActivity(), R.color.readMore), PorterDuff.Mode.SRC_IN );
     }
 
 
@@ -123,10 +140,22 @@ public class BusinessFragment extends Fragment {
 
     private void setDataInViews() {
 
+
+
         GridLayoutManager setOrientationToLatestNewsRecyclerView = setRecyclerViewOrientation();
         recyclerViewMoreAboutBusiness.setLayoutManager(setOrientationToLatestNewsRecyclerView);
 
-        getBusinessNews("https://livenewstime.com/wp-json/wp/v2/",6);
+        if (MainActivity.getSportsNews == true)
+        {
+            parentAnimationHide();
+            getStoreBusinessNews();
+        }
+        else
+        {
+            getBusinessNews(pageNumber);
+        }
+
+
 
     }
 
@@ -136,12 +165,14 @@ public class BusinessFragment extends Fragment {
         return gridLayoutManager;
     }
 
-    public void getBusinessNews(String url,int newsCategoryID)
+    public void getBusinessNews(int pageNumber)
     {
+
+        categortIDAndPageNumber = " 6 | " +  String.valueOf(pageNumber);
 
         try {
             interfaceApi = RetrofitLibrary.connect(url);
-            callForBusiness = interfaceApi.getAllCategoriesNews(newsCategoryID);
+            callForBusiness = interfaceApi.getAllCategoriesNews(categortIDAndPageNumber);
             callForBusiness.enqueue(new Callback<List<NewsModel>>() {
                 @Override
                 public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
@@ -151,28 +182,36 @@ public class BusinessFragment extends Fragment {
                         sweetAlertDialogGeneral.showSweetAlertDialog("warning","Please try later");
                         return;
                     }
-                    MainActivity.arrayListBusinessNews = (ArrayList<NewsModel>) response.body();
+                    MainActivity.arrayListBusinessNews.addAll((ArrayList<NewsModel>) response.body());
 
                     MainActivity.getBusinessNews = true;
 
-                    MainActivity.categoryNameBusiness = MainActivity.arrayListCategoryDetails.get(1).getName();
+                    if (pageNumber == 1)
+                    {
+                        MainActivity.categoryNameBusiness = MainActivity.arrayListCategoryDetails.get(1).getName();
 
-                    tvCategoryName.setText(MainActivity.categoryNameBusiness);
-
-
-                    MainActivity.businessThumbnailUrl = MainActivity.arrayListBusinessNews.get(0).getFeaturedMedia();
-                    Picasso.with(getActivity()).load(MainActivity.businessThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewBusiness);
-
-                    MainActivity.businessPostTitle = MainActivity.arrayListBusinessNews.get(0).getTitle();
-                    tvPostTitle.setText(MainActivity.businessPostTitle);
-
-                    MainActivity.arrayListBusinessNews.remove(0);
+                        tvCategoryName.setText(MainActivity.categoryNameBusiness);
 
 
-                    AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListBusinessNews,"readMoreNews");
-                    recyclerViewMoreAboutBusiness.setAdapter(allNewsCategoriesAdapter);
+                        MainActivity.businessThumbnailUrl = MainActivity.arrayListBusinessNews.get(0).getFeaturedMedia();
+                        Picasso.with(getActivity()).load(MainActivity.businessThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewBusiness);
+
+                        MainActivity.businessPostTitle = MainActivity.arrayListBusinessNews.get(0).getTitle();
+                        tvPostTitle.setText(MainActivity.businessPostTitle);
+
+                        MainActivity.arrayListBusinessNews.remove(0);
+
+
+                        allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListBusinessNews,"readMoreNews");
+                        recyclerViewMoreAboutBusiness.setAdapter(allNewsCategoriesAdapter);
+                    }
+
+                    allNewsCategoriesAdapter.notifyDataSetChanged();
+                    allNewsCategoriesAdapter.notifyItemRangeInserted(allNewsCategoriesAdapter.getItemCount() , MainActivity.arrayListBusinessNews.size());
 
                     parentAnimationHide();
+
+                    loadMore();
 
                 }
 
@@ -192,6 +231,49 @@ public class BusinessFragment extends Fragment {
 
     }
 
+    private void loadMore() {
+
+        recyclerViewMoreAboutBusiness.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override   //method called when scrolling start
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                {
+                    isScrooling = true;
+                }
+            }
+
+            @Override   //method called when scrolling end
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                currentItem = gridLayoutManager.getChildCount();
+                totalItems = gridLayoutManager.getItemCount();
+                scrollOutItems = gridLayoutManager.findFirstVisibleItemPosition();
+
+                if (isScrooling && (currentItem + scrollOutItems == totalItems))
+                {
+                    isScrooling = false;
+                    fetchData();
+                }
+            }
+        });
+    }
+
+    private void fetchData() {
+        progressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pageNumber++;
+                getBusinessNews(pageNumber);
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+        },5000);
+    }
+
     private void getStoreBusinessNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameBusiness);
@@ -201,6 +283,8 @@ public class BusinessFragment extends Fragment {
 
         AllNewsCategoriesAdapter allNewsCategoriesAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListBusinessNews,"readMoreNews");
         recyclerViewMoreAboutBusiness.setAdapter(allNewsCategoriesAdapter);
+
+        loadMore();
     }
 }
 

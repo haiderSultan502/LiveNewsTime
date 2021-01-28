@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -18,10 +19,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.livenewstime.Interface.InterfaceApi;
 import com.example.livenewstime.fragments.BusinessFragment;
@@ -51,7 +54,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TabLayout tabLayout;
-    Button btnDrawerLayout;
+    LinearLayout btnDrawerLayout;
     ImageView imgSearch;
     RelativeLayout rlSearchLayout;
     FrameLayout frameLayout,frameLayoutWebView;
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText edtSearch;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    ImageView faceBook,twitter,pinterest,youtube;
     public static LinearLayout lootieAnimaationLayout;
 
     public static boolean getHomeNews=false,getPoloiticsNews=false,getNews=false,getTechnologyNews=false,getHealthNews=false,getSportsNews=false,getBusinessNews=false,getLiveNews,getFragmentDetails;
@@ -102,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDrawerLayout = findViewById(R.id.btn_drawer);
         lootieAnimaationLayout=findViewById(R.id.lootie_animation_layout);
 
+        faceBook = findViewById(R.id.facebook);
+        twitter = findViewById(R.id.twitter);
+        pinterest = findViewById(R.id.pinterest);
+        youtube = findViewById(R.id.youtube);
+
 //        animationShow();
 
         setNavigationDrawer();
@@ -121,6 +130,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         imgSearch.setOnClickListener(this);
         btnDrawerLayout.setOnClickListener(this);
+        faceBook.setOnClickListener(this);
+        twitter.setOnClickListener(this);
+        pinterest.setOnClickListener(this);
+        youtube.setOnClickListener(this);
     }
 
     private void initializeArrayList() {
@@ -301,7 +314,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     drawerLayout.openDrawer(Gravity.LEFT);
                     break;
 
+            case R.id.facebook:
+//                viewSocialMediaPage("https://www.facebook.com/");
+
+            case R.id.twitter:
+//                viewSocialMediaPage("https://www.facebook.com/");
+
+            case R.id.pinterest:
+//                viewSocialMediaPage("https://www.facebook.com/");
+
+            case R.id.youtube:
+//                viewSocialMediaPage("https://www.facebook.com/");
+
         }
+    }
+
+    private void viewSocialMediaPage(String socialMediaLink) {
+        Intent socialMediaPage = new Intent(Intent.ACTION_VIEW);
+        socialMediaPage.setData(Uri.parse(socialMediaLink));
+        startActivity(socialMediaPage);
     }
 
     private void setNavigationDrawer() {

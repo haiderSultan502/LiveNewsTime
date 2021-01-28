@@ -74,7 +74,12 @@ public class LiveNewsFragment extends Fragment {
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
+
+        MainActivity.animationShow();
+
         setDataInViews();
+
+
 
         if (MainActivity.getLiveNews == true)
         {

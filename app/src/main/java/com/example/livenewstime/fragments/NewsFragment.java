@@ -1,6 +1,7 @@
 package com.example.livenewstime.fragments;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -86,6 +88,8 @@ public class NewsFragment extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar);
 
 
+        setProgressBarColor();
+
         MainActivity.animationShow();
 
         setDataInViews();
@@ -98,6 +102,11 @@ public class NewsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setProgressBarColor() {
+        progressBar.getIndeterminateDrawable()
+                .setColorFilter(ContextCompat.getColor(getActivity(), R.color.readMore), PorterDuff.Mode.SRC_IN );
     }
 
 

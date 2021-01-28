@@ -39,10 +39,14 @@ import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.jarvanmo.exoplayerview.media.ExoMediaSource;
 import com.jarvanmo.exoplayerview.media.SimpleMediaSource;
 import com.jarvanmo.exoplayerview.media.SimpleQuality;
+import com.jarvanmo.exoplayerview.ui.ExoVideoPlaybackControlView;
 import com.jarvanmo.exoplayerview.ui.ExoVideoView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import tcking.github.com.giraffeplayer2.GiraffePlayer;
+import tcking.github.com.giraffeplayer2.VideoView;
 
 import static com.jarvanmo.exoplayerview.orientation.OnOrientationChangedListener.SENSOR_LANDSCAPE;
 import static com.jarvanmo.exoplayerview.orientation.OnOrientationChangedListener.SENSOR_PORTRAIT;
@@ -52,6 +56,8 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
 
     private ExoVideoView videoView;
+//    VideoView videoView;
+
 
     private View playerBelowScreen;
 
@@ -82,6 +88,38 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
         videoView = findViewById(R.id.videoView);
 
+//        videoView.changeWidgetVisibility(R.id.exo_controller,View.GONE);
+
+//        int mode = ExoVideoPlaybackControlView.CONTROLLER_MODE_TOP_LANDSCAPE;
+//
+//        videoView.setControllerDisplayMode(mode);
+
+
+        videoView.setUseController(false);
+        //hide all controls
+
+//        videoView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                videoView.setUseController(true);
+//                Toast.makeText(LiveNewsPlayer.this, "clk lis", Toast.LENGTH_SHORT).show();
+//                return true;
+//            }
+//        });
+
+//        videoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(LiveNewsPlayer.this, "clk lis", Toast.LENGTH_SHORT).show();
+//                videoView.setUseController(true);
+//
+//            }
+//        });
+
+
+
+
         actionBar = getActionBar();
 
 
@@ -100,7 +138,6 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
         position = getIntent().getIntExtra("position",0);
 
-
         LiveChannelsModel liveChannelsModel = MainActivity.liveChannelsModel;
 
         channelTitle = liveChannelsModel.getData().get(position).getTitle();
@@ -117,7 +154,7 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
             }
             return false;
         });
-
+//
         videoView.setOrientationListener(orientation -> {
             if (orientation == SENSOR_PORTRAIT) {
                 changeToPortrait();
@@ -139,13 +176,26 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
         mediaSource.setDisplayName("Live");
 
-//        videoView.play(mediaSource, false);
+        videoView.play(mediaSource, false);
 
         videoView.play(mediaSource);
+
+//        videoView.getVideoInfo().setAspectRatio(3);
+//
+//        videoView.setVideoPath(streamingLink).getPlayer().start();
+
+
+
+
+
+
 
         tvChannelTitle.setText(channelTitle);
         tvCountryName.setText(countryName);
         tvNewsContent.setText(channelDescription);
+
+
+
 
 
 
@@ -262,24 +312,24 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
                 {
                     if (x2 > x1 )
                     {
-                        Toast.makeText(this, "rightdd Swiped", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "rightdd Swiped", Toast.LENGTH_SHORT).show();
                         pictureInPictureMode();
                     }
                     else
                     {
-                        Toast.makeText(this, "Leftdd swiped", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Leftdd swiped", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else if (Math.abs(valueY) > MIN_DISTANCE)
                 {
                     if (y2 > y1 )
                     {
-                        Toast.makeText(this, "bottom Swiped", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "bottom Swiped", Toast.LENGTH_SHORT).show();
                         pictureInPictureMode();
                     }
                     else
                     {
-                        Toast.makeText(this, "top swiped", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "top swiped", Toast.LENGTH_SHORT).show();
 //                        pictureInPictureMode();
                     }
                 }

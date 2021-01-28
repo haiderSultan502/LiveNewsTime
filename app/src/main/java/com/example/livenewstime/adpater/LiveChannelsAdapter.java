@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.livenewstime.LiveNewsPlayer;
@@ -83,7 +84,7 @@ public class LiveChannelsAdapter extends RecyclerView.Adapter<LiveChannelsAdapte
     public class ItemViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener
     {
         ImageView thumbnialLiveChannel;
-        LinearLayout itemClick;
+        CardView itemClick;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);

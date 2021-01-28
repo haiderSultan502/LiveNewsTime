@@ -33,6 +33,7 @@ public class WebsiteView extends Fragment {
     WebView webView;
     RelativeLayout imgBackButton,imgShareButton;
     public static LinearLayout lootieAnmationParentlayout;
+    public static Boolean captureLinkClick;
 
     Bundle bundle;
     static  String newsUrl;
@@ -61,6 +62,8 @@ public class WebsiteView extends Fragment {
         bundle=getArguments();
         newsUrl=bundle.getString("newsUrl");
 
+
+        captureLinkClick=false;
         new MyAsynTask().execute();
 
         imgBackButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +98,7 @@ public class WebsiteView extends Fragment {
 
         @Override
         protected Document doInBackground(Void... voids) {
+//            if (captureLinkClick==false) {
 
                 try {
                     document = Jsoup.connect(newsUrl).get();
@@ -106,6 +110,16 @@ public class WebsiteView extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+//            }
+//            else {
+//                try {
+//                    document= Jsoup.connect(newsUrl).get();
+//                    Log.d("NetworkUrl",newsUrl);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
 
 
             return document;
@@ -123,17 +137,34 @@ public class WebsiteView extends Fragment {
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setUseWideViewPort(true);
 
+
+//            webView.loadUrl(newsUrl);
+//
+            parentAnimationHide();
+
             webView.setWebViewClient(new WebViewClient(){
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+
                     view.loadUrl(newsUrl);
 
                     parentAnimationHide();
 
                     return super.shouldOverrideUrlLoading(view, request);
                 }
-
+//
+//                @Override
+//                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//
+//                    view.loadUrl(newsUrl);
+//
+//                    parentAnimationHide();
+////                    newsUrl=url;
+////                    captureLinkClick=true;
+//                    new MyAsynTask().execute();
+//                    return super.shouldOverrideUrlLoading(view, url);
+//                }
             });
         }
 

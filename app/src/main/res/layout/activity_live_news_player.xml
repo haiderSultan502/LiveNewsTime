@@ -80,6 +80,12 @@
             app:resize_mode="fill"
             app:use_artwork="true" />
 
+<!--    <tcking.github.com.giraffeplayer2.VideoView-->
+<!--        android:id="@+id/videoView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="3.5"/>-->
+
         <LinearLayout
             android:id="@+id/player_below_screen"
             android:layout_width="match_parent"
