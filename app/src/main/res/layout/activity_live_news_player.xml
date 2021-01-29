@@ -10,176 +10,226 @@
 
 
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:paddingLeft="@dimen/_20sdp"-->
-<!--        android:paddingRight="@dimen/_20sdp">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:paddingLeft="@dimen/_20sdp"-->
+    <!--        android:paddingRight="@dimen/_20sdp">-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical"-->
-<!--            android:gravity="left">-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Live Channels"-->
-<!--                android:textSize="@dimen/_12sdp"-->
-<!--                android:textColor="@color/heading_color"-->
-<!--                android:textStyle="normal"-->
-<!--                android:layout_marginTop="@dimen/_5sdp">-->
-<!--            </TextView>-->
-<!--            <TextView-->
-<!--                android:id="@+id/tv_live_channel_description"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/about_live_news_channels"-->
-<!--                android:layout_marginTop="@dimen/_5sdp"/>-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:gravity="left">-->
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Live Channels"-->
+    <!--                android:textSize="@dimen/_12sdp"-->
+    <!--                android:textColor="@color/heading_color"-->
+    <!--                android:textStyle="normal"-->
+    <!--                android:layout_marginTop="@dimen/_5sdp">-->
+    <!--            </TextView>-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_live_channel_description"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="@string/about_live_news_channels"-->
+    <!--                android:layout_marginTop="@dimen/_5sdp"/>-->
 
-<!--        </LinearLayout>-->
+    <!--        </LinearLayout>-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="vertical">-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:orientation="vertical">-->
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                android:layout_marginBottom="@dimen/_10sdp">-->
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:orientation="vertical"-->
+    <!--                android:layout_marginTop="@dimen/_10sdp"-->
+    <!--                android:layout_marginBottom="@dimen/_10sdp">-->
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/recycler_view_live_channels"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"/>-->
-<!--            </LinearLayout>-->
+    <!--                <androidx.recyclerview.widget.RecyclerView-->
+    <!--                    android:id="@+id/recycler_view_live_channels"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent"/>-->
+    <!--            </LinearLayout>-->
 
-<!--        </LinearLayout>-->
+    <!--        </LinearLayout>-->
 
-<!--    </LinearLayout>-->
-
-
-
-<!--    <com.example.livenewstime.otherClasses.YoutubeLayout-->
-<!--        android:id="@+id/dragLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+    <!--    </LinearLayout>-->
 
 
 
-        <com.jarvanmo.exoplayerview.ui.ExoVideoView
-            android:id="@+id/videoView"
+    <!--    <com.example.livenewstime.otherClasses.YoutubeLayout-->
+    <!--        android:id="@+id/dragLayout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+
+
+    <!--        <com.jarvanmo.exoplayerview.ui.ExoVideoView-->
+    <!--            android:id="@+id/videoView"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:layout_weight="3.5"-->
+    <!--            app:controller_display_mode="all"-->
+    <!--            app:resize_mode="fill"-->
+    <!--            app:use_artwork="true" />-->
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3.5">
+
+        <com.potyvideo.library.AndExoPlayerView
+            android:id="@+id/andExoPlayerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3.5"
-            app:controller_display_mode="all"
-            app:resize_mode="fill"
-            app:use_artwork="true" />
+            android:layout_height="match_parent"
+            app:andexo_aspect_ratio="aspect_16_9"
+            app:andexo_full_screen="true"
+            app:andexo_loop="infinite"
+            app:andexo_play_when_ready="true"
+            app:andexo_resize_mode="Fit"
+            app:andexo_show_controller="true">
+        </com.potyvideo.library.AndExoPlayerView>
 
-<!--    <tcking.github.com.giraffeplayer2.VideoView-->
-<!--        android:id="@+id/videoView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="3.5"/>-->
+        <ImageButton
+            android:id="@+id/imageBtn"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_alignParentLeft="true"
+            android:background="@color/transparent">
+        </ImageButton>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--        <View-->
+    <!--            android:id="@+id/upperView"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@color/transparent"></View>-->
+
+
+
+
+    <!--    <tcking.github.com.giraffeplayer2.VideoView-->
+    <!--        android:id="@+id/videoView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="3.5"/>-->
+
+    <LinearLayout
+        android:id="@+id/player_below_screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3.5"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:orientation="vertical"
+        android:background="@color/white_color">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/channel_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Channel Title"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/app_major_color"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"></TextView>
+
+            <TextView
+                android:id="@+id/country_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="United States"
+                android:textColor="#3f7794"
+                android:textSize="@dimen/_12sdp"
+                android:layout_centerHorizontal="true"
+                ></TextView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/news_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="normal"
+                android:text="@string/about_live_news_channels"/>
+        </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/player_below_screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3.5"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingRight="@dimen/_10sdp"
             android:orientation="vertical"
-            android:background="@color/white_color">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/channel_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Channel Title"
-                    android:textSize="@dimen/_14sdp"
-                    android:textColor="@color/app_major_color"
-                    android:textStyle="bold"
-                    android:layout_alignParentLeft="true"></TextView>
-
-                <TextView
-                    android:id="@+id/country_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="United States"
-                    android:textColor="#3f7794"
-                    android:textSize="@dimen/_12sdp"
-                    android:layout_centerHorizontal="true"
-                    ></TextView>
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            android:gravity="left">
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/news_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="normal"
-                    android:text="@string/about_live_news_channels"/>
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="left">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Related Channels"
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/heading_color"
-                    android:textStyle="normal"
-                    android:layout_marginTop="@dimen/_5sdp">
-                </TextView>
+                android:text="Related Channels"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/heading_color"
+                android:textStyle="normal"
+                android:layout_marginTop="@dimen/_5sdp">
+            </TextView>
 
-            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp">
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_realted_live_channels"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_realted_live_channels"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-
+                    android:layout_height="match_parent"/>
             </LinearLayout>
+
         </LinearLayout>
-
-
-
-<!--    </com.example.livenewstime.otherClasses.YoutubeLayout>-->
-
-
-
-
-
     </LinearLayout>
+
+
+
+    <!--    </com.example.livenewstime.otherClasses.YoutubeLayout>-->
+
+
+
+
+
+</LinearLayout>

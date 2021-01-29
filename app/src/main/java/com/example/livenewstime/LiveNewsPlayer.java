@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.Rational;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ import com.jarvanmo.exoplayerview.media.SimpleMediaSource;
 import com.jarvanmo.exoplayerview.media.SimpleQuality;
 import com.jarvanmo.exoplayerview.ui.ExoVideoPlaybackControlView;
 import com.jarvanmo.exoplayerview.ui.ExoVideoView;
+import com.potyvideo.library.AndExoPlayerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +58,15 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
 
 
-    private ExoVideoView videoView;
+    //    private ExoVideoView videoView;
 //    VideoView videoView;
+    AndExoPlayerView andExoPlayerView;
 
+    ImageButton imageButton;
+
+    Boolean playerStatus = false;
+
+//    View viewUpper ;
 
     private View playerBelowScreen;
 
@@ -86,7 +95,67 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
         this.gestureDetector = new GestureDetector(LiveNewsPlayer.this,this);
 
-        videoView = findViewById(R.id.videoView);
+        andExoPlayerView = findViewById(R.id.andExoPlayerView);
+        imageButton = findViewById(R.id.imageBtn);
+//        viewUpper = findViewById(R.id.upperView);
+
+//        andExoPlayerView.setVisibility(View.VISIBLE);
+        andExoPlayerView.setShowController(true);
+
+        imageButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    pictureInPictureMode();
+                    return true;
+                }
+                return true;
+            }
+        });
+
+
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                if (playerStatus == false)
+////                {
+////                    andExoPlayerView.stopPlayer();
+////                    playerStatus = true;
+////                }
+////                else
+////                {
+////                    andExoPlayerView.setPlayWhenReady(true);
+////                    playerStatus = false;
+////                }
+//                andExoPlayerView.setShowFullScreen(false);
+//
+//            }
+//        });
+
+
+
+//        viewUpper.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                andExoPlayerView.setShowController(true);
+//            }
+//        });
+
+
+//
+//
+//
+//        andExoPlayerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(LiveNewsPlayer.this, "sucess", Toast.LENGTH_SHORT).show();
+//                andExoPlayerView.setShowController(true);
+//            }
+//        });
+
+
+//        videoView = findViewById(R.id.videoView);
 
 //        videoView.changeWidgetVisibility(R.id.exo_controller,View.GONE);
 
@@ -95,8 +164,9 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 //        videoView.setControllerDisplayMode(mode);
 
 
-        videoView.setUseController(false);
+//        videoView.setUseController(false);
         //hide all controls
+
 
 //        videoView.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
@@ -148,20 +218,27 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
         streamingLink = liveChannelsModel.getData().get(position).getVideoUrl();
 
-        videoView.setBackListener((view, isPortrait) -> {
-            if (isPortrait) {
-                finish();
-            }
-            return false;
-        });
+//        videoView.setBackListener((view, isPortrait) -> {
+//            if (isPortrait) {
+//                finish();
+//            }
+//            return false;
+//        });
+////
+//        videoView.setOrientationListener(orientation -> {
+//            if (orientation == SENSOR_PORTRAIT) {
+//                changeToPortrait();
+//            } else if (orientation == SENSOR_LANDSCAPE) {
+//                changeToLandscape();
+//            }
+//        });
 //
-        videoView.setOrientationListener(orientation -> {
-            if (orientation == SENSOR_PORTRAIT) {
-                changeToPortrait();
-            } else if (orientation == SENSOR_LANDSCAPE) {
-                changeToLandscape();
-            }
-        });
+//        videoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("videoview", "onClick: ");
+//            }
+//        });
 
 //        videoView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -172,13 +249,16 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
 
 //        SimpleMediaSource mediaSource = new SimpleMediaSource("https://videolinks.com/pub/media/videolinks/video/dji.osmo.action.mp4");
-        SimpleMediaSource mediaSource = new SimpleMediaSource(streamingLink);
+//        SimpleMediaSource mediaSource = new SimpleMediaSource(streamingLink);
+//
+//        mediaSource.setDisplayName("Live");
+//
+//
+//        videoView.play(mediaSource, false);
+//
+//        videoView.play(mediaSource);
 
-        mediaSource.setDisplayName("Live");
-
-        videoView.play(mediaSource, false);
-
-        videoView.play(mediaSource);
+        andExoPlayerView.setSource(streamingLink);
 
 //        videoView.getVideoInfo().setAspectRatio(3);
 //
@@ -263,7 +343,11 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
             public void onClick(View v) {
 //                Toast.makeText(LiveNewsPlayer.this, "Title", Toast.LENGTH_SHORT).show();
 
-                pictureInPictureMode();
+//                pictureInPictureMode();
+
+
+//                videoView.pause();
+
 
 //                Display d = getWindowManager()
 //                        .getDefaultDisplay();
@@ -313,7 +397,7 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
                     if (x2 > x1 )
                     {
 //                        Toast.makeText(this, "rightdd Swiped", Toast.LENGTH_SHORT).show();
-                        pictureInPictureMode();
+//                        pictureInPictureMode();
                     }
                     else
                     {
@@ -348,11 +432,11 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
 
     private void pictureInPictureMode() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-        // Calculate the aspect ratio of the PiP screen.
-        Rational aspectRatio = new Rational(350, 180);
-        PictureInPictureParams.Builder mPictureInPictureParamsBuilder  = new PictureInPictureParams.Builder();
-        mPictureInPictureParamsBuilder.setAspectRatio(aspectRatio).build();
-        enterPictureInPictureMode(mPictureInPictureParamsBuilder.build());
+            // Calculate the aspect ratio of the PiP screen.
+            Rational aspectRatio = new Rational(350, 180);
+            PictureInPictureParams.Builder mPictureInPictureParamsBuilder  = new PictureInPictureParams.Builder();
+            mPictureInPictureParamsBuilder.setAspectRatio(aspectRatio).build();
+            enterPictureInPictureMode(mPictureInPictureParamsBuilder.build());
 
 
 //            Display d = getWindowManager().getDefaultDisplay();
@@ -419,54 +503,54 @@ public class LiveNewsPlayer extends AppCompatActivity implements GestureDetector
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (Build.VERSION.SDK_INT > 23) {
-            videoView.resume();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if ((Build.VERSION.SDK_INT <= 23)) {
-            videoView.resume();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (Build.VERSION.SDK_INT <= 23) {
-            videoView.pause();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (Build.VERSION.SDK_INT > 23) {
-            videoView.pause();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        videoView.releasePlayer();
-    }
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return videoView.onKeyDown(keyCode, event);
-
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (Build.VERSION.SDK_INT > 23) {
+//            videoView.resume();
+//        }
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if ((Build.VERSION.SDK_INT <= 23)) {
+//            videoView.resume();
+//        }
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if (Build.VERSION.SDK_INT <= 23) {
+//            videoView.pause();
+//        }
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        if (Build.VERSION.SDK_INT > 23) {
+//            videoView.pause();
+//        }
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        videoView.releasePlayer();
+//    }
+//
+//
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            return videoView.onKeyDown(keyCode, event);
+//
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     public boolean onDown(MotionEvent e) {
