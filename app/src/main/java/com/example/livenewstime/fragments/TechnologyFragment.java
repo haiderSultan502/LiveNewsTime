@@ -41,7 +41,7 @@ public class TechnologyFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutTechnology;
     GridLayoutManager gridLayoutManager;
     View view,technologyLatestNewsItem;
-    TextView tvPostTitle,tvReadMore,tvCategoryName;
+    TextView tvPostTitle,tvReadMore,tvCategoryName,tvCategoryDetail;
     ImageView imageViewrtechnologyNews;
     WebsiteView websiteView = new WebsiteView();
 
@@ -78,6 +78,7 @@ public class TechnologyFragment extends Fragment {
         imageViewrtechnologyNews = view.findViewById(R.id.image_view_technology);
         technologyLatestNewsItem = view.findViewById(R.id.technology_latest_News_Item);
         tvCategoryName = view.findViewById(R.id.categoryNametechnology);
+        tvCategoryDetail = view.findViewById(R.id.categoryDetailTechnology);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -163,7 +164,18 @@ public class TechnologyFragment extends Fragment {
                     {
                         MainActivity.categoryNameTechnolohy = MainActivity.arrayListCategoryDetails.get(12).getName();
 
+                        MainActivity.categoryDetailsTechnology = MainActivity.arrayListCategoryDetails.get(12).getDescription();
+
                         tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
+
+                        if (MainActivity.categoryDetailsTechnology.length() < 1)
+                        {
+                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                        }
+                        else
+                        {
+                            tvCategoryDetail.setText(MainActivity.categoryDetailsTechnology);
+                        }
 
 
                         MainActivity.technologyThumbnailUrl = MainActivity.arrayListTechnologyNews.get(0).getFeaturedMedia();
@@ -248,6 +260,15 @@ public class TechnologyFragment extends Fragment {
     private void getStoreTechnologyNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
+
+        if (MainActivity.categoryDetailsTechnology.length() < 1)
+        {
+            tvCategoryDetail.setText(getString(R.string.about_politics));
+        }
+        else
+        {
+            tvCategoryDetail.setText(MainActivity.categoryDetailsTechnology);
+        }
 
         Picasso.with(getActivity()).load(MainActivity.technologyThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewrtechnologyNews);
         tvPostTitle.setText(MainActivity.technologyPostTitle);

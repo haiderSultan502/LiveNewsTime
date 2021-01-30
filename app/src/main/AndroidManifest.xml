@@ -13,12 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LiveNewsTime"
+        android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".Video_Player_T"></activity>
+        <!-- <activity android:name=".Video_Player_T"></activity> -->
         <activity
             android:name=".LiveNewsPlayer"
-            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|keyboardHidden"
-            android:supportsPictureInPicture="true"></activity>
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:supportsPictureInPicture="true" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

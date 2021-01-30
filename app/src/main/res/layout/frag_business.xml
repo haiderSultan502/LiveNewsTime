@@ -79,7 +79,7 @@
                         android:layout_marginTop="@dimen/_5sdp">
                     </TextView>
                     <TextView
-                        android:id="@+id/tv_business"
+                        android:id="@+id/categoryDetailBusiness"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/about_politics"

@@ -43,7 +43,7 @@ public class HealthFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutHealth;
     GridLayoutManager gridLayoutManager;
     View view,healthLatestNewsItem;
-    TextView tvPostTitle,tvReadMore,tvCategoryName;
+    TextView tvPostTitle,tvReadMore,tvCategoryName,tvCategoryDetail;
     ImageView imageViewHealth;
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
@@ -83,6 +83,7 @@ public class HealthFragment extends Fragment {
         healthLatestNewsItem = view.findViewById(R.id.health_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
         tvCategoryName = view.findViewById(R.id.categoryNameHealth);
+        tvCategoryDetail = view.findViewById(R.id.categoryDetailHealth);
 
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
@@ -190,7 +191,18 @@ public class HealthFragment extends Fragment {
                     {
                         MainActivity.categoryNameHealth = MainActivity.arrayListCategoryDetails.get(7).getName();
 
+                        MainActivity.categoryDetailsHealth = MainActivity.arrayListCategoryDetails.get(7).getDescription();
+
                         tvCategoryName.setText(MainActivity.categoryNameHealth);
+
+                        if (MainActivity.categoryDetailsHealth.length() < 1)
+                        {
+                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                        }
+                        else
+                        {
+                            tvCategoryDetail.setText(MainActivity.categoryDetailsHealth);
+                        }
 
 
 
@@ -280,6 +292,15 @@ public class HealthFragment extends Fragment {
     private void getStoreHealthNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameHealth);
+
+        if (MainActivity.categoryDetailsHealth.length() < 1)
+        {
+            tvCategoryDetail.setText(getString(R.string.about_politics));
+        }
+        else
+        {
+            tvCategoryDetail.setText(MainActivity.categoryDetailsHealth);
+        }
 
         Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
         tvPostTitle.setText(MainActivity.healthPostTitle);

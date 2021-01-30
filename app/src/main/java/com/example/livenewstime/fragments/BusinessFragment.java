@@ -43,7 +43,7 @@ public class BusinessFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutBusiness;
     GridLayoutManager gridLayoutManager;
     View view,businessLatestNewsItem;
-    TextView tvPostTitle,tvReadMore,tvCategoryName;
+    TextView tvPostTitle,tvReadMore,tvCategoryName,tvCategoryDetail;
     ImageView imageViewBusiness;
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
@@ -82,6 +82,7 @@ public class BusinessFragment extends Fragment {
         businessLatestNewsItem = view.findViewById(R.id.business_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
         tvCategoryName = view.findViewById(R.id.categoryNameBusiness);
+        tvCategoryDetail = view.findViewById(R.id.categoryDetailBusiness);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -190,7 +191,20 @@ public class BusinessFragment extends Fragment {
                     {
                         MainActivity.categoryNameBusiness = MainActivity.arrayListCategoryDetails.get(1).getName();
 
+                        MainActivity.categoryDetailsBusiness = MainActivity.arrayListCategoryDetails.get(1).getDescription();
+
+
+
                         tvCategoryName.setText(MainActivity.categoryNameBusiness);
+
+                        if (MainActivity.categoryDetailsBusiness.length() < 1)
+                        {
+                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                        }
+                        else
+                        {
+                            tvCategoryDetail.setText(MainActivity.categoryDetailsBusiness);
+                        }
 
 
                         MainActivity.businessThumbnailUrl = MainActivity.arrayListBusinessNews.get(0).getFeaturedMedia();
@@ -277,6 +291,15 @@ public class BusinessFragment extends Fragment {
     private void getStoreBusinessNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameBusiness);
+
+        if (MainActivity.categoryDetailsBusiness.length() < 1)
+        {
+            tvCategoryDetail.setText(getString(R.string.about_politics));
+        }
+        else
+        {
+            tvCategoryDetail.setText(MainActivity.categoryDetailsBusiness);
+        }
 
         Picasso.with(getActivity()).load(MainActivity.businessThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewBusiness);
         tvPostTitle.setText(MainActivity.businessPostTitle);

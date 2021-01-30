@@ -201,7 +201,6 @@ import retrofit2.Response;
                         AllNewsCategoriesAdapter homeMoreNewsAdapter = new AllNewsCategoriesAdapter(getActivity(),MainActivity.arrayListHomeNews,"moreNews");
                         recyclerViewMoretNews.setAdapter(homeMoreNewsAdapter);
 
-
                         MainActivity.animationHide();
 
                     }

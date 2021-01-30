@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static List<String> homeThumbnailUrl,politicsThumbnailUrl,newsThumbnailUrl,technologyThumbnailUrl,healthThumbnailUrl,sportsThumbnailUrl,businessThumbnailUrl;
     public static String homePostTitle,politicsPostTitle,newsPostTitle,technologyPostTitle,healthPostTitle,sportsPostTitle,businessPostTitle;
     public static String categoryNameLive,categoryNameHome,categoryNameNews,categoryNamepolitics,categoryNameTechnolohy,categoryNameSports,categoryNameBusiness,categoryNameHealth;
+    public static String categoryDetailsPolitics,categoryDetailsNews,categoryDetailsTechnology,categoryDetailsHealth,categoryDetailsSports,categoryDetailsBusiness;
 
     int index;
     FragmentManager fragmentManager;

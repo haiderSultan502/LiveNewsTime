@@ -43,7 +43,7 @@ public class SportsFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutSports;
     GridLayoutManager gridLayoutManager;
     View view,sportsLatestNewsItem;
-    TextView tvPostTitle,tvReadMore,tvCategoryName;
+    TextView tvPostTitle,tvReadMore,tvCategoryName,tvCategoryDetail;
     ImageView imageViewSports;
     RelativeLayout imgBackButton;
     LinearLayout lootieAnmationParentlayout;
@@ -84,6 +84,7 @@ public class SportsFragment extends Fragment {
         sportsLatestNewsItem = view.findViewById(R.id.sports_latest_News_Item);
         lootieAnmationParentlayout=view.findViewById(R.id.lootie_animation_parent_layout);
         tvCategoryName = view.findViewById(R.id.categoryNameSports);
+        tvCategoryDetail = view.findViewById(R.id.categoryDetailSports);
 
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
@@ -191,7 +192,18 @@ public class SportsFragment extends Fragment {
                     {
                         MainActivity.categoryNameSports = MainActivity.arrayListCategoryDetails.get(11).getName();
 
+                        MainActivity.categoryDetailsSports = MainActivity.arrayListCategoryDetails.get(11).getDescription();
+
                         tvCategoryName.setText(MainActivity.categoryNameSports);
+
+                        if (MainActivity.categoryDetailsSports.length() < 1)
+                        {
+                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                        }
+                        else
+                        {
+                            tvCategoryDetail.setText(MainActivity.categoryDetailsSports);
+                        }
 
 
                         MainActivity.sportsThumbnailUrl = MainActivity.arrayListSportsNews.get(0).getFeaturedMedia();
@@ -278,6 +290,15 @@ public class SportsFragment extends Fragment {
     private void getStoreSportsNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameSports);
+
+        if (MainActivity.categoryDetailsSports.length() < 1)
+        {
+            tvCategoryDetail.setText(getString(R.string.about_politics));
+        }
+        else
+        {
+            tvCategoryDetail.setText(MainActivity.categoryDetailsSports);
+        }
 
         Picasso.with(getActivity()).load(MainActivity.sportsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewSports);
         tvPostTitle.setText(MainActivity.sportsPostTitle);

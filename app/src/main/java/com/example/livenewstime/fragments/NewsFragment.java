@@ -43,7 +43,7 @@ public class NewsFragment extends Fragment {
     RecyclerView recyclerViewMoreAboutNews;
     GridLayoutManager gridLayoutManager;
     View view,latestNewsItem;
-    TextView tvPostTitle,tvReadMore,tvCategoryName;
+    TextView tvPostTitle,tvReadMore,tvCategoryName,tvCategoryDetail;
     ImageView imageViewNews;
     WebsiteView websiteView = new WebsiteView();
 
@@ -82,6 +82,7 @@ public class NewsFragment extends Fragment {
         imageViewNews = view.findViewById(R.id.image_view_news);
         latestNewsItem = view.findViewById(R.id.latest_News_Item);
         tvCategoryName = view.findViewById(R.id.categoryNameNews);
+        tvCategoryDetail = view.findViewById(R.id.categoryDetailNews);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
 
@@ -170,7 +171,18 @@ public class NewsFragment extends Fragment {
                     {
                         MainActivity.categoryNameNews = MainActivity.arrayListCategoryDetails.get(8).getName();
 
+                        MainActivity.categoryDetailsNews = MainActivity.arrayListCategoryDetails.get(8).getDescription();
+
                         tvCategoryName.setText(MainActivity.categoryNameNews);
+
+                        if (MainActivity.categoryDetailsNews.length() < 1)
+                        {
+                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                        }
+                        else
+                        {
+                            tvCategoryDetail.setText(MainActivity.categoryDetailsNews);
+                        }
 
 
                         MainActivity.newsThumbnailUrl = MainActivity.arrayListNews.get(0).getFeaturedMedia();
@@ -258,6 +270,15 @@ public class NewsFragment extends Fragment {
     private void getStoreNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameNews);
+
+        if (MainActivity.categoryDetailsNews.length() < 1)
+        {
+            tvCategoryDetail.setText(getString(R.string.about_politics));
+        }
+        else
+        {
+            tvCategoryDetail.setText(MainActivity.categoryDetailsNews);
+        }
 
         Picasso.with(getActivity()).load(MainActivity.newsThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewNews);
         tvPostTitle.setText(MainActivity.newsPostTitle);
