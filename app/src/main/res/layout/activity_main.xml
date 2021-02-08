@@ -206,25 +206,25 @@
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/fb"
-                android:layout_marginRight="@dimen/_10sdp"/>
+                android:layout_marginRight="10dp"/>
             <ImageView
                 android:id="@+id/twitter"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/twitter"
-                android:layout_marginRight="@dimen/_10sdp"/>
+                android:layout_marginRight="10dp"/>
             <ImageView
                 android:id="@+id/pinterest"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pinterest"
-                android:layout_marginRight="@dimen/_10sdp"/>
+                android:layout_marginRight="10dp"/>
             <ImageView
                 android:id="@+id/youtube"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/youtube"
-                android:layout_marginRight="@dimen/_10sdp"/>
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
 
     </com.google.android.material.navigation.NavigationView>
