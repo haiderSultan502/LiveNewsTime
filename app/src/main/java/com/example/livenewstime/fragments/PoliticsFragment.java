@@ -190,12 +190,13 @@ public class PoliticsFragment extends Fragment {
 
                         tvCategoryName.setText(MainActivity.categoryNamepolitics);
 
-                        if (MainActivity.categoryDetailsPolitics.length() < 1)
+                        if (MainActivity.categoryDetailsPolitics.length() == 0)
                         {
-                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                            tvCategoryDetail.setVisibility(View.GONE);
                         }
                         else
                         {
+                            tvCategoryDetail.setVisibility(View.VISIBLE);
                             tvCategoryDetail.setText(MainActivity.categoryDetailsPolitics);
                         }
 
@@ -237,6 +238,8 @@ public class PoliticsFragment extends Fragment {
         }
 
     }
+
+
 
     private void loadMore() {
         recyclerViewMoreAboutPolitics.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -350,12 +353,13 @@ public class PoliticsFragment extends Fragment {
     {
         tvCategoryName.setText(MainActivity.categoryNamepolitics);
 
-        if (MainActivity.categoryDetailsPolitics.length() < 1)
+        if (MainActivity.categoryDetailsPolitics.length() == 0)
         {
-            tvCategoryDetail.setText(getString(R.string.about_politics));
+            tvCategoryDetail.setVisibility(View.GONE);
         }
         else
         {
+            tvCategoryDetail.setVisibility(View.VISIBLE);
             tvCategoryDetail.setText(MainActivity.categoryDetailsPolitics);
         }
 

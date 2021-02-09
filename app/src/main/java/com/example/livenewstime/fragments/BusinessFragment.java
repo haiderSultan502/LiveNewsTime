@@ -197,12 +197,13 @@ public class BusinessFragment extends Fragment {
 
                         tvCategoryName.setText(MainActivity.categoryNameBusiness);
 
-                        if (MainActivity.categoryDetailsBusiness.length() < 1)
+                        if (MainActivity.categoryDetailsBusiness.length() == 0 )
                         {
-                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                            tvCategoryDetail.setVisibility(View.GONE);
                         }
                         else
                         {
+                            tvCategoryDetail.setVisibility(View.VISIBLE);
                             tvCategoryDetail.setText(MainActivity.categoryDetailsBusiness);
                         }
 
@@ -292,14 +293,16 @@ public class BusinessFragment extends Fragment {
 
         tvCategoryName.setText(MainActivity.categoryNameBusiness);
 
-        if (MainActivity.categoryDetailsBusiness.length() < 1)
+        if (MainActivity.categoryDetailsBusiness.length() == 0 )
         {
-            tvCategoryDetail.setText(getString(R.string.about_politics));
+            tvCategoryDetail.setVisibility(View.GONE);
         }
         else
         {
+            tvCategoryDetail.setVisibility(View.VISIBLE);
             tvCategoryDetail.setText(MainActivity.categoryDetailsBusiness);
         }
+
 
         Picasso.with(getActivity()).load(MainActivity.businessThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewBusiness);
         tvPostTitle.setText(MainActivity.businessPostTitle);

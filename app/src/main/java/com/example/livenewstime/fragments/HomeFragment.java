@@ -159,8 +159,15 @@ import retrofit2.Response;
         return linearLayoutManager;
     }
 
-    public void getNews(String url)
+//        @Override
+//        public void onResume() {
+//            super.onResume();
+//            MainActivity.animationShow();
+//        }
+
+        public void getNews(String url)
         {
+            Log.d("TAG", "animation called ");
             MainActivity.animationShow();
 
             try {

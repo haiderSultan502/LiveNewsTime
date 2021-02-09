@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">LiveNewsTime</string>
     <string name="edittext_hint"><font size="15">Search for News</font></string>
-    <string name="about_politics">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
+<!--    <string name="about_politics">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>-->
+    <string name="about_politics"></string>
     <string name="about_channels_news">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
-    <string name="about_live_news_channels">We have managed to bring the live news streaming for our readers, it may be audio or video. Our mission is to provide a single platform for daily news updates.</string>
+    <string name="about_live_news_channels"></string>
+<!--    <string name="about_live_news_channels">We have managed to bring the live news streaming for our readers, it may be audio or video. Our mission is to provide a single platform for daily news updates.</string>-->
 </resources>

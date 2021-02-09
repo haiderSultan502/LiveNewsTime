@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_85sdp"
         android:scaleType="centerCrop"
-        android:src="@drawable/img1"/>
+        android:src="@drawable/ic_baseline_image_search_24"/>
 
     <TextView
         android:id="@+id/tv_title"

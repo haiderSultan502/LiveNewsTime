@@ -195,12 +195,13 @@ public class HealthFragment extends Fragment {
 
                         tvCategoryName.setText(MainActivity.categoryNameHealth);
 
-                        if (MainActivity.categoryDetailsHealth.length() < 1)
+                        if (MainActivity.categoryDetailsHealth.length() == 0 )
                         {
-                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                            tvCategoryDetail.setVisibility(View.GONE);
                         }
                         else
                         {
+                            tvCategoryDetail.setVisibility(View.VISIBLE);
                             tvCategoryDetail.setText(MainActivity.categoryDetailsHealth);
                         }
 
@@ -293,14 +294,16 @@ public class HealthFragment extends Fragment {
 
         tvCategoryName.setText(MainActivity.categoryNameHealth);
 
-        if (MainActivity.categoryDetailsHealth.length() < 1)
+        if (MainActivity.categoryDetailsHealth.length() == 0 )
         {
-            tvCategoryDetail.setText(getString(R.string.about_politics));
+            tvCategoryDetail.setVisibility(View.GONE);
         }
         else
         {
+            tvCategoryDetail.setVisibility(View.VISIBLE);
             tvCategoryDetail.setText(MainActivity.categoryDetailsHealth);
         }
+
 
         Picasso.with(getActivity()).load(MainActivity.healthThumbnailUrl.get(0)).placeholder(R.drawable.ic_baseline_image_search_24).error(R.drawable.ic_baseline_image_search_24).into(imageViewHealth);
         tvPostTitle.setText(MainActivity.healthPostTitle);

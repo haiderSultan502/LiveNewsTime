@@ -41,7 +41,7 @@ public class LiveNewsFragment extends Fragment {
     RecyclerView recyclerViewLiveNewsChannels;
     GridLayoutManager gridLayoutManager;
     View view;
-    TextView tvLiveChannelDescription,tvCategoryName;
+    TextView tvCategoryDetail,tvCategoryName;
 
     Context context;
     InterfaceApi interfaceApi;
@@ -69,7 +69,7 @@ public class LiveNewsFragment extends Fragment {
 
         view=inflater.inflate(R.layout.frag_live_news,container,false);
         recyclerViewLiveNewsChannels=view.findViewById(R.id.recycler_view_live_channels);
-        tvLiveChannelDescription = view.findViewById(R.id.tv_live_channel_description);
+        tvCategoryDetail = view.findViewById(R.id.categoryDetailLive);
         tvCategoryName = view.findViewById(R.id.categoryNameLive);
 
         sweetAlertDialogGeneral = new SweetAlertDialogGeneral(getActivity());
@@ -173,7 +173,21 @@ public class LiveNewsFragment extends Fragment {
 
                     MainActivity.categoryNameLive = MainActivity.arrayListCategoryDetails.get(15).getName();
 
+                    MainActivity.categoryDetailsLive = MainActivity.arrayListCategoryDetails.get(15).getDescription();
+
                     tvCategoryName.setText(MainActivity.categoryNameLive);
+
+                    if (MainActivity.categoryDetailsLive.length() == 0 )
+                    {
+                        tvCategoryDetail.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        tvCategoryDetail.setVisibility(View.VISIBLE);
+                        tvCategoryDetail.setText(MainActivity.categoryDetailsLive);
+                    }
+
+
 
 
                     LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel);
@@ -208,6 +222,16 @@ public class LiveNewsFragment extends Fragment {
     private void getStoreLiveNews() {
 
         tvCategoryName.setText(MainActivity.categoryNameLive);
+
+        if (MainActivity.categoryDetailsLive.length() == 0 )
+        {
+            tvCategoryDetail.setVisibility(View.GONE);
+        }
+        else
+        {
+            tvCategoryDetail.setVisibility(View.VISIBLE);
+            tvCategoryDetail.setText(MainActivity.categoryDetailsLive);
+        }
 
         LiveChannelsAdapter liveChannelsAdapter = new LiveChannelsAdapter(context,MainActivity.liveChannelsModel);
         recyclerViewLiveNewsChannels.setAdapter(liveChannelsAdapter);

@@ -175,12 +175,13 @@ public class NewsFragment extends Fragment {
 
                         tvCategoryName.setText(MainActivity.categoryNameNews);
 
-                        if (MainActivity.categoryDetailsNews.length() < 1)
+                        if (MainActivity.categoryDetailsNews.length() == 0)
                         {
-                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                            tvCategoryDetail.setVisibility(View.GONE);
                         }
                         else
                         {
+                            tvCategoryDetail.setVisibility(View.VISIBLE);
                             tvCategoryDetail.setText(MainActivity.categoryDetailsNews);
                         }
 
@@ -271,12 +272,13 @@ public class NewsFragment extends Fragment {
 
         tvCategoryName.setText(MainActivity.categoryNameNews);
 
-        if (MainActivity.categoryDetailsNews.length() < 1)
+        if (MainActivity.categoryDetailsNews.length() == 0)
         {
-            tvCategoryDetail.setText(getString(R.string.about_politics));
+            tvCategoryDetail.setVisibility(View.GONE);
         }
         else
         {
+            tvCategoryDetail.setVisibility(View.VISIBLE);
             tvCategoryDetail.setText(MainActivity.categoryDetailsNews);
         }
 

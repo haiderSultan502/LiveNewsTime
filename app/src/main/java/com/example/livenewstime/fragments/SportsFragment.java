@@ -196,12 +196,13 @@ public class SportsFragment extends Fragment {
 
                         tvCategoryName.setText(MainActivity.categoryNameSports);
 
-                        if (MainActivity.categoryDetailsSports.length() < 1)
+                        if (MainActivity.categoryDetailsSports.length() == 0 )
                         {
-                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                            tvCategoryDetail.setVisibility(View.GONE);
                         }
                         else
                         {
+                            tvCategoryDetail.setVisibility(View.VISIBLE);
                             tvCategoryDetail.setText(MainActivity.categoryDetailsSports);
                         }
 
@@ -291,12 +292,13 @@ public class SportsFragment extends Fragment {
 
         tvCategoryName.setText(MainActivity.categoryNameSports);
 
-        if (MainActivity.categoryDetailsSports.length() < 1)
+        if (MainActivity.categoryDetailsSports.length() == 0 )
         {
-            tvCategoryDetail.setText(getString(R.string.about_politics));
+            tvCategoryDetail.setVisibility(View.GONE);
         }
         else
         {
+            tvCategoryDetail.setVisibility(View.VISIBLE);
             tvCategoryDetail.setText(MainActivity.categoryDetailsSports);
         }
 

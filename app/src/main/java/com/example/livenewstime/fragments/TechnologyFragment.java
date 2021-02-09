@@ -168,12 +168,13 @@ public class TechnologyFragment extends Fragment {
 
                         tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
 
-                        if (MainActivity.categoryDetailsTechnology.length() < 1)
+                        if (MainActivity.categoryDetailsTechnology.length() == 0 )
                         {
-                            tvCategoryDetail.setText(getString(R.string.about_politics));
+                            tvCategoryDetail.setVisibility(View.GONE);
                         }
                         else
                         {
+                            tvCategoryDetail.setVisibility(View.VISIBLE);
                             tvCategoryDetail.setText(MainActivity.categoryDetailsTechnology);
                         }
 
@@ -261,12 +262,13 @@ public class TechnologyFragment extends Fragment {
 
         tvCategoryName.setText(MainActivity.categoryNameTechnolohy);
 
-        if (MainActivity.categoryDetailsTechnology.length() < 1)
+        if (MainActivity.categoryDetailsTechnology.length() == 0 )
         {
-            tvCategoryDetail.setText(getString(R.string.about_politics));
+            tvCategoryDetail.setVisibility(View.GONE);
         }
         else
         {
+            tvCategoryDetail.setVisibility(View.VISIBLE);
             tvCategoryDetail.setText(MainActivity.categoryDetailsTechnology);
         }
 

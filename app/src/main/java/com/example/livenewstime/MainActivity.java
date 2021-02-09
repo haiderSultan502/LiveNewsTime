@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static List<String> homeThumbnailUrl,politicsThumbnailUrl,newsThumbnailUrl,technologyThumbnailUrl,healthThumbnailUrl,sportsThumbnailUrl,businessThumbnailUrl;
     public static String homePostTitle,politicsPostTitle,newsPostTitle,technologyPostTitle,healthPostTitle,sportsPostTitle,businessPostTitle;
     public static String categoryNameLive,categoryNameHome,categoryNameNews,categoryNamepolitics,categoryNameTechnolohy,categoryNameSports,categoryNameBusiness,categoryNameHealth;
-    public static String categoryDetailsPolitics,categoryDetailsNews,categoryDetailsTechnology,categoryDetailsHealth,categoryDetailsSports,categoryDetailsBusiness;
+    public static String categoryDetailsPolitics,categoryDetailsNews,categoryDetailsTechnology,categoryDetailsHealth,categoryDetailsSports,categoryDetailsBusiness,categoryDetailsLive;
 
     int index;
     FragmentManager fragmentManager;
@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static void animationShow()
     {
+
         lootieAnimaationLayout.setVisibility(View.VISIBLE);
     }
     public static void animationHide()
@@ -334,6 +335,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent socialMediaPage = new Intent(Intent.ACTION_VIEW);
         socialMediaPage.setData(Uri.parse(socialMediaLink));
         startActivity(socialMediaPage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
+        //this functuion is called because when we back press then unInitialize the boolean variables othervise if not uninitialize then when app reopen then app perform some wrong operation because static varaibale has no set new values , there fore set new valuse of static avr before exit the app;
+
+        setFalseStaticBooleanVariales();
+        finish();
+
+    }
+
+    private void setFalseStaticBooleanVariales() {
+        getHomeNews = false;
+        getPoloiticsNews = false;
+        getNews = false;
+        getTechnologyNews = false;
+        getSportsNews = false;
+        getBusinessNews = false;
+        getHealthNews = false;
+        getLiveNews = false;
     }
 
     private void setNavigationDrawer() {
