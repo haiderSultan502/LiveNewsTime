@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.livenewstime">
+    package="app.webscare.livenewstime">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/icon_live_news_time"
+        android:icon="@mipmap/ic_launcher_square"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/icon_live_news_time"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.LiveNewsTime"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <!-- <activity android:name=".Video_Player_T"></activity> -->
         <activity
-            android:name=".LiveNewsPlayer"
+            android:name="app.webscare.livenewstime.LiveNewsPlayer"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:supportsPictureInPicture="true" />
-        <activity android:name=".SplashScreen">
+        <activity android:name="app.webscare.livenewstime.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="app.webscare.livenewstime.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>

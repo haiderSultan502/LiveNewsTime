@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context="app.webscare.livenewstime.MainActivity">
 
     <FrameLayout
         android:id="@+id/frame_layout_parent"
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context="app.webscare.livenewstime.MainActivity">
 
 
 
@@ -88,11 +88,10 @@
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:paddingLeft="@dimen/_15sdp"
-                    android:drawableRight="@drawable/search_icon"
                     android:paddingRight="@dimen/_20sdp"
                     android:layout_alignParentTop="true">
                 </EditText>
-
+<!--                android:drawableRight="@drawable/search_icon"-->
 
             </RelativeLayout>
 
@@ -214,10 +213,10 @@
                 android:src="@drawable/twitter"
                 android:layout_marginRight="10dp"/>
             <ImageView
-                android:id="@+id/pinterest"
+                android:id="@+id/instagram"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/pinterest"
+                android:src="@drawable/insta"
                 android:layout_marginRight="10dp"/>
             <ImageView
                 android:id="@+id/youtube"
